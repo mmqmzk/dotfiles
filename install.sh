@@ -88,15 +88,15 @@ ln -s -f $dot/zshrc $zrc
 #bash -c "$(curl $proxy -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sed '/env zsh/d')"
 
 echo "Zsh plugins and themes"
-plugins=$omz/custom/plugins
-mkdir -p $plugins && cd $plugins
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
-git clone https://github.com/zsh-users/zsh-autosuggestions.git
-git clone https://github.com/changyuheng/fz.git
-themes=$omz/custom/themes
+#plugins=$omz/custom/plugins
+#mkdir -p $plugins && cd $plugins
+#git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
+#git clone https://github.com/zsh-users/zsh-autosuggestions.git
+#git clone https://github.com/changyuheng/fz.git
+themes=$dot/zsh-custom/themes
 mkdir -p $themes && cd $themes
 awk '/^prompt_context/{a=NR} {if(a>0&&NR>a&&NR<a+4)$0="#"$0;print}' $omz/themes/agnoster.zsh-theme > agnoster.zsh-theme
-curl $proxy -fsSL https://gist.github.com/mmqmzk/ae92f25a1d506ba0235a79619f9aceb1/raw/09a5844181a87dc93ba1590b368ac52b7c539b33/.zshrc > $zrc
+#curl $proxy -fsSL https://gist.github.com/mmqmzk/ae92f25a1d506ba0235a79619f9aceb1/raw/09a5844181a87dc93ba1590b368ac52b7c539b33/.zshrc > $zrc
 
 echo "Nvm"
 NVM=~/.nvm
