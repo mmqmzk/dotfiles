@@ -104,6 +104,9 @@ if [[ ! -x $(wh tmux) ]]
 then
     sudo $PM install tmux -y
 fi
+tc=~/.tumx.conf
+del $tc
+ln -s -f $dot/.tmux.conf $tc
 
 echo "Nvm"
 NVM=~/.nvm
