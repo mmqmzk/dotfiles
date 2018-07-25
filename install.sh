@@ -99,6 +99,12 @@ mkdir -p $themes && cd $themes
 awk '/^prompt_context/{a=NR} {if(a>0&&NR>a&&NR<a+4)$0="#"$0;print}' $omz/themes/agnoster.zsh-theme > agnoster.zsh-theme
 #curl $proxy -fsSL https://gist.github.com/mmqmzk/ae92f25a1d506ba0235a79619f9aceb1/raw/09a5844181a87dc93ba1590b368ac52b7c539b33/.zshrc > $zrc
 
+echo "Tmux"
+if [[ ! -x $(wh tmux) ]]
+then
+    sudo $PM install tmux -y
+fi
+
 echo "Nvm"
 NVM=~/.nvm
 del $NVM
