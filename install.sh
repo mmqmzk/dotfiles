@@ -82,7 +82,6 @@ then
 fi
 
 omz=$dot/oh-my-zsh
-del $omz
 zrc=~/.zshrc
 del $zrc
 echo "Oh my zsh"
