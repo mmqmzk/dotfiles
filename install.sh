@@ -106,7 +106,7 @@ then
 fi
 tc=~/.tumx.conf
 del $tc
-ln -s -f $dot/.tmux.conf $tc
+ln -s -f $dot/tmux.conf $tc
 
 echo "Nvm"
 NVM=~/.nvm
