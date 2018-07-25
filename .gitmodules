@@ -1,0 +1,12 @@
+[submodule "oh-my-zsh"]
+	path = oh-my-zsh
+	url = https://github.com/robbyrussell/oh-my-zsh.git
+[submodule "vim"]
+	path = vim
+	url = https://github.com/mmqmzk/.vim.git
+[submodule "fzf"]
+	path = fzf
+	url = https://github.com/junegunn/fzf.git
+[submodule "nvm"]
+	path = nvm
+	url = https://github.com/creationix/nvm.git

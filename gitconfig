@@ -1,0 +1,32 @@
+[user]
+	name = mmqmzk
+	email = mmqmzk@gmail.com
+[alias]
+	rb = rebase
+	rbc = rebase --continue
+	rbs = rebase --skip
+	rbm = rebase master
+	co = checkout
+	com = checkout master
+	cow = checkout work
+	m = merge
+	mff = merge --ff
+	ms = merge --squash
+	mw = merge --ff work
+	s = status
+	br = branch
+	cm = commit
+	ca = commit -a
+	a = add
+	A = add .
+	d = diff
+	sr = svn rebase
+	sd = svn dcommit
+[core]
+	editor = vim
+	autocrlf = false
+	quotepath = false
+[color]
+	pager = true
+[text]
+	eol=lf
