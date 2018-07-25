@@ -46,9 +46,11 @@ then
   sudo $PM install git -y
 fi
 dot=~/.dotfiles
-del $h
+del $dot
 git clone https://github.com/mmqmzk/dotfiles.git $dot
-cd $dot && git submodule update
+cd $dot 
+git submodule init
+git submodule update
 
 PY=$(wh python3 python)
 if [[ -x $PY ]]
@@ -93,7 +95,7 @@ echo "Zsh plugins and themes"
 #git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
 #git clone https://github.com/zsh-users/zsh-autosuggestions.git
 #git clone https://github.com/changyuheng/fz.git
-themes=$dot/zsh-custom/themes
+themes=$dot/zsh-custom/
 mkdir -p $themes && cd $themes
 awk '/^prompt_context/{a=NR} {if(a>0&&NR>a&&NR<a+4)$0="#"$0;print}' $omz/themes/agnoster.zsh-theme > agnoster.zsh-theme
 #curl $proxy -fsSL https://gist.github.com/mmqmzk/ae92f25a1d506ba0235a79619f9aceb1/raw/09a5844181a87dc93ba1590b368ac52b7c539b33/.zshrc > $zrc
