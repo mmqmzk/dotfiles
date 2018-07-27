@@ -33,8 +33,13 @@ then
 elif [[ -x $APT ]]
 then
   PM=$APT
-  AG="silversearcher-ag"
   sudo $APT update
+  AG="silversearcher-ag"
+  if [[ ! -x $(wh jq) ]]
+  then
+      echo "Jq"
+      sudo $PM install jq -y
+  fi
 else
   echo "yum and apt not found"
   exit 1
@@ -162,6 +167,16 @@ del $FZF
 #git clone https://github.com/junegunn/fzf.git $FZF
 ln -f -s $dot/fzf $FZF
 bash $FZF/install --all
+
+if [[ ! -x $(wh jq) ]]
+then
+    echo "Jq"
+    jq_tag="1.5"
+    jq_bin=$bin/jq
+    del $jq_bin
+    curl $proxy -fsSL "https://github.com/stedolan/jq/releases/download/jq-${jq_tag}/jq-linux64" > $jq_bin
+    chmod 755 $jq_bin
+fi
 
 
 echo "Vim"

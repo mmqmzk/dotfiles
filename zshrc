@@ -69,6 +69,7 @@ plugins=(
   python
   pip
   httpie
+  tmux
   zsh-syntax-highlighting
   zsh-autosuggestions
   z
