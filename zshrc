@@ -119,4 +119,8 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS="-m --cycle --inline-info"
 
 unsetopt BG_NICE
+
+# for Ctrl-W
+export WORDCHARS='*?_[]~=&;!#$%^(){}/-'
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
