@@ -19,3 +19,6 @@
 [submodule "zsh-custom/plugins/fz"]
 	path = zsh-custom/plugins/fz
 	url = https://github.com/changyuheng/fz.git
+[submodule "tmux-resurrect"]
+	path = tmux-resurrect
+	url = https://github.com/tmux-plugins/tmux-resurrect.git
