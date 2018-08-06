@@ -22,3 +22,6 @@
 [submodule "tmux-resurrect"]
 	path = tmux-resurrect
 	url = https://github.com/tmux-plugins/tmux-resurrect.git
+[submodule "zsh-custom/plugins/zsh-autopair"]
+	path = zsh-custom/plugins/zsh-autopair
+	url = https://github.com/hlissner/zsh-autopair.git
