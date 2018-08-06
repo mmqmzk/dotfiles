@@ -7,7 +7,7 @@ export ZSH=~/.dotfiles/oh-my-zsh
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="agnoster"
+ZSH_THEME="gallois"
 
 # Set list of themes to load
 # Setting this variable when ZSH_THEME=random
@@ -72,6 +72,7 @@ plugins=(
   tmux
   zsh-syntax-highlighting
   zsh-autosuggestions
+  zsh-autopair
   z
   fz
 )
@@ -117,6 +118,8 @@ alias ff="fzf -f"
 export FZF_DEFAULT_COMMAND='fd --type file'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS="-m --cycle --inline-info"
+
+unsetopt BG_NICE
 
 # for Ctrl-W
 export WORDCHARS='*?_[]~=&;!#$%^(){}/-.:'
