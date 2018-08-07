@@ -136,29 +136,29 @@ chmod 755 $CHT
 del $bin/cht
 mv $CHT $bin
 
-echo "Bat"
-BAT=~/.bat
-del $BAT
-mkdir -p $BAT && cd $BAT
-bat_tag="v0.4.1"
-bat_file="bat-${bat_tag}-x86_64-unknown-linux-musl"
-curl $proxy -fsSL "https://github.com/sharkdp/bat/releases/download/${bat_tag}/${bat_file}.tar.gz" > ${bat_file}.tar.gz
-tar -xf ${bat_file}.tar.gz && rm -f ${bat_file}.tar.gz
-bat_bin=$bin/bat
-del $bat_bin
-ln -s $BAT/${bat_file}/bat $bat_bin
+#echo "Bat"
+#BAT=~/.bat
+#del $BAT
+#mkdir -p $BAT && cd $BAT
+#bat_tag="v0.4.1"
+#bat_file="bat-${bat_tag}-x86_64-unknown-linux-musl"
+#curl $proxy -fsSL "https://github.com/sharkdp/bat/releases/download/${bat_tag}/${bat_file}.tar.gz" > ${bat_file}.tar.gz
+#tar -xf ${bat_file}.tar.gz && rm -f ${bat_file}.tar.gz
+#bat_bin=$bin/bat
+#del $bat_bin
+#ln -s $BAT/${bat_file}/bat $bat_bin
 
-echo "Fd"
-FD=~/.fd
-del $FD
-mkdir -p $FD && cd $FD
-fd_tag="v7.0.0"
-fd_file="fd-${fd_tag}-x86_64-unknown-linux-musl"
-curl $proxy -fsSL "https://github.com/sharkdp/fd/releases/download/${fd_tag}/${fd_file}.tar.gz" > ${fd_file}.tar.gz
-tar -xf ${fd_file}.tar.gz && rm -f ${fd_file}.tar.gz
-fd_bin=$bin/fd
-del $fd_bin
-ln -s $FD/${fd_file}/fd $fd_bin
+#echo "Fd"
+#FD=~/.fd
+#del $FD
+#mkdir -p $FD && cd $FD
+#fd_tag="v7.0.0"
+#fd_file="fd-${fd_tag}-x86_64-unknown-linux-musl"
+#curl $proxy -fsSL "https://github.com/sharkdp/fd/releases/download/${fd_tag}/${fd_file}.tar.gz" > ${fd_file}.tar.gz
+#tar -xf ${fd_file}.tar.gz && rm -f ${fd_file}.tar.gz
+#fd_bin=$bin/fd
+#del $fd_bin
+#ln -s $FD/${fd_file}/fd $fd_bin
 
 
 echo "Fzf"
@@ -168,15 +168,15 @@ del $FZF
 ln -f -s $dot/fzf $FZF
 bash $FZF/install --all
 
-if [[ ! -x $(wh jq) ]]
-then
-    echo "Jq"
-    jq_tag="1.5"
-    jq_bin=$bin/jq
-    del $jq_bin
-    curl $proxy -fsSL "https://github.com/stedolan/jq/releases/download/jq-${jq_tag}/jq-linux64" > $jq_bin
-    chmod 755 $jq_bin
-fi
+#if [[ ! -x $(wh jq) ]]
+#then
+    #echo "Jq"
+    #jq_tag="1.5"
+    #jq_bin=$bin/jq
+    #del $jq_bin
+    #curl $proxy -fsSL "https://github.com/stedolan/jq/releases/download/jq-${jq_tag}/jq-linux64" > $jq_bin
+    #chmod 755 $jq_bin
+#fi
 
 
 echo "Vim"
