@@ -58,6 +58,12 @@ ZSH_CUSTOM=~/.dotfiles/zsh-custom
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
+#
+AUTO_PAIR="zsh-autopair"
+if [[ $(zsh --version | awk '{print $2}') <= 5.0.2 ]]; then
+    AUTO_PAIR=""
+fi
+
 plugins=(
   debian
   yum
@@ -73,7 +79,7 @@ plugins=(
   #zsh-syntax-highlighting
   fast-syntax-highlighting
   zsh-autosuggestions
-  zsh-autopair
+  $AUTO_PAIR
   z
   fz
 )
@@ -115,6 +121,7 @@ alias https="http --default-scheme https"
 alias b="bat --color=always"
 alias fb="fzf --preview 'bat --color=always {}'"
 alias ff="fzf -f"
+alias ft="fzf-tmux"
 
 export FZF_DEFAULT_COMMAND='fd --type file'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
