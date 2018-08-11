@@ -70,7 +70,8 @@ plugins=(
   pip
   httpie
   tmux
-  zsh-syntax-highlighting
+  #zsh-syntax-highlighting
+  fast-syntax-highlighting
   zsh-autosuggestions
   zsh-autopair
   z
