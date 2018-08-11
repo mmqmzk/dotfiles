@@ -59,10 +59,8 @@ ZSH_CUSTOM=~/.dotfiles/zsh-custom
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 #
-AUTO_PAIR="zsh-autopair"
-if [[ $(zsh --version | awk '{print $2}') <= 5.0.2 ]]; then
-    AUTO_PAIR=""
-fi
+VERSION=$(zsh --version | awk '{print $2}')
+AUTO_PAIR=$(echo $VERSION | awk -F'.' '$1 >=5 && ($2 > 0 || $2 == 0 && $3 > 2) {print "zsh-autopair"}')
 
 plugins=(
   debian
