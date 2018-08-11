@@ -70,7 +70,8 @@ plugins=(
   pip
   httpie
   tmux
-  zsh-syntax-highlighting
+  #zsh-syntax-highlighting
+  fast-syntax-highlighting
   zsh-autosuggestions
   zsh-autopair
   z
@@ -118,8 +119,6 @@ alias ff="fzf -f"
 #export FZF_DEFAULT_COMMAND='fd --type file'
 #export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS="-m --cycle --inline-info"
-
-#unsetopt BG_NICE
 
 # for Ctrl-W
 export WORDCHARS='*?_[]~=&;!#$%^(){}/-.:'
