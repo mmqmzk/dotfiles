@@ -140,7 +140,7 @@ echo "Bat"
 BAT=~/.bat
 del $BAT
 mkdir -p $BAT && cd $BAT
-bat_tag="v0.4.1"
+bat_tag="v0.5.0"
 bat_file="bat-${bat_tag}-x86_64-unknown-linux-musl"
 curl $proxy -fsSL "https://github.com/sharkdp/bat/releases/download/${bat_tag}/${bat_file}.tar.gz" > ${bat_file}.tar.gz
 tar -xf ${bat_file}.tar.gz && rm -f ${bat_file}.tar.gz
@@ -152,7 +152,7 @@ echo "Fd"
 FD=~/.fd
 del $FD
 mkdir -p $FD && cd $FD
-fd_tag="v7.0.0"
+fd_tag="v7.1.0"
 fd_file="fd-${fd_tag}-x86_64-unknown-linux-musl"
 curl $proxy -fsSL "https://github.com/sharkdp/fd/releases/download/${fd_tag}/${fd_file}.tar.gz" > ${fd_file}.tar.gz
 tar -xf ${fd_file}.tar.gz && rm -f ${fd_file}.tar.gz
