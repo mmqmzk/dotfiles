@@ -1,17 +1,11 @@
 dot=~/.dotfiles
-WH="which --skip-alias"
-if ! $WH sh &> /dev/null
-then
-  WH="command -v"
-fi
 
 wh() {
   for name in $@
   do
-    program=$($WH $name 2> /dev/null)
-    if [[ -x  $program ]]
+    if which $name &> /dev/null
     then
-      echo $program
+      echo $name
       return 0
     fi
   done
