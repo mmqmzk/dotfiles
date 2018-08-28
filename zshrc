@@ -67,6 +67,7 @@ plugins=(
   yum
   common-aliases
   git
+  forgit
   node
   npm
   nvm  
