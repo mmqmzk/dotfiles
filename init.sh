@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 proxy=$@
 cd $(dirname $0)
+if [[ ! -f ./functions.sh ]]; then
+    echo "functions.sh not found"
+    exit 1
+fi
 source ./functions.sh
 
 YUM=$(wh yum)
