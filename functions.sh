@@ -30,6 +30,7 @@ install_dot() {
         git clone https://github.com/mmqmzk/dotfiles.git $dot
     fi
     cd $dot
+    git pull
     git submodule update --init
 }
 
