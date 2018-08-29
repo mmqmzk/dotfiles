@@ -26,6 +26,7 @@ install_dot() {
     cd $dot
     git pull
     git submodule update --init
+    ln -s -f $dot/zsh-custom/plugins/diff-so-fancy/diff-so-fancy $bin/diff-so-fancy
 }
 
 install_bat() {
