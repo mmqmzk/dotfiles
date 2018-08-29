@@ -8,7 +8,7 @@ export ZSH=~/.dotfiles/oh-my-zsh
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 export DEFAULT_USER="zhoukun"
-ZSH_THEME="agnoster"
+ZSH_THEME="zys"
 
 # Set list of themes to load
 # Setting this variable when ZSH_THEME=random
