@@ -75,7 +75,6 @@ echo "Zsh plugins and themes"
 themes=$dot/zsh-custom/
 mkdir -p $themes && cd $themes
 awk '/^prompt_context/{a=NR} {if(a>0&&NR>a&&NR<a+4)$0="#"$0;print}' $omz/themes/agnoster.zsh-theme > agnoster.zsh-theme
-ln -s -f $dot/zsh-custom/plugins/diff-so-fancy/diff-so-fancy $bin/diff-so-fancy
 
 echo "Tmux"
 if [[ ! -x $(wh tmux) ]]
