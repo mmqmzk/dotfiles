@@ -71,10 +71,10 @@ del $zrc
 echo "Oh my zsh"
 ln -s -f $dot/zshrc $zrc
 
-echo "Zsh plugins and themes"
-themes=$dot/zsh-custom/
-mkdir -p $themes && cd $themes
-awk '/^prompt_context/{a=NR} {if(a>0&&NR>a&&NR<a+4)$0="#"$0;print}' $omz/themes/agnoster.zsh-theme > agnoster.zsh-theme
+#echo "Zsh plugins and themes"
+#themes=$dot/zsh-custom/
+#mkdir -p $themes && cd $themes
+#awk '/^prompt_context/{a=NR} {if(a>0&&NR>a&&NR<a+4)$0="#"$0;print}' $omz/themes/agnoster.zsh-theme > agnoster.zsh-theme
 
 echo "Tmux"
 if [[ ! -x $(wh tmux) ]]
