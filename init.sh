@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-proxy=$@
+export PROXY=$@
 cd $(dirname $0)
 if [[ ! -f ./functions.sh ]]; then
     echo "functions.sh not found"
@@ -7,20 +7,14 @@ if [[ ! -f ./functions.sh ]]; then
 fi
 source ./functions.sh
 
-YUM=$(wh yum)
-APT=$(wh apt)
-if [[ -x  $YUM ]]
-then
-  PM=$YUM
+PM=$(wh yum apt)
+if [[ $PM == *yum* ]]; then
   AG="the_silver_searcher"
-elif [[ -x $APT ]]
-then
-  PM=$APT
-  sudo $APT update
+elif [[ $PM == *apt* ]]; then
+  sudo $PM update
   AG="silversearcher-ag"
-  if [[ ! -x $(wh jq) ]]
-  then
-      echo "Jq"
+  if ! has jq; then
+      echo "Installing jq"
       sudo $PM install jq -y
   fi
 else
@@ -28,80 +22,64 @@ else
   exit 1
 fi
 
-if [[ ! -x $(wh git) ]]
-then
-  echo "Git"
+if ! has git; then
+  echo "Installing git"
   sudo $PM install git -y
 fi
 
 PY=$(wh python3 python)
-if [[ -x $PY ]]
+if [[ -n $PY ]]
 then
     PIP=$(wh pip3 pip) 
-    if [[ ! -x $PIP ]]
+    if [[ -z $PIP ]]
     then
-      echo "Pip"
-      gpy="/tmp/get-pip.py"
-      del $gpy
-      curl $proxy -sSfL https://bootstrap.pypa.io/get-pip.py > $gpy
-      $PY $gpy
+      echo "Installing pip"
+      GPY="/tmp/get-pip.py"
+      del $GPY
+      curl $PROXY -sSfL https://bootstrap.pypa.io/get-pip.py > $GPY
+      $PY $GPY
     fi
     $PIP install pip -U 
-    echo "Httpie"
+    echo "Installing httpie"
     $PIP install httpie -U 
 fi
 
-if [[ ! -x $(wh ag) ]]
-then
-  echo "Ag"
+if ! has ag; then
+  echo "Installing ag"
   sudo $PM install $AG -y
 fi
 
-if [[ ! -x $(wh zsh) ]] 
-then
-  echo "Zsh"
+if ! has zsh; then
+  echo "Installing zsh"
   sudo $PM install zsh -y
 fi
 
+check_bin
 install_dot
 
-omz=$dot/oh-my-zsh
-zrc=~/.zshrc
-del $zrc
-echo "Oh my zsh"
-ln -s -f $dot/zshrc $zrc
+OMZ=$DOT/oh-my-zsh
+ZRC=~/.zshrc
+del $ZRC
+echo "Installing oh my zsh"
+ln -s -f $DOT/zshrc $ZRC
 
-#echo "Zsh plugins and themes"
-#themes=$dot/zsh-custom/
-#mkdir -p $themes && cd $themes
-#awk '/^prompt_context/{a=NR} {if(a>0&&NR>a&&NR<a+4)$0="#"$0;print}' $omz/themes/agnoster.zsh-theme > agnoster.zsh-theme
-
-echo "Tmux"
-if [[ ! -x $(wh tmux) ]]
-then
+if ! has tmux; then
+    echo "Installing tmux"
     sudo $PM install tmux -y
 fi
-tc=~/.tmux.conf
-del $tc
-ln -s -f $dot/tmux.conf $tc
+TC=~/.tmux.conf
+del $TC
+ln -s -f $DOT/tmux.conf $TC
 
-echo "Nvm"
+echo "Installing nvm"
 NVM=~/.nvm
 del $NVM
-ln -s -f $dot/nvm $NVM
+ln -s -f $DOT/nvm $NVM
 
-echo "Git config"
+echo "Installing git config"
 GC=~/.gitconfig
 del $GC
-ln -s -f $dot/gitconfig  $GC
-
-echo "Cheat.sh"
-CHT=/tmp/cht
-del $CHT
-curl $proxy -sSfL http://cht.sh/:cht.sh > $CHT
-chmod 755 $CHT
-del $bin/cht
-mv $CHT $bin
+ln -s -f $DOT/gitconfig  $GC
 
 install_bat "v0.5.0"
 
@@ -109,6 +87,10 @@ install_fd "v7.1.0"
 
 install_fzf
 
-install_jq "1.5"
-
 install_vim
+
+install_cht
+
+if ! has jq; then
+    install_jq "1.5"
+fi
