@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 if [[ -z $2 ]]; then
-    echo "Usage: $0 <module> <version|init> [curl proxy]"
+    echo "Usage: $0 <module> <version|init|noinit> [curl proxy]"
     exit 1
 fi
 cd $(dirname $0)

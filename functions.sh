@@ -110,7 +110,7 @@ install_vim() {
     echo "Installing vim"
     cd ~
     rm -rf ~/.vim*
-    local VIMDir=$DOT/vim
+    local VIMDIR=$DOT/vim
     ln -s -f $VIMDIR ~/.vim
     bash $VIMDIR/install.sh
 }
