@@ -1,4 +1,5 @@
-dot=~/.dotfiles
+DOT=~/.dotfiles
+BIN=~/.bin
 
 wh() {
   for name in $@
@@ -12,91 +13,115 @@ wh() {
   return 1
 }
 
+has() {
+    which $1 &> /dev/null
+}
+
 del() {
   [[ -e $1 ]] && rm -rf $1
 }
 
-bin=~/.bin
-mkdir -p $bin
+check_bin() {
+    [[ -d $BIN ]] || mkdir -p $BIN
+}
+
 
 install_dot() {
-    if [[ ! -d $dot ]]; then
-        git clone https://github.com/mmqmzk/dotfiles.git $dot
+    if [[ ! -d $DOT ]]; then
+        git clone https://github.com/mmqmzk/dotfiles.git $DOT
     fi
-    cd $dot
+    cd $DOT
     git pull
     git submodule update --init
-    ln -s -f $dot/zsh-custom/plugins/diff-so-fancy/diff-so-fancy $bin/diff-so-fancy
+    check_bin
+    ln -s -f $DOT/zsh-custom/diff-so-fancy/diff-so-fancy $BIN/diff-so-fancy
 }
 
 install_bat() {
-    bat_tag=$1
-    if [[ -z $bat_tag ]]; then
+    local BAT_TAG=$1
+    if [[ -z $BAT_TAG ]]; then
         return 1
     fi
-    echo "Installing bat $bat_tag"
-    BAT=~/.bat
+    echo "Installing bat $BAT_TAG"
+    check_bin
+    local BAT=~/.bat
     del $BAT
     mkdir -p $BAT && cd $BAT
-    bat_file="bat-${bat_tag}-x86_64-unknown-linux-musl"
-    curl $proxy -fsSL "https://github.com/sharkdp/bat/releases/download/${bat_tag}/${bat_file}.tar.gz" > ${bat_file}.tar.gz
-    tar -xf ${bat_file}.tar.gz && rm -f ${bat_file}.tar.gz
-    bat_bin=$bin/bat
-    del $bat_bin
-    ln -s $BAT/${bat_file}/bat $bat_bin
+    local BAT_FILE="bat-${BAT_TAG}-x86_64-unknown-linux-musl"
+    curl $PROXY -fsSL "https://github.com/sharkdp/bat/releases/download/${BAT_TAG}/${BAT_FILE}.tar.gz" > ${BAT_FILE}.tar.gz
+    tar -xf ${BAT_FILE}.tar.gz && rm -f ${BAT_FILE}.tar.gz
+    local BAT_BIN=$BIN/bat
+    del $BAT_BIN
+    ln -s $BAT/${BAT_FILE}/bat $BAT_BIN
 }
 
 install_fd() {
-    fd_tag=$1
-    if [[ -z $fd_tag ]]; then
+    local FD_TAG=$1
+    if [[ -z $FD_TAG ]]; then
         return 1
     fi
-    echo "Installing fd $fd_tag"
-    FD=~/.fd
+    echo "Installing fd $FD_TAG"
+    check_bin
+    local FD=~/.fd
     del $FD
     mkdir -p $FD && cd $FD
-    fd_file="fd-${fd_tag}-x86_64-unknown-linux-musl"
-    curl $proxy -fsSL "https://github.com/sharkdp/fd/releases/download/${fd_tag}/${fd_file}.tar.gz" > ${fd_file}.tar.gz
-    tar -xf ${fd_file}.tar.gz && rm -f ${fd_file}.tar.gz
-    fd_bin=$bin/fd
-    del $fd_bin
-    ln -s $FD/${fd_file}/fd $fd_bin
+    local FD_FILE="fd-${FD_TAG}-x86_64-unknown-linux-musl.tar.gz"
+    curl $PROXY -fsSL "https://github.com/sharkdp/fd/releases/download/${FD_TAG}/${FD_FILE}.tar.gz" > ${FD_FILE}
+    tar -xf ${FD_FILE}.tar.gz && rm -f ${FD_FILE}.tar.gz
+    local FD_BIN=$BIN/fd
+    del $FD_BIN
+    ln -s $FD/${FD_FILE}/fd $FD_BIN
 }
 
 
 install_fzf() {
-    if [[ -n $1 ]]; then
+    if [[ $1 == "init" ]]; then
         install_dot
     fi
-    echo "Installing fzf"
-    FZF=~/.fzf
-    if [[ -e  $dot/fzf ]]; then
+    if [[ -e  $DOT/fzf ]]; then
+        echo "Installing fzf"
+        check_bin
+        local FZF=~/.fzf
         del $FZF
-        ln -f -s $dot/fzf $FZF
+        ln -f -s $DOT/fzf $FZF
+        del $DOT/fzf/bin/fzf
         bash $FZF/install --all
     fi
 }
 
 install_jq() {
-    jq_tag=$1
-    if [[ -z $jq_tag ]]; then
+    local JQ_TAG=$1
+    if [[ -z $JQ_TAG ]]; then
         return 1
     fi
-    echo "Installing jq $jq_tag"
-    jq_bin=$bin/jq
-    del $jq_bin
-    curl $proxy -fsSL "https://github.com/stedolan/jq/releases/download/jq-${jq_tag}/jq-linux64" > $jq_bin
-    chmod 755 $jq_bin
+    echo "Installing jq $JQ_TAG"
+    check_bin
+    local JQ_BIN=$BIN/jq
+    del $JQ_BIN
+    curl $PROXY -fsSL "https://github.com/stedolan/jq/releases/download/jq-${JQ_TAG}/jq-linux64" > $JQ_BIN
+    chmod 755 $JQ_BIN
 }
 
 
 install_vim() {
-    if [[ -n $1 ]]; then
+    if [[ $1 == "init" ]]; then
         install_dot
     fi
     echo "Installing vim"
     cd ~
     rm -rf ~/.vim*
-    ln -s -f $dot/vim ~/.vim
-    bash $dot/vim/install.sh
+    local VIMDir=$DOT/vim
+    ln -s -f $VIMDIR ~/.vim
+    bash $VIMDIR/install.sh
+}
+
+install_cht() {
+    echo "Installing cheat.sh"
+    check_bin
+    local CHT=/tmp/cht
+    del $CHT
+    curl $PROXY -sSfL http://cht.sh/:cht.sh > $CHT
+    chmod 755 $CHT
+    del $BIN/cht
+    mv $CHT $BIN
 }

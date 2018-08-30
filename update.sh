@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 if [[ -z $2 ]]; then
-    echo "Usage: $0 <module> <version|init dot> [curl proxy]"
+    echo "Usage: $0 <module> <version|init> [curl proxy]"
     exit 1
 fi
 cd $(dirname $0)
-mod=$1
-version=$2
+MOD=$1
+VERSION=$2
 shift 2
-proxy=$@
+export PROXY=$@
 source ./functions.sh
-install_$mod $version
+install_$MOD $VERSION
