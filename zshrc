@@ -8,7 +8,7 @@ export ZSH=~/.dotfiles/oh-my-zsh
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 export DEFAULT_USER="zhoukun"
-ZSH_THEME="zys"
+ZSH_THEME="agnoster"
 
 # Set list of themes to load
 # Setting this variable when ZSH_THEME=random
@@ -82,6 +82,8 @@ plugins=(
   z
   fz
 )
+
+autoload -Uz is-at-least
 
 if is-at-least 5.0.3; then
     plugins+=("zsh-autopair")
