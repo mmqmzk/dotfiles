@@ -1,11 +1,14 @@
 DOT=~/.dotfiles
 BIN=~/.bin
 
+has() {
+    which $1 &> /dev/null
+}
+
 wh() {
   for name in $@
   do
-    if which $name &> /dev/null
-    then
+    if has $name; then
       echo $name
       return 0
     fi
@@ -13,9 +16,7 @@ wh() {
   return 1
 }
 
-has() {
-    which $1 &> /dev/null
-}
+export PM=$(wh yum apt)
 
 del() {
   [[ -e $1 ]] && rm -rf $1
@@ -52,7 +53,7 @@ install_bat() {
     tar -xf ${BAT_FILE}.tar.gz && rm -f ${BAT_FILE}.tar.gz
     local BAT_BIN=$BIN/bat
     del $BAT_BIN
-    ln -s $BAT/${BAT_FILE}/bat $BAT_BIN
+    ln -s -f $BAT/${BAT_FILE}/bat $BAT_BIN
 }
 
 install_fd() {
@@ -70,7 +71,7 @@ install_fd() {
     tar -xf ${FD_FILE}.tar.gz && rm -f ${FD_FILE}.tar.gz
     local FD_BIN=$BIN/fd
     del $FD_BIN
-    ln -s $FD/${FD_FILE}/fd $FD_BIN
+    ln -s -f $FD/${FD_FILE}/fd $FD_BIN
 }
 
 
