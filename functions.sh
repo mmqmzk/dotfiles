@@ -1,11 +1,14 @@
 DOT=~/.dotfiles
 BIN=~/.bin
 
+has() {
+    which $1 &> /dev/null
+}
+
 wh() {
   for name in $@
   do
-    if which $name &> /dev/null
-    then
+    if has $name; then
       echo $name
       return 0
     fi
@@ -13,9 +16,7 @@ wh() {
   return 1
 }
 
-has() {
-    which $1 &> /dev/null
-}
+export PM=$(wh yum apt)
 
 del() {
   [[ -e $1 ]] && rm -rf $1

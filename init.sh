@@ -7,7 +7,6 @@ if [[ ! -f ./functions.sh ]]; then
 fi
 source ./functions.sh
 
-PM=$(wh yum apt)
 if [[ $PM == *yum* ]]; then
   AG="the_silver_searcher"
 elif [[ $PM == *apt* ]]; then
@@ -81,7 +80,7 @@ GC=~/.gitconfig
 del $GC
 ln -s -f $DOT/gitconfig  $GC
 
-install_bat "v0.5.0"
+install_bat "v0.6.1"
 
 install_fd "v7.1.0"
 
