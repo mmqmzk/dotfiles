@@ -7,7 +7,8 @@ export ZSH=~/.dotfiles/oh-my-zsh
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="ys"
+export DEFAULT_USER="zhoukun"
+ZSH_THEME="agnoster"
 
 # Set list of themes to load
 # Setting this variable when ZSH_THEME=random
@@ -58,25 +59,35 @@ ZSH_CUSTOM=~/.dotfiles/zsh-custom
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
+#
+
 plugins=(
   debian
   yum
   common-aliases
   git
+  forgit
   node
   npm
   nvm  
   python
   pip
   httpie
+  systemd
+  firewalld
   tmux
   #zsh-syntax-highlighting
   fast-syntax-highlighting
   zsh-autosuggestions
-  zsh-autopair
   z
   fz
 )
+
+autoload -Uz is-at-least
+
+if is-at-least 5.0.3; then
+    plugins+=("zsh-autopair")
+fi
 
 source $ZSH/oh-my-zsh.sh
 
@@ -115,6 +126,7 @@ alias https="http --default-scheme https"
 #alias b="bat --color=always"
 #alias fb="fzf --preview 'bat --color=always {}'"
 alias ff="fzf -f"
+alias ft="fzf-tmux"
 
 #export FZF_DEFAULT_COMMAND='fd --type file'
 #export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
