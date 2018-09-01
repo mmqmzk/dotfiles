@@ -37,40 +37,23 @@ install_dot() {
     ln -s -f $DOT/zsh-custom/diff-so-fancy/diff-so-fancy $BIN/diff-so-fancy
 }
 
-install_bat() {
-    local BAT_TAG=$1
-    if [[ -z $BAT_TAG ]]; then
-        return 1
+install_rust() {
+    if ! has cargo; then
+        apt install rust -y
     fi
-    echo "Installing bat $BAT_TAG"
-    check_bin
-    local BAT=~/.bat
-    del $BAT
-    mkdir -p $BAT && cd $BAT
-    local BAT_FILE="bat-${BAT_TAG}-x86_64-unknown-linux-musl"
-    curl $PROXY -fsSL "https://github.com/sharkdp/bat/releases/download/${BAT_TAG}/${BAT_FILE}.tar.gz" > ${BAT_FILE}.tar.gz
-    tar -xf ${BAT_FILE}.tar.gz && rm -f ${BAT_FILE}.tar.gz
-    local BAT_BIN=$BIN/bat
-    del $BAT_BIN
-    ln -s $BAT/${BAT_FILE}/bat $BAT_BIN
+    if ! has cmake; then
+        apt install cmake -y
+    fi
+}
+
+install_bat() {
+    install_rust
+    cargo install bat -f
 }
 
 install_fd() {
-    local FD_TAG=$1
-    if [[ -z $FD_TAG ]]; then
-        return 1
-    fi
-    echo "Installing fd $FD_TAG"
-    check_bin
-    local FD=~/.fd
-    del $FD
-    mkdir -p $FD && cd $FD
-    local FD_FILE="fd-${FD_TAG}-x86_64-unknown-linux-musl.tar.gz"
-    curl $PROXY -fsSL "https://github.com/sharkdp/fd/releases/download/${FD_TAG}/${FD_FILE}.tar.gz" > ${FD_FILE}
-    tar -xf ${FD_FILE}.tar.gz && rm -f ${FD_FILE}.tar.gz
-    local FD_BIN=$BIN/fd
-    del $FD_BIN
-    ln -s $FD/${FD_FILE}/fd $FD_BIN
+    install_rust
+    cargo install fd-find -f
 }
 
 
@@ -90,16 +73,9 @@ install_fzf() {
 }
 
 install_jq() {
-    local JQ_TAG=$1
-    if [[ -z $JQ_TAG ]]; then
-        return 1
+    if ! has jq; then
+        apt install jq -y
     fi
-    echo "Installing jq $JQ_TAG"
-    check_bin
-    local JQ_BIN=$BIN/jq
-    del $JQ_BIN
-    curl $PROXY -fsSL "https://github.com/stedolan/jq/releases/download/jq-${JQ_TAG}/jq-linux64" > $JQ_BIN
-    chmod 755 $JQ_BIN
 }
 
 
