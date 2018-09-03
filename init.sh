@@ -7,16 +7,7 @@ if [[ ! -f ./functions.sh ]]; then
 fi
 source ./functions.sh
 
-if [[ $PM == *yum* ]]; then
-  AG="the_silver_searcher"
-elif [[ $PM == *apt* ]]; then
-  sudo $PM update
-  AG="silversearcher-ag"
-  if ! has jq; then
-      echo "Installing jq"
-      sudo $PM install jq -y
-  fi
-else
+if [[ -z $PM ]]; then
   echo "yum and apt not found"
   exit 1
 fi
@@ -45,6 +36,11 @@ fi
 
 if ! has ag; then
   echo "Installing ag"
+  if is_debian; then
+      AG="silversearcher-ag"
+  else
+      AG="the_silver_searcher"
+  fi
   sudo $PM install $AG -y
 fi
 
@@ -90,6 +86,6 @@ install_vim
 
 install_cht
 
-if ! has jq; then
-    install_jq "1.5"
-fi
+install_jq "1.5"
+
+install_rg
