@@ -40,10 +40,10 @@ install_dot() {
 
 install_rust() {
     if ! has cargo; then
-        apt install rust -y
+        $PM install rust -y
     fi
     if ! has cmake; then
-        apt install cmake -y
+        $PM install cmake -y
     fi
 }
 
@@ -75,7 +75,7 @@ install_fzf() {
 
 install_jq() {
     if ! has jq; then
-        apt install jq -y
+        $PM install jq -y
     fi
 }
 
@@ -100,5 +100,5 @@ install_cht() {
     curl $PROXY -sSfL http://cht.sh/:cht.sh > $CHT
     chmod 755 $CHT
     del $BIN/cht
-    mv $CHT $BIN
+    mv -f $CHT $BIN
 }
