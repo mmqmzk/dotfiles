@@ -19,7 +19,7 @@ wh() {
 export PM=$(wh yum apt)
 
 del() {
-  [[ -e $1 ]] && rm -rf $1
+  [[ -e $1 || -L $1 ]] && rm -rf $1
 }
 
 check_bin() {
