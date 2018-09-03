@@ -18,6 +18,10 @@ wh() {
 
 export PM=$(wh yum apt)
 
+is_debian() {
+    [[ $PM != *yum* ]]
+}
+
 del() {
   [[ -e $1 || -L $1 ]] && rm -rf $1
 }
@@ -91,16 +95,20 @@ install_fzf() {
 }
 
 install_jq() {
-    local JQ_TAG=$1
-    if [[ -z $JQ_TAG ]]; then
-        return 1
+    if is_debian; then
+        $PM install jq -y
+    else
+        local JQ_TAG=$1
+        if [[ -z $JQ_TAG ]]; then
+            return 1
+        fi
+        echo "Installing jq $JQ_TAG"
+        check_bin
+        local JQ_BIN=$BIN/jq
+        del $JQ_BIN
+        curl $PROXY -fsSL "https://github.com/stedolan/jq/releases/download/jq-${JQ_TAG}/jq-linux64" > $JQ_BIN
+        chmod 755 $JQ_BIN
     fi
-    echo "Installing jq $JQ_TAG"
-    check_bin
-    local JQ_BIN=$BIN/jq
-    del $JQ_BIN
-    curl $PROXY -fsSL "https://github.com/stedolan/jq/releases/download/jq-${JQ_TAG}/jq-linux64" > $JQ_BIN
-    chmod 755 $JQ_BIN
 }
 
 
