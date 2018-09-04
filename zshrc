@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=~/.bin:$PATH
+export PATH=~/.bin:~/.cargo/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH=~/.dotfiles/oh-my-zsh
