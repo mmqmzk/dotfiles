@@ -89,3 +89,5 @@ install_cht
 install_jq "1.5"
 
 install_rg
+
+install_q

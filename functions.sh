@@ -122,3 +122,12 @@ install_rg() {
     install_rust
     cargo install ripgrep -f
 }
+
+install_q() {
+    echo "Installing q"
+    check_bin
+    local Q=$BIN/q
+    del $Q
+    curl $PROXY -fsSL https://github.com/harelba/q/raw/master/bin/q -o $Q
+    chmod 755 $Q
+}
