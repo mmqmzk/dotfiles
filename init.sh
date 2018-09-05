@@ -87,3 +87,5 @@ install_vim
 install_cht
 
 install_jq "1.5"
+
+install_q
