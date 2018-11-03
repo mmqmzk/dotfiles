@@ -53,8 +53,8 @@ install_bat() {
     del $BAT
     mkdir -p $BAT && cd $BAT
     local BAT_FILE="bat-${BAT_TAG}-x86_64-unknown-linux-musl"
-    curl $PROXY -fsSL "https://github.com/sharkdp/bat/releases/download/${BAT_TAG}/${BAT_FILE}.tar.gz" > ${BAT_FILE}.tar.gz
-    tar -xf ${BAT_FILE}.tar.gz && rm -f ${BAT_FILE}.tar.gz
+    curl $PROXY -fsSL "https://github.com/sharkdp/bat/releases/download/${BAT_TAG}/${BAT_FILE}.tar.gz" > ${BAT_FILE}.tgz
+    tar -xf ${BAT_FILE}.tgz && rm -f ${BAT_FILE}.tgz
     local BAT_BIN=$BIN/bat
     del $BAT_BIN
     ln -s -f $BAT/${BAT_FILE}/bat $BAT_BIN
@@ -70,9 +70,9 @@ install_fd() {
     local FD=~/.fd
     del $FD
     mkdir -p $FD && cd $FD
-    local FD_FILE="fd-${FD_TAG}-x86_64-unknown-linux-musl.tar.gz"
-    curl $PROXY -fsSL "https://github.com/sharkdp/fd/releases/download/${FD_TAG}/${FD_FILE}.tar.gz" > ${FD_FILE}
-    tar -xf ${FD_FILE}.tar.gz && rm -f ${FD_FILE}.tar.gz
+    local FD_FILE="fd-${FD_TAG}-x86_64-unknown-linux-musl"
+    curl $PROXY -fsSL "https://github.com/sharkdp/fd/releases/download/${FD_TAG}/${FD_FILE}.tar.gz" > ${FD_FILE}.tgz
+    tar -xf ${FD_FILE}.tgz && rm -f ${FD_FILE}.tgz
     local FD_BIN=$BIN/fd
     del $FD_BIN
     ln -s -f $FD/${FD_FILE}/fd $FD_BIN

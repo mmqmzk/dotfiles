@@ -76,9 +76,9 @@ GC=~/.gitconfig
 del $GC
 ln -s -f $DOT/gitconfig  $GC
 
-install_bat "v0.6.1"
+install_bat "v0.8.0"
 
-install_fd "v7.1.0"
+install_fd "v7.2.0"
 
 install_fzf
 
@@ -86,4 +86,4 @@ install_vim
 
 install_cht
 
-install_jq "1.5"
+install_jq "1.6"
