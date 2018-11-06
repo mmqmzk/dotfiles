@@ -56,11 +56,6 @@ install_bat() {
     cargo install bat -f
 }
 
-install_fd() {
-    install_rust
-    cargo install fd-find -f
-}
-
 
 install_fzf() {
     if [[ $1 == "init" ]]; then
