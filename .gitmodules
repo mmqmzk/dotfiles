@@ -29,7 +29,7 @@
 	path = zsh-custom/plugins/fast-syntax-highlighting
 	url = https://github.com/zdharma/fast-syntax-highlighting.git
 [submodule "zsh-custom/plugins/diff-so-fancy"]
-	path = zsh-custom/diff-so-funcy
+	path = zsh-custom/diff-so-fancy
 	url = https://github.com/so-fancy/diff-so-fancy.git
 [submodule "zsh-custom/plugins/forgit"]
 	path = zsh-custom/plugins/forgit
