@@ -136,3 +136,4 @@ export FZF_DEFAULT_OPTS="-m --cycle --inline-info"
 export WORDCHARS='*?_[]~=&;!#$%^(){}/-.:'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.cargo/env ] && source ~/.cargo/env
