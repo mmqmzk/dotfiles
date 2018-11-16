@@ -31,3 +31,6 @@
 [submodule "zsh-custom/plugins/forgit"]
 	path = zsh-custom/plugins/forgit
 	url = https://github.com/wfxr/forgit.git
+[submodule "zsh-custom/diff-so-fancy"]
+    path = zsh-custom/diff-so-fancy
+    url = https://github.com/so-fancy/diff-so-fancy.git
