@@ -138,3 +138,4 @@ unsetopt BG_NICE
 export WORDCHARS='*?_[]~=&;!#$%^(){}/-.:'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.cargo/env ] && source ~/.cargo/env
