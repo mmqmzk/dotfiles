@@ -127,6 +127,7 @@ alias b="bat --color=always"
 alias fb="fzf --preview 'bat --color=always {}'"
 alias ff="fzf -f"
 alias ft="fzf-tmux"
+alias svi="sudo vim -u ~/.vim/vimrc"
 
 export FZF_DEFAULT_COMMAND='fd --type file'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
