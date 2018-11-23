@@ -129,12 +129,17 @@ alias ff="fzf -f"
 alias ft="fzf-tmux"
 alias se="sudo env PATH='/usr/local/sbin:/usr/sbin:/sbin:$PATH'"
 
-export FZF_DEFAULT_COMMAND='fd --type file'
+export FZF_DEFAULT_COMMAND='fd --type file --color=always'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_DEFAULT_OPTS="-m --cycle --inline-info"
+export FZF_COMPLETION_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_DEFAULT_OPTS="--multi --cycle --inline-info --ansi --height 50% --border --layout=reverse"
+export FZF_CTRL_T_OPTS="$FZF_DEFAULT_OPTS"
+export FZF_COMPLETION_OPTS="$FZF_DEFAULT_OPTS"
+
+export BAT_PAGER="less -R"
 
 # for Ctrl-W
-export WORDCHARS='*?_[]~=&;!#$%^(){}/-.:'
+export WORDCHARS='*?_[]~=&;!#$%^(){}-.:'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.cargo/env ] && source ~/.cargo/env
