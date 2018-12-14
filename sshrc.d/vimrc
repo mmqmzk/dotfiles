@@ -1,0 +1,29 @@
+set number
+set autoindent
+set showcmd
+set tabstop=4
+set shiftwidth=4
+set scrolloff=4
+set softtabstop=4
+set backspace=indent,eol,start
+set showmatch
+set hlsearch
+set incsearch
+set smartcase
+set ruler
+set expandtab
+set encoding=utf-8
+set cursorline
+
+set nocompatible
+syntax on
+
+noremap Y y$
+noremap <F8> :let @/ = ""<cr>
+vnoremap < <gv
+vnoremap > >gv
+noremap <c-l> :bnext<cr>
+noremap <c-h> :bprevious<cr>
+noremap <leader>d :bdelete<cr>
+noremap <Up> gk
+noremap <Down> gj
