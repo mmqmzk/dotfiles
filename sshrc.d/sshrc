@@ -1,0 +1,15 @@
+if [[ -f /etc/bash.bashrc ]]; then
+    source /etc.bash.bashrc
+elif [[ -f /etc/bashrc ]]; then
+    source /etc/bashrc
+fi
+stty werase undef
+bind '\C-w:unix-filename-rubout'
+if command -v vim &> /dev/null; then
+    export EDITOR=vim
+    if [[ -f $SSHRCD/vimrc ]]; then
+        alias vim="command vim -u $SSHRCD/vimrc"
+    fi
+fi
+alias l="ls -lha"
+alias t="tail -f"
