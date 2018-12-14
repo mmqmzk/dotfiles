@@ -31,7 +31,8 @@ _sshrc() {
         command ssh $OPTS $OPTS2
         return 1
     fi
-    if [[ -e $SSHRCD ]]; then
+    shopt -s extglob
+    if [[ -e $SSHRCD ]] && [[ $OPTS == !(*-N*|*-D*|*-L*|*-R*|*-W*|*-w*) ]]; then
         local dir=$(dirname $SSHRCD)
         local name=$(basename $SSHRCD)
         local randomFileName=".sshrc.d.$(cat /dev/urandom | tr -dc '0-9a-zA-Z' | head -c 32)"
@@ -43,8 +44,6 @@ _sshrc() {
         else
             CMD="export SSHRCD=$dest/$name; source $dest/$name/sshrc; $CMD"
         fi
-    else
-        echo ".sshrc.d not find"
     fi
 
     command ssh $OPTS $OPTS2 $DOMAIN $CMD
