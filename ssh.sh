@@ -6,12 +6,12 @@ _sshrc() {
     local CMD=""
     while [[ -n $1 ]]; do
         case $1 in
-            -D|-E|-e|-F|-L|-O|-Q|-R|-S|-W|-w)
+            -D|-E|-e|-L|-O|-Q|-R|-S|-W|-w)
                 OPTS="$OPTS $1 $2"
                 shift
                 ;;
-            -c|-i|-l|-o|-p|-b|-I|-m)
-                OPTS2="$OPTS $1 $2"
+            -b|-c|-F|-i|-I|-l|-m|-o|-p)
+                OPTS2="$OPTS2 $1 $2"
                 shift
                 ;;
             -t|-T)
@@ -37,7 +37,7 @@ _sshrc() {
         local dir=$(dirname $SSHRC)
         local name=$(basename $SSHRC)
         local dest=${SSHRC_DEST:="/tmp"}
-        tar -hzcf - -C $dir $name | command ssh $OPTS2 $DOMAIN "tar -zxf - -C $dest"
+        tar -hzcf - -C $dir $name | command ssh -T $OPTS2 $DOMAIN "tar -zxf - -C $dest"
         if [[ -z $CMD ]]; then
             CMD="source $dest/$name && bash -i"
         else
