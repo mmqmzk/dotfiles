@@ -5,6 +5,8 @@ export DOT="$HOME/.dotfiles"
 # Path to your oh-my-zsh installation.
 export ZSH="$DOT/oh-my-zsh"
 
+export NVM_DIR=$DOT/nvm
+
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
@@ -70,7 +72,7 @@ plugins=(
   forgit
   node
   npm
-  nvm  
+  #nvm  
   python
   pip
   httpie
@@ -144,6 +146,7 @@ export WORDCHARS='*?_[]~=&;!#$%^(){}-.:'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.cargo/env ] && source ~/.cargo/env
+[ -f $NVM_DIR/nvm.sh ] && source $NVM_DIR/nvm.sh
 if [[ -f ~/.nvmrc ]]; then
     NODE_VERSION=$(cat ~/.nvmrc)
     if [[ -n $NODE_VERSION ]]; then
