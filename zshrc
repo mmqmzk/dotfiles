@@ -144,3 +144,13 @@ export WORDCHARS='*?_[]~=&;!#$%^(){}-.:'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.cargo/env ] && source ~/.cargo/env
+if [[ -f ~/.nvmrc ]]; then
+    NODE_VERSION=$(cat ~/.nvmrc)
+    if [[ -n $NODE_VERSION ]]; then
+        if ! nvm version $NODE_VERSION &> /dev/null; then
+            echo "Installing node.js $NODE_VERSION"
+            nvm install $NODE_VERSION
+        fi
+        nvm use --delete-prefix $NODE_VERSION > /dev/null
+    fi
+fi
