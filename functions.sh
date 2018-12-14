@@ -26,6 +26,10 @@ del() {
   [[ -e $1 || -L $1 ]] && rm -rf $1
 }
 
+version_lte() {
+    [[ $1 == $(printf "%s\n%s" $1 $2 | sort -V | head -n 1) ]]
+}
+
 check_bin() {
     [[ -d $BIN ]] || mkdir -p $BIN
 }
@@ -144,4 +148,28 @@ install_q() {
     del $Q
     curl $PROXY -fsSL https://github.com/harelba/q/raw/master/bin/q -o $Q
     chmod 755 $Q
+}
+
+install_node() {
+    local NVM=${NVM_DIR:="~/.nvm"}"/nvm.sh"
+    if [[ -f $NVM ]]; then
+        source $NVM
+    else
+        echo "nvm not installed"
+        return 1
+    fi
+    local CURRENT_VERSION=$(cat ~/.nvmrc)
+    local NODE_TAG=${1:="0"}
+    if version_lte $NODE_TAG "0"; then
+        return 1
+    fi
+    if [[ $NODE_TAG != $CURRENT_VERSION ]] && nvm version $CURRENT_VERSION &> /dev/null then
+        nvm uninstall $CURRENT_VERSION
+    fi
+    if nvm install $NODE_TAG; then
+        echo $NODE_TAG > ~/.nvmrc
+        nvm use --delete-prefix $NODE_TAG --silent
+        return 0
+    fi
+    return 1
 }
