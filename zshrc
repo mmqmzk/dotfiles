@@ -1,8 +1,9 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=~/.bin:~/.cargo/bin:$PATH
+export PATH="$HOME/.bin:$PATH"
+export DOT="$HOME/.dotfiles"
 
 # Path to your oh-my-zsh installation.
-export ZSH=~/.dotfiles/oh-my-zsh
+export ZSH="$DOT/oh-my-zsh"
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -53,7 +54,7 @@ ZSH_THEME="agnoster"
 # HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
-ZSH_CUSTOM=~/.dotfiles/zsh-custom
+ZSH_CUSTOM="$DOT/zsh-custom"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
@@ -145,3 +146,4 @@ export WORDCHARS='*?_[]~=&;!#$%^(){}-.:'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.cargo/env ] && source ~/.cargo/env
+[ -f $DOT/ssh.sh ] && source $DOT/ssh.sh
