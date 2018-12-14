@@ -150,7 +150,7 @@ if [[ -f ~/.nvmrc ]]; then
     NODE_VERSION=$(cat ~/.nvmrc)
     if [[ -n $NODE_VERSION ]]; then
         if nvm version $NODE_VERSION &> /dev/null; then
-            nvm use --delete-prefix $NODE_VERSION > /dev/null
+            nvm use --delete-prefix $NODE_VERSION --silent &> /dev/null
         else
             echo "Node.js $NODE_VERSION need install"
         fi
