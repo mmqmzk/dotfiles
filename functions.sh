@@ -158,22 +158,25 @@ install_node() {
         echo "nvm not installed"
         return 1
     fi
-    local CURRENT_VERSION="0"
-    local NVMRC="~/.nvmrc"
-    if [[ -f $NVMRC ]]; then
-        CURRENT_VERSION=$(cat $NVMRC)
-    fi
-    local NODE_TAG=${1:-"0"}
-    if version_lte $NODE_TAG "0"; then
+    local NVMRC="$HOME/.nvmrc"
+    local CURRENT_VERSION="$(nvm current 2> /dev/null)"
+    local NODE_TAG="$(nvm ls-remote $1 2> /dev/null | egrep -o 'v[0-9.]+' | sort -V | tail -n 1)"
+    if [[ -z $NODE_TAG ]]; then
+        echo "Node version $1 not found"
         return 1
     fi
-    if [[ $NODE_TAG != $CURRENT_VERSION ]] && nvm version $CURRENT_VERSION &> /dev/null; then
-        nvm uninstall $CURRENT_VERSION
+    if [[ $NODE_TAG != $CURRENT_VERSION ]]; then
+        if nvm install $NODE_TAG; then
+            echo $NODE_TAG > $NVMRC
+            nvm use --delete-prefix $NODE_TAG
+        else
+            echo "Install node version $NODE_TAG failed"
+            return 1
+        fi
+        if nvm version $CURRENT_VERSION &> /dev/null; then
+            nvm uninstall $CURRENT_VERSION
+        fi
+    else
+        echo "Node version $NODE_TAG alreday installed"
     fi
-    if nvm install $NODE_TAG; then
-        echo $NODE_TAG > $NVMRC
-        nvm use --delete-prefix $NODE_TAG --silent
-        return 0
-    fi
-    return 1
 }
