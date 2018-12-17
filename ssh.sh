@@ -1,5 +1,5 @@
 _sshrc() {
-    SSHRCD="${SSHHOME:=$HOME}/.sshrc.d"
+    SSHRCD="${SSHHOME:-$HOME}/.sshrc.d"
     local OPTS=""
     local OPTS2=""
     local DOMAIN=""
@@ -35,8 +35,8 @@ _sshrc() {
     if [[ -e $SSHRCD ]] && [[ $OPTS == !(*-N*|*-D*|*-L*|*-R*|*-W*|*-w*) ]]; then
         local dir=$(dirname $SSHRCD)
         local name=$(basename $SSHRCD)
-        local randomFileName=".sshrc.d.$(cat /dev/urandom | tr -dc '0-9a-zA-Z' | head -c 32)"
-        local dest="${SSHRCD_DEST:="/tmp"}/$randomFileName"
+        local randomFileName=".sshrc.d.$(cat /dev/urandom | tr -dc '0-9a-zA-Z' | head -c 32 -q)"
+        local dest="${SSHRCD_DEST:-"/tmp"}/$randomFileName"
         tar -hzcf - -C $dir $name | command ssh -T $OPTS2 $DOMAIN "mkdir -p $dest && tar -zxf - -C $dest"
         if [[ -z $CMD ]]; then
             CMD="/usr/bin/env SSHRCD=$dest/$name bash --rcfile $dest/$name/sshrc -i"
