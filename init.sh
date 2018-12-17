@@ -66,10 +66,6 @@ TC=~/.tmux.conf
 del $TC
 ln -s -f $DOT/tmux.conf $TC
 
-echo "Installing nvm"
-NVM=~/.nvm
-del $NVM
-ln -s -f $DOT/nvm $NVM
 
 echo "Installing git config"
 GC=~/.gitconfig

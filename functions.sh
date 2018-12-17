@@ -139,7 +139,7 @@ install_q() {
 }
 
 install_node() {
-    local NVM=${NVM_DIR:="~/.nvm"}"/nvm.sh"
+    local NVM=${NVM_DIR:="$DOT/nvm"}"/nvm.sh"
     if [[ -f $NVM ]]; then
         source $NVM
     else
