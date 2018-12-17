@@ -139,15 +139,19 @@ install_q() {
 }
 
 install_node() {
-    local NVM=${NVM_DIR:="$DOT/nvm"}"/nvm.sh"
+    local NVM=${NVM_DIR:-"$DOT/nvm"}"/nvm.sh"
     if [[ -f $NVM ]]; then
         source $NVM
     else
         echo "nvm not installed"
         return 1
     fi
-    local CURRENT_VERSION=$(cat ~/.nvmrc)
-    local NODE_TAG=${1:="0"}
+    local CURRENT_VERSION="0"
+    local NVMRC="~/.nvmrc"
+    if [[ -f $NVMRC ]]; then
+        CURRENT_VERSION=$(cat $NVMRC)
+    fi
+    local NODE_TAG=${1:-"0"}
     if version_lte $NODE_TAG "0"; then
         return 1
     fi
@@ -155,7 +159,7 @@ install_node() {
         nvm uninstall $CURRENT_VERSION
     fi
     if nvm install $NODE_TAG; then
-        echo $NODE_TAG > ~/.nvmrc
+        echo $NODE_TAG > $NVMRC
         nvm use --delete-prefix $NODE_TAG --silent
         return 0
     fi
