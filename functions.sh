@@ -151,7 +151,7 @@ install_node() {
     if version_lte $NODE_TAG "0"; then
         return 1
     fi
-    if [[ $NODE_TAG != $CURRENT_VERSION ]] && nvm version $CURRENT_VERSION &> /dev/null then
+    if [[ $NODE_TAG != $CURRENT_VERSION ]] && nvm version $CURRENT_VERSION &> /dev/null; then
         nvm uninstall $CURRENT_VERSION
     fi
     if nvm install $NODE_TAG; then
