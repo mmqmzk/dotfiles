@@ -14,3 +14,7 @@ if command -v vim &> /dev/null; then
 fi
 alias l="ls -lha"
 alias t="tail -f"
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
