@@ -84,6 +84,24 @@ install_fd() {
     ln -s -f $FD/${FD_FILE}/fd $FD_BIN
 }
 
+install_ripgrep() {
+    local RG_TAG=$1
+    if [[ -z $RG_TAG ]]; then
+        return 1
+    fi
+    echo "Installing ripgrep $RG_TAG"
+    check_bin
+    local RG=~/.ripgrep
+    del $RG
+    mkdir -p $RG && cd $RG
+    local RG_FILE="ripgrep-${RG_TAG}-x86_64-unknown-linux-musl"
+    curl $PROXY -fsSL "https://github.com/BurntSushi/ripgrep/releases/download/${RG_TAG}/${RG_FILE}.tar.gz" > ${RG_FILE}.tgz
+    tar -xf ${RG_FILE}.tgz && rm -f ${RG_FILE}.tgz
+    local RG_BIN=$BIN/rg
+    del $RG_BIN
+    ln -s -f $RG/${RG_FILE}/rg $RG_BIN
+}
+
 
 install_fzf() {
     if [[ $1 == "init" ]]; then
