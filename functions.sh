@@ -1,3 +1,4 @@
+set -o errexit
 DOT=~/.dotfiles
 BIN=~/.bin
 
