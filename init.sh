@@ -72,7 +72,7 @@ GC=~/.gitconfig
 del $GC
 ln -s -f $DOT/gitconfig  $GC
 
-install_bat "v0.9.0"
+install_bat "v0.10.0"
 
 install_fd "v7.2.0"
 
