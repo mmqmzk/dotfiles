@@ -48,23 +48,40 @@ install_dot() {
     ln -s -f $DOT/sshrc.d ~/.sshrc.d
 }
 
-install_rust() {
-    if ! has cargo; then
-        $PM install rust -y
-    fi
-    if ! has cmake; then
-        $PM install cmake -y
-    fi
-}
-
 install_bat() {
-    install_rust
-    cargo install bat -f
+    local BAT_TAG=$1
+    if [[ -z $BAT_TAG ]]; then
+        return 1
+    fi
+    echo "Installing bat $BAT_TAG"
+    check_bin
+    local BAT=~/.bat
+    del $BAT
+    mkdir -p $BAT && cd $BAT
+    local BAT_FILE="bat-${BAT_TAG}-arm-unknown-linux-gnueabihf"
+    curl $PROXY -fsSL "https://github.com/sharkdp/bat/releases/download/${BAT_TAG}/${BAT_FILE}.tar.gz" > ${BAT_FILE}.tgz
+    tar -xf ${BAT_FILE}.tgz && rm -f ${BAT_FILE}.tgz
+    local BAT_BIN=$BIN/bat
+    del $BAT_BIN
+    ln -s -f $BAT/${BAT_FILE}/bat $BAT_BIN
 }
 
 install_fd() {
-    install_rust
-    cargo install fd-find -f
+    local FD_TAG=$1
+    if [[ -z $FD_TAG ]]; then
+        return 1
+    fi
+    echo "Installing fd $FD_TAG"
+    check_bin
+    local FD=~/.fd
+    del $FD
+    mkdir -p $FD && cd $FD
+    local FD_FILE="fd-${FD_TAG}-arm-unknown-linux-gnueabihf.tar.gz"
+    curl $PROXY -fsSL "https://github.com/sharkdp/fd/releases/download/${FD_TAG}/${FD_FILE}.tar.gz" > ${FD_FILE}.tgz
+    tar -xf ${FD_FILE}.tgz && rm -f ${FD_FILE}.tgz
+    local FD_BIN=$BIN/fd
+    del $FD_BIN
+    ln -s -f $FD/${FD_FILE}/fd $FD_BIN
 }
 
 install_ripgrep() {
@@ -77,7 +94,7 @@ install_ripgrep() {
     local RG=~/.ripgrep
     del $RG
     mkdir -p $RG && cd $RG
-    local RG_FILE="ripgrep-${RG_TAG}-x86_64-unknown-linux-musl"
+    local RG_FILE="ripgrep-${RG_TAG}-arm-unknown-linux-gnueabihf.tar.gz"
     curl $PROXY -fsSL "https://github.com/BurntSushi/ripgrep/releases/download/${RG_TAG}/${RG_FILE}.tar.gz" > ${RG_FILE}.tgz
     tar -xf ${RG_FILE}.tgz && rm -f ${RG_FILE}.tgz
     local RG_BIN=$BIN/rg
@@ -140,11 +157,6 @@ install_cht() {
     chmod 755 $CHT
     del $BIN/cht
     mv -f $CHT $BIN
-}
-
-install_rg() {
-    install_rust
-    cargo install ripgrep -f
 }
 
 install_q() {
