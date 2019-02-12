@@ -24,7 +24,7 @@ is_debian() {
 }
 
 del() {
-  [[ -e $1 || -L $1 ]] && rm -rf $1
+  [[ -e $1 || -L $1 ]] && rm -rf $1 || true
 }
 
 version_lte() {
