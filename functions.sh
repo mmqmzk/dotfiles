@@ -76,7 +76,7 @@ install_fd() {
     local FD=~/.fd
     del $FD
     mkdir -p $FD && cd $FD
-    local FD_FILE="fd-${FD_TAG}-arm-unknown-linux-gnueabihf.tar.gz"
+    local FD_FILE="fd-${FD_TAG}-arm-unknown-linux-gnueabihf"
     curl $PROXY -fsSL "https://github.com/sharkdp/fd/releases/download/${FD_TAG}/${FD_FILE}.tar.gz" > ${FD_FILE}.tgz
     tar -xf ${FD_FILE}.tgz && rm -f ${FD_FILE}.tgz
     local FD_BIN=$BIN/fd
@@ -94,7 +94,7 @@ install_ripgrep() {
     local RG=~/.ripgrep
     del $RG
     mkdir -p $RG && cd $RG
-    local RG_FILE="ripgrep-${RG_TAG}-arm-unknown-linux-gnueabihf.tar.gz"
+    local RG_FILE="ripgrep-${RG_TAG}-arm-unknown-linux-gnueabihf"
     curl $PROXY -fsSL "https://github.com/BurntSushi/ripgrep/releases/download/${RG_TAG}/${RG_FILE}.tar.gz" > ${RG_FILE}.tgz
     tar -xf ${RG_FILE}.tgz && rm -f ${RG_FILE}.tgz
     local RG_BIN=$BIN/rg
