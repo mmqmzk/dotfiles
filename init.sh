@@ -74,7 +74,7 @@ ln -s -f $DOT/gitconfig  $GC
 
 install_bat "v0.10.0"
 
-install_fd "v7.2.0"
+install_fd "v7.3.0"
 
 install_ripgrep "0.10.0"
 
