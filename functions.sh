@@ -3,7 +3,7 @@ DOT=~/.dotfiles
 BIN=~/.bin
 
 has() {
-    which $1 &> /dev/null
+    command -v $1 &> /dev/null
 }
 
 wh() {
@@ -14,7 +14,6 @@ wh() {
       return 0
     fi
   done
-  return 1
 }
 
 export PM=$(wh yum apt)
