@@ -147,7 +147,6 @@ unsetopt BG_NICE
 export WORDCHARS='*?_[]~=&;!#$%^(){}-.:'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -f ~/.cargo/env ] && source ~/.cargo/env
 if [[ -f ~/.nvmrc ]]; then
     NODE_VERSION=$(cat ~/.nvmrc)
     if [[ -n $NODE_VERSION ]]; then
