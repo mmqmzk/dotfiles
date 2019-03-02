@@ -4,14 +4,17 @@ fi
 if [[ -f ~/.bashrc ]]; then
     source ~/.bashrc
 fi
+
 stty werase undef
 bind '\C-w:unix-filename-rubout'
+
 if command -v vim &> /dev/null; then
-    export EDITOR=vim
+    export EDITOR="vim"
     if [[ -f $SSHRCD/vimrc ]]; then
         alias vim="command vim -u $SSHRCD/vimrc"
     fi
 fi
+
 alias l="ls -lha"
 alias t="tail -f"
 alias ..="cd .."

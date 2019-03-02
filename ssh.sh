@@ -39,8 +39,8 @@ _sshrc() {
         local dest="${SSHRCD_DEST:-"/tmp"}/$randomFileName"
         tar -hzcf - -C $dir $name | command ssh -T $OPTS2 $DOMAIN "mkdir -p $dest && tar -zxf - -C $dest"
         if [[ -z $CMD ]]; then
-            CMD="/usr/bin/env SSHRCD=$dest/$name bash --rcfile $dest/$name/sshrc -i"
-            OPTS="$OPTS -t -t"
+            CMD="/usr/bin/env SSHRCD=$dest/$name bash --rcfile $dest/$name/sshrc"
+            OPTS="$OPTS -t"
         else
             CMD="export SSHRCD=$dest/$name; source $dest/$name/sshrc; $CMD"
         fi
