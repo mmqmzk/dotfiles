@@ -15,9 +15,22 @@ if command -v vim &> /dev/null; then
     fi
 fi
 
-alias l="ls -lha"
+alias L="less -r"
+alias T="tail"
+alias H="head -q"
+alias h="history"
+alias l="ls -lha --color=always"
 alias t="tail -f"
+alias p="ps -ef"
+alias g="git"
+alias md="mkdir -p"
+alias c="cd"
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
+alias c-="cd -"
+
+take () {
+    mkdir -p $1 && cd $1
+}
