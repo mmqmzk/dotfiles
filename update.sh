@@ -9,4 +9,4 @@ VERSION=$2
 shift 2
 export PROXY=$@
 source ./functions.sh
-install_$MOD $VERSION
+"install_$MOD" "$VERSION"
