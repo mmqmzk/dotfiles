@@ -1,6 +1,8 @@
 set -o errexit
-DOT=${DOT:=$HOME/.dotfiles}
-BIN=${BIN:=$HOME/.bin}
+DOT=${DOT:="$HOME/.dotfiles"}
+BIN=${BIN:="$HOME/.bin"}
+
+RUST_ARCH="x86_64-unknown-linux-musl"
 
 has() {
     command -v $1 &> /dev/null
@@ -23,7 +25,7 @@ is_debian() {
 }
 
 del() {
-  [[ -e "$1" || -L "$1" ]] && rm -rf "$1" || true
+  [[ -e $1 || -L $1 ]] && rm -rf $1 || true
 }
 
 version_lte() {
@@ -58,7 +60,7 @@ install_bat() {
     local BAT="$HOME/.bat"
     del "$BAT"
     mkdir -p "$BAT" && cd "$BAT"
-    local BAT_FILE="bat-$BAT_TAG-x86_64-unknown-linux-musl"
+    local BAT_FILE="bat-$BAT_TAG-$RUST_ARCH"
     curl $PROXY -fsSL "https://github.com/sharkdp/bat/releases/download/$BAT_TAG/$BAT_FILE.tar.gz" > "$BAT_FILE.tgz"
     tar -xf "$BAT_FILE.tgz" && rm -f "$BAT_FILE.tgz"
     local BAT_BIN="$BIN/bat"
@@ -76,7 +78,7 @@ install_fd() {
     local FD="$HOME/.fd"
     del "$FD"
     mkdir -p "$FD" && cd "$FD"
-    local FD_FILE="fd-$FD_TAG-x86_64-unknown-linux-musl"
+    local FD_FILE="fd-$FD_TAG-$RUST_ARCH"
     curl $PROXY -fsSL "https://github.com/sharkdp/fd/releases/download/$FD_TAG/$FD_FILE.tar.gz" > "$FD_FILE.tgz"
     tar -xf "$FD_FILE.tgz" && rm -f "$FD_FILE.tgz"
     local FD_BIN="$BIN/fd"
@@ -94,7 +96,7 @@ install_ripgrep() {
     local RG=~/.ripgrep
     del "$RG"
     mkdir -p "$RG" && cd "$RG"
-    local RG_FILE="ripgrep-$RG_TAG-x86_64-unknown-linux-musl"
+    local RG_FILE="ripgrep-$RG_TAG-$RUST_ARCH"
     curl $PROXY -fsSL "https://github.com/BurntSushi/ripgrep/releases/download/$RG_TAG/$RG_FILE.tar.gz" > "$RG_FILE.tgz"
     tar -xf "$RG_FILE.tgz" && rm -f "$RG_FILE.tgz"
     local RG_BIN="$BIN/rg"
