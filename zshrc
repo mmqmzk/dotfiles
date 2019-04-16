@@ -69,6 +69,8 @@ plugins=(
   debian
   yum
   common-aliases
+  docker
+  docker-compose
   git
   forgit
   node
