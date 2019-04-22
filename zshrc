@@ -66,24 +66,28 @@ ZSH_CUSTOM="$DOT/zsh-custom"
 #
 
 plugins=(
-  debian
-  yum
+  colored-man-pages
   common-aliases
+  debian
   docker
   docker-compose
-  git
+  fast-syntax-highlighting
+  #zsh-syntax-highlighting
+  fd
+  firewalld
   forgit
+  git
+  httpie
+  mosh
   node
   npm
   nvm  
-  python
   pip
-  httpie
+  python
+  ripgrep
   systemd
-  firewalld
   tmux
-  #zsh-syntax-highlighting
-  fast-syntax-highlighting
+  yum
   zsh-autosuggestions
   z
   fz
@@ -158,5 +162,5 @@ if [[ -f ~/.nvmrc ]]; then
         fi
     fi
 fi
-ips=$(printf "%s," 192.168.{1,5,31}.{1..255})
+ips=$(printf "%s," 192.168.{0,1,5,31}.{1..255})
 export no_proxy="${ips//,/ }"
