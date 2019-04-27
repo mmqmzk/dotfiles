@@ -92,6 +92,4 @@ install_jq "1.6"
 
 install_q
 
-intall_ripgrep "11.0.0"
-
 install_node "11"
