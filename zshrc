@@ -66,22 +66,28 @@ ZSH_CUSTOM="$DOT/zsh-custom"
 #
 
 plugins=(
-  debian
-  yum
+  colored-man-pages
   common-aliases
-  git
+  debian
+  docker
+  docker-compose
+  fast-syntax-highlighting
+  #zsh-syntax-highlighting
+  fd
+  firewalld
   forgit
+  git
+  httpie
+  mosh
   node
   npm
   nvm  
-  python
   pip
-  httpie
+  python
+  ripgrep
   systemd
-  firewalld
   tmux
-  #zsh-syntax-highlighting
-  fast-syntax-highlighting
+  yum
   zsh-autosuggestions
   z
   fz
@@ -131,7 +137,8 @@ alias b="bat --color=always"
 alias fb="fzf --preview 'bat --color=always {}'"
 alias ff="fzf -f"
 alias ft="fzf-tmux"
-alias se="sudo env PATH='/usr/local/sbin:/usr/sbin:/sbin:$PATH'"
+alias se="sudo -E env PATH='$PATH:/usr/local/sbin:/usr/sbin:/sbin'"
+alias s="sudo "
 
 export FZF_DEFAULT_COMMAND='fd --type file --color=always'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -156,3 +163,5 @@ if [[ -f ~/.nvmrc ]]; then
         fi
     fi
 fi
+ips=$(printf "%s," 192.168.{0,1,5,31}.{1..255})
+export no_proxy="${ips//,/ }"
