@@ -122,7 +122,7 @@ install_fzf() {
 
 install_jq() {
     if is_debian; then
-        ${PM} install jq -y
+        sudo ${PM} install jq -y
     else
         local JQ_TAG=$1
         if [[ -z "$JQ_TAG" ]]; then
