@@ -2,7 +2,7 @@ set -o errexit
 DOT=${DOT:="$HOME/.dotfiles"}
 BIN=${BIN:="$HOME/.bin"}
 
-RUST_ARCH="x86_64-unknown-linux-musl"
+RUST_ARCH="arm-unknown-linux-gnueabihf"
 
 has() {
     command -v $1 &> /dev/null
