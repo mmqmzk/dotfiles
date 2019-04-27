@@ -94,6 +94,4 @@ install_rg
 
 install_q
 
-intall_ripgrep "11.0.0"
-
 install_node "11"
