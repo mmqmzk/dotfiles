@@ -50,58 +50,43 @@ install_dot() {
     ln -s -f "$DOT/sshrc.d" ~/.sshrc.d
 }
 
-install_bat() {
-    local BAT_TAG=$1
-    if [[ -z "$BAT_TAG" ]]; then
+install_rust_module() {
+    local module=$1
+    local bin=$2
+    local repo=$3
+    local tag=$4
+    if [[ -z "$tag" ]]; then
         return 1
     fi
-    echo "Installing bat $BAT_TAG"
+    echo "Installing $module $tag"
     check_bin
-    local BAT="$HOME/.bat"
-    del "$BAT"
-    mkdir -p "$BAT" && cd "$BAT"
-    local BAT_FILE="bat-$BAT_TAG-$RUST_ARCH"
-    curl $PROXY -fsSL "https://github.com/sharkdp/bat/releases/download/$BAT_TAG/$BAT_FILE.tar.gz" > "$BAT_FILE.tgz"
-    tar -xf "$BAT_FILE.tgz" && rm -f "$BAT_FILE.tgz"
-    local BAT_BIN="$BIN/bat"
-    del ${BAT_BIN}
-    ln -s -f "$BAT/$BAT_FILE/bat" "$BAT_BIN"
+    local dir="$HOME/.$module"
+    del "$dir"
+    mkdir -p "$dir" && cd "$dir"
+    local file="$module-$tag-$RUST_ARCH"
+    curl $PROXY -fsSL "https://github.com/$repo/releases/download/$tag/$file.tar.gz" > "$file.tgz"
+    tar -xf "$file.tgz" && rm -f "$file.tgz"
+    if [[ $bin == /* ]]; then
+        ln -s -f "$dir/$bin" "$BIN/$(basename $bin)"
+    else
+        ln -s -f "$dir/$file/$bin" "$BIN/$(basename $bin)"
+    fi
+}
+
+install_bat() {
+    install_rust_module bat bat "sharkdp/bat" $1
 }
 
 install_fd() {
-    local FD_TAG=$1
-    if [[ -z "$FD_TAG" ]]; then
-        return 1
-    fi
-    echo "Installing fd $FD_TAG"
-    check_bin
-    local FD="$HOME/.fd"
-    del "$FD"
-    mkdir -p "$FD" && cd "$FD"
-    local FD_FILE="fd-$FD_TAG-$RUST_ARCH"
-    curl $PROXY -fsSL "https://github.com/sharkdp/fd/releases/download/$FD_TAG/$FD_FILE.tar.gz" > "$FD_FILE.tgz"
-    tar -xf "$FD_FILE.tgz" && rm -f "$FD_FILE.tgz"
-    local FD_BIN="$BIN/fd"
-    del "$FD_BIN"
-    ln -s -f "$FD/$FD_FILE/fd" "$FD_BIN"
+    install_rust_module fd fd "sharkdp/fd" $1
 }
 
 install_ripgrep() {
-    local RG_TAG=$1
-    if [[ -z "$RG_TAG" ]]; then
-        return 1
-    fi
-    echo "Installing ripgrep $RG_TAG"
-    check_bin
-    local RG=~/.ripgrep
-    del "$RG"
-    mkdir -p "$RG" && cd "$RG"
-    local RG_FILE="ripgrep-$RG_TAG-$RUST_ARCH"
-    curl $PROXY -fsSL "https://github.com/BurntSushi/ripgrep/releases/download/$RG_TAG/$RG_FILE.tar.gz" > "$RG_FILE.tgz"
-    tar -xf "$RG_FILE.tgz" && rm -f "$RG_FILE.tgz"
-    local RG_BIN="$BIN/rg"
-    del "$RG_BIN"
-    ln -s -f "$RG/$RG_FILE/rg" "$RG_BIN"
+    install_rust_module ripgrep rg "BurntSushi/ripgrep" $1
+}
+
+install_xsv() {
+    install_rust_module xsv "/xsv" "BurntSushi/xsv" $1
 }
 
 
@@ -122,7 +107,7 @@ install_fzf() {
 
 install_jq() {
     if is_debian; then
-        ${PM} install jq -y
+        sudo ${PM} install jq -y
     else
         local JQ_TAG=$1
         if [[ -z "$JQ_TAG" ]]; then
