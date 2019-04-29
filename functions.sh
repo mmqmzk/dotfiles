@@ -67,7 +67,7 @@ install_rust_module() {
     curl $PROXY -fsSL "https://github.com/$repo/releases/download/$tag/$file.tar.gz" > "$file.tgz"
     tar -xf "$file.tgz" && rm -f "$file.tgz"
     if [[ $bin == /* ]]; then
-        ln -s -f "$dir/$bin" "$BIN/$(basename $bin)"
+        ln -s -f "$dir$bin" "$BIN/$(basename $bin)"
     else
         ln -s -f "$dir/$file/$bin" "$BIN/$(basename $bin)"
     fi
