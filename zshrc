@@ -138,6 +138,7 @@ alias fb="fzf --preview 'bat --color=always {}'"
 alias ff="fzf -f"
 alias ft="fzf-tmux"
 alias se="sudo -E env PATH='$PATH:/usr/local/sbin:/usr/sbin:/sbin'"
+alias s="sudo "
 
 export FZF_DEFAULT_COMMAND='fd --type file --color=always'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"

@@ -12,6 +12,10 @@ if [[ -z "$PM" ]]; then
   exit 1
 fi
 
+if !has curl; then
+    sudo ${PM} install curl -y
+fi
+
 if ! has git; then
   echo "Installing git"
   sudo ${PM} install git -y
@@ -20,18 +24,18 @@ fi
 PY=$(wh python3 python)
 if [[ -n "$PY" ]]
 then
-    PIP=$(wh pip3 pip) 
-    if [[ -z "$PIP" ]]
-    then
-      echo "Installing pip"
-      GPY="/tmp/get-pip.py"
-      del "$GPY"
-      curl ${PROXY} -sSfL https://bootstrap.pypa.io/get-pip.py > "$GPY"
-      ${PY} ${GPY}
-    fi
-    ${PIP} install pip -U 
-    echo "Installing httpie"
-    ${PIP} install httpie -U 
+  PIP=$(wh pip3 pip) 
+  if [[ -z "$PIP" ]]; then
+    echo "Installing pip"
+    GPY="/tmp/get-pip.py"
+    del "$GPY"
+    curl ${PROXY} -sSfL https://bootstrap.pypa.io/get-pip.py > "$GPY"
+    sudo ${PY} ${GPY}
+  else
+    sudo ${PIP} install pip -U 
+  fi
+  echo "Installing httpie"
+  sudo ${PIP} install httpie -U 
 fi
 
 if ! has ag; then
@@ -76,7 +80,9 @@ install_bat "v0.10.0"
 
 install_fd "v7.3.0"
 
-install_ripgrep "0.10.0"
+install_ripgrep "11.0.1"
+
+install_xsv "0.13.0"
 
 install_fzf
 
@@ -87,7 +93,5 @@ install_cht
 install_jq "1.6"
 
 install_q
-
-intall_ripgrep "11.0.0"
 
 install_node "11"
