@@ -66,9 +66,11 @@ install_rust_module() {
     local file="$module-$tag-$RUST_ARCH"
     curl $PROXY -fsSL "https://github.com/$repo/releases/download/$tag/$file.tar.gz" > "$file.tgz"
     tar -xf "$file.tgz" && rm -f "$file.tgz"
-    local pos="$BIN/bin"
-    del "$pos"
-    ln -s -f "$dir/$file/$bin" "$pos"
+    if [[ $bin == /* ]]; then
+        ln -s -f "$dir/$bin" "$BIN/$(basename $bin)"
+    else
+        ln -s -f "$dir/$file/$bin" "$BIN/$(basename $bin)"
+    fi
 }
 
 install_bat() {
@@ -84,7 +86,7 @@ install_ripgrep() {
 }
 
 install_xsv() {
-    install_rust_module xsv xsv "BurntSushi/xsv" $1
+    install_rust_module xsv "/xsv" "BurntSushi/xsv" $1
 }
 
 
