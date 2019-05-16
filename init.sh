@@ -76,7 +76,7 @@ GC=~/.gitconfig
 del "$GC"
 ln -s -f "$DOT/gitconfig"  "$GC"
 
-install_bat "v0.10.0"
+install_bat "v0.11.0"
 
 install_fd "v7.3.0"
 
@@ -94,4 +94,4 @@ install_jq "1.6"
 
 install_q
 
-install_node "11"
+install_node "12"
