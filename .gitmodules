@@ -34,3 +34,6 @@
 [submodule "zsh-custom/diff-so-fancy"]
     path = zsh-custom/diff-so-fancy
     url = https://github.com/so-fancy/diff-so-fancy.git
+[submodule "zsh-custom/plugins/alias-tips"]
+	path = zsh-custom/plugins/alias-tips
+	url = https://github.com/djui/alias-tips.git
