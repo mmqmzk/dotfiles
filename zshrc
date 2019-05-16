@@ -66,6 +66,7 @@ ZSH_CUSTOM="$DOT/zsh-custom"
 #
 
 plugins=(
+  alias-tips
   colored-man-pages
   common-aliases
   debian
@@ -85,6 +86,7 @@ plugins=(
   pip
   python
   ripgrep
+  sudo
   systemd
   tmux
   yum
@@ -165,3 +167,4 @@ if [[ -f ~/.nvmrc ]]; then
 fi
 ips=$(printf "%s," 192.168.{0,1,5,31}.{1..255})
 export no_proxy="${ips//,/ }"
+
