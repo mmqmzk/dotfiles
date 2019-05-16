@@ -65,6 +65,9 @@ ZSH_CUSTOM="$DOT/zsh-custom"
 # Add wisely, as too many plugins slow down shell startup.
 #
 
+export FZ_HISTORY_CD_CMD="_zlua"
+export _ZL_DATA="~/.z"
+
 plugins=(
   alias-tips
   colored-man-pages
@@ -90,8 +93,9 @@ plugins=(
   systemd
   tmux
   yum
+  z.lua
   zsh-autosuggestions
-  z
+  #z
   fz
 )
 

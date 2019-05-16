@@ -37,3 +37,6 @@
 [submodule "zsh-custom/plugins/alias-tips"]
 	path = zsh-custom/plugins/alias-tips
 	url = https://github.com/djui/alias-tips.git
+[submodule "zsh-custom/plugins/z.lua"]
+	path = zsh-custom/plugins/z.lua
+	url = https://github.com/skywind3000/z.lua.git
