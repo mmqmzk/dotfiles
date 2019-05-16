@@ -53,6 +53,14 @@ if ! has zsh; then
   sudo ${PM} install zsh -y
 fi
 
+if ! wh lua5.3 lua5.2 lua > /dev/null; then
+    if is_debian; then 
+      sudo $PM install lua5.3
+  else
+      sudo $PM install lua
+  fi
+fi
+
 check_bin
 install_dot
 
