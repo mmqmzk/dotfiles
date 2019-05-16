@@ -1,21 +1,20 @@
-set -o errexit
 DOT=${DOT:="$HOME/.dotfiles"}
 BIN=${BIN:="$HOME/.bin"}
 
 RUST_ARCH="x86_64-unknown-linux-musl"
 
 has() {
-    command -v $1 &> /dev/null
+    wh $@ &> /dev/null
 }
 
 wh() {
   for name in $@
   do
-    if has ${name}; then
-      echo ${name}
+    if command which $name 2> /dev/null; then
       return 0
     fi
   done
+  return 1;
 }
 
 export PM=$(wh yum apt)
