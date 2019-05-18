@@ -34,3 +34,12 @@
 [submodule "zsh-custom/diff-so-fancy"]
     path = zsh-custom/diff-so-fancy
     url = https://github.com/so-fancy/diff-so-fancy.git
+[submodule "zsh-custom/plugins/alias-tips"]
+	path = zsh-custom/plugins/alias-tips
+	url = https://github.com/djui/alias-tips.git
+[submodule "zsh-custom/plugins/z.lua"]
+	path = zsh-custom/plugins/z.lua
+	url = https://github.com/skywind3000/z.lua.git
+[submodule "zsh-custom/plugins/nvm-auto"]
+	path = zsh-custom/plugins/nvm-auto
+	url = https://github.com/dijitalmunky/nvm-auto.git
