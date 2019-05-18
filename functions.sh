@@ -100,7 +100,7 @@ install_fzf() {
         del "$FZF"
         ln -f -s "$DOT/fzf" "$FZF"
         del "$DOT/fzf/bin/fzf"
-        bash "$FZF/install" --all
+        bash "$FZF/install" --bin
     fi
 }
 
@@ -155,7 +155,7 @@ install_q() {
 }
 
 install_node() {
-    local NVM="${NVM_DIR:-$DOT/nvm}/nvm.sh"
+    local NVM="${NVM_DIR:-"$DOT/nvm"}/nvm.sh"
     if [[ -f "$NVM" ]]; then
         source "$NVM"
     else

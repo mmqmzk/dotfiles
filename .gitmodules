@@ -40,3 +40,6 @@
 [submodule "zsh-custom/plugins/z.lua"]
 	path = zsh-custom/plugins/z.lua
 	url = https://github.com/skywind3000/z.lua.git
+[submodule "zsh-custom/plugins/nvm-auto"]
+	path = zsh-custom/plugins/nvm-auto
+	url = https://github.com/dijitalmunky/nvm-auto.git

@@ -80,12 +80,14 @@ plugins=(
   fd
   firewalld
   forgit
+  fzf
   git
   httpie
   mosh
   node
   npm
   nvm  
+  nvm-auto
   pip
   python
   ripgrep
@@ -158,17 +160,9 @@ export BAT_PAGER="less -R"
 # for Ctrl-W
 export WORDCHARS='*?_[]~=&;!#$%^(){}-.:'
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-if [[ -f ~/.nvmrc ]]; then
-    NODE_VERSION=$(cat ~/.nvmrc)
-    if [[ -n $NODE_VERSION ]]; then
-        if nvm version $NODE_VERSION &> /dev/null; then
-            nvm use --delete-prefix $NODE_VERSION --silent &> /dev/null
-        else
-            echo "Node.js $NODE_VERSION need install"
-        fi
-    fi
-fi
-ips=$(printf "%s," 192.168.{0,1,5,31}.{1..255})
-export no_proxy="${ips//,/ }"
+set_no_proxy() {
+ local ips=$(printf "%s," 192.168.{0,1,5,31}.{1..255} $@)
+ export no_proxy="${ips//,/ }"
+}
+set_no_proxy
 
