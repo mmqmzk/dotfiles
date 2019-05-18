@@ -1,21 +1,20 @@
-set -o errexit
 DOT=${DOT:="$HOME/.dotfiles"}
 BIN=${BIN:="$HOME/.bin"}
 
 RUST_ARCH="arm-unknown-linux-gnueabihf"
 
 has() {
-    command -v $1 &> /dev/null
+    wh $@ &> /dev/null
 }
 
 wh() {
   for name in $@
   do
-    if has ${name}; then
-      echo ${name}
+    if command which $name 2> /dev/null; then
       return 0
     fi
   done
+  return 1;
 }
 
 export PM=$(wh yum apt)
@@ -67,7 +66,7 @@ install_rust_module() {
     curl $PROXY -fsSL "https://github.com/$repo/releases/download/$tag/$file.tar.gz" > "$file.tgz"
     tar -xf "$file.tgz" && rm -f "$file.tgz"
     if [[ $bin == /* ]]; then
-        ln -s -f "$dir/$bin" "$BIN/$(basename $bin)"
+        ln -s -f "$dir$bin" "$BIN/$(basename $bin)"
     else
         ln -s -f "$dir/$file/$bin" "$BIN/$(basename $bin)"
     fi
@@ -101,7 +100,7 @@ install_fzf() {
         del "$FZF"
         ln -f -s "$DOT/fzf" "$FZF"
         del "$DOT/fzf/bin/fzf"
-        bash "$FZF/install" --all
+        bash "$FZF/install" --bin
     fi
 }
 
@@ -156,7 +155,7 @@ install_q() {
 }
 
 install_node() {
-    local NVM="${NVM_DIR:-$DOT/nvm}/nvm.sh"
+    local NVM="${NVM_DIR:-"$DOT/nvm"}/nvm.sh"
     if [[ -f "$NVM" ]]; then
         source "$NVM"
     else

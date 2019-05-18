@@ -53,6 +53,14 @@ if ! has zsh; then
   sudo ${PM} install zsh -y
 fi
 
+if ! wh lua5.3 lua5.2 lua > /dev/null; then
+    if is_debian; then 
+      sudo $PM install lua5.3
+  else
+      sudo $PM install lua
+  fi
+fi
+
 check_bin
 install_dot
 
@@ -76,7 +84,7 @@ GC=~/.gitconfig
 del "$GC"
 ln -s -f "$DOT/gitconfig"  "$GC"
 
-install_bat "v0.10.0"
+install_bat "v0.11.0"
 
 install_fd "v7.3.0"
 
@@ -96,4 +104,4 @@ install_rg
 
 install_q
 
-install_node "11"
+install_node "12"
