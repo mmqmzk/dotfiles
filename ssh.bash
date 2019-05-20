@@ -32,7 +32,7 @@ _sshrc() {
         return 1
     fi
     shopt -s extglob
-    if [[ -e "$SSHRCD" ]] && [[ "$OPTS" == !(*-N*|*-D*|*-L*|*-R*|*-W*|*-w*) ]]; then
+    if [[ -e "$SSHRCD" ]] && [[ "$OPTS" != *(*-N*|*-D*|*-L*|*-R*|*-W*|*-w*) ]]; then
         local dir=$(dirname "$SSHRCD")
         local name=$(basename "$SSHRCD")
         local randomFileName=".sshrc.d.$(cat /dev/urandom | tr -dc '0-9a-zA-Z' | head -c 32 -q)"
