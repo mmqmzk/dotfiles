@@ -7,7 +7,7 @@ export ZSH="$DOT/oh-my-zsh"
 
 export NVM_DIR="$DOT/nvm"
 
-export fpath=($DOT/zfuncs "$fpath[@]")
+fpath=($DOT/zfuncs "$fpath[@]")
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
