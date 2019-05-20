@@ -2,12 +2,14 @@
 export PATH="$HOME/.bin:$PATH"
 export DOT="$HOME/.dotfiles"
 
-# Path to your oh-my-zsh installation.
-export ZSH="$DOT/oh-my-zsh"
-
+export FZF_BASE="$DOT/fzf"
 export NVM_DIR="$DOT/nvm"
 
 fpath=($DOT/zfuncs "$fpath[@]")
+
+# Path to your oh-my-zsh installation.
+export ZSH="$DOT/oh-my-zsh"
+
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
