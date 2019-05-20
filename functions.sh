@@ -59,7 +59,7 @@ install_rust_module() {
     fi
     echo "Installing $module $tag"
     check_bin
-    local dir="$HOME/.$module"
+    local dir="$HOME/.cache/.$module"
     del "$dir"
     mkdir -p "$dir" && cd "$dir"
     local file="$module-$tag-$RUST_ARCH"
@@ -93,14 +93,9 @@ install_fzf() {
     if [[ $1 == "init" ]]; then
         install_dot
     fi
-    if [[ -e  "$DOT/fzf" ]]; then
+    if [[ -d  "$DOT/fzf" ]]; then
         echo "Installing fzf"
-        check_bin
-        local FZF="$HOME/.fzf"
-        del "$FZF"
-        ln -f -s "$DOT/fzf" "$FZF"
-        del "$DOT/fzf/bin/fzf"
-        bash "$FZF/install" --bin
+        bash "$DOT/fzf/install" --bin
     fi
 }
 
