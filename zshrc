@@ -7,6 +7,8 @@ export ZSH="$DOT/oh-my-zsh"
 
 export NVM_DIR="$DOT/nvm"
 
+export fpath=($DOT/zfuncs "$fpath[@]")
+
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
@@ -162,9 +164,6 @@ unsetopt BG_NICE
 # for Ctrl-W
 export WORDCHARS='*?_[]~=&;!#$%^(){}-.:'
 
-set_no_proxy() {
- local ips=$(printf "%s," 192.168.{0,1,5,31}.{1..255} $@)
- export no_proxy="${ips//,/ }"
-}
+autoload -Uz proxy noproxy set_no_proxy
 set_no_proxy
 
