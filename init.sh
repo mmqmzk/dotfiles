@@ -12,7 +12,7 @@ if [[ -z "$PM" ]]; then
   exit 1
 fi
 
-if !has curl; then
+if ! has curl; then
     sudo ${PM} install curl -y
 fi
 
@@ -53,7 +53,7 @@ if ! has zsh; then
   sudo ${PM} install zsh -y
 fi
 
-if ! wh lua5.3 lua5.2 lua > /dev/null; then
+if ! has lua5.3 lua; then
     if is_debian; then 
       sudo $PM install lua5.3
   else
