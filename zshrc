@@ -2,10 +2,14 @@
 export PATH="$HOME/.bin:$PATH"
 export DOT="$HOME/.dotfiles"
 
+export FZF_BASE="$DOT/fzf"
+export NVM_DIR="$DOT/nvm"
+
+fpath=($DOT/zfuncs "$fpath[@]")
+
 # Path to your oh-my-zsh installation.
 export ZSH="$DOT/oh-my-zsh"
 
-export NVM_DIR="$DOT/nvm"
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -160,9 +164,6 @@ export BAT_PAGER="less -R"
 # for Ctrl-W
 export WORDCHARS='*?_[]~=&;!#$%^(){}-.:'
 
-set_no_proxy() {
- local ips=$(printf "%s," 192.168.{0,1,5,31}.{1..255} $@)
- export no_proxy="${ips//,/ }"
-}
+autoload -Uz proxy noproxy set_no_proxy
 set_no_proxy
 

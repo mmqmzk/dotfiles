@@ -1,0 +1,8 @@
+_noproxy() {
+  unset http_proxy
+  unset HTTP_PROXY
+  unset https_proxy
+  unset HTTPS_PROXY
+}
+
+_noproxy $@
