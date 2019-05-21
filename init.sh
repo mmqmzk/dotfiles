@@ -100,8 +100,6 @@ install_cht
 
 install_jq "1.6"
 
-install_rg
-
 install_q
 
 install_node "12"
