@@ -105,3 +105,5 @@ install_rg
 install_q
 
 install_node "12"
+
+install_exa "0.8.0"
