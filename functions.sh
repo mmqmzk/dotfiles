@@ -179,3 +179,17 @@ install_node() {
         echo "Node version $NODE_TAG alreday installed"
     fi
 }
+
+install_exa() {
+    local tag=$1
+    if [[ -z "$tag" ]]; then 
+        return 1
+    fi
+    echo "Installing exa"
+    local file="exa-linux-x86_64-$tag.zip"
+    local url="https://github.com/ogham/exa/releases/download/v$tag/$file"
+    curl ${PROXY} -fsSL $url -o "$file"
+    unzip "$file" 
+    mv -f "exa-linux-x86_64" "$BIN/exa"    
+    rm -f "$file"
+}
