@@ -166,6 +166,13 @@ unsetopt BG_NICE
 # for Ctrl-W
 export WORDCHARS='*?_[]~=&;!#$%^(){}-.:'
 
+if command -v exa &> /dev/null; then
+    alias ls="exa"
+    alias l="exa -l"
+    alias la="exa -al -a"
+    alias lt="exa -lT"
+fi
+
 autoload -Uz proxy noproxy set_no_proxy
 set_no_proxy
 
