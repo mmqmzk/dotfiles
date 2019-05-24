@@ -168,6 +168,7 @@ install_node() {
         if nvm install ${NODE_TAG}; then
             echo ${NODE_TAG} > "$NVMRC"
             nvm use --delete-prefix ${NODE_TAG}
+            install_npm
         else
             echo "Install node version $NODE_TAG failed"
             return 1
@@ -179,6 +180,21 @@ install_node() {
         echo "Node version $NODE_TAG alreday installed"
     fi
 }
+
+
+install_npm() {
+    if ! has npm; then
+        nvm use
+        if ! has npm; then
+            echo "npm command not found"
+            return 1
+        fi
+    fi
+    npm install -g npm
+    npm install -g fkill-cli
+    npm install -g ramda-cli
+}
+
 
 install_exa() {
     local tag=$1
