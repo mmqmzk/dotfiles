@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
-export PROXY=$@
 cd $(dirname "$0")
 if [[ ! -f ./functions.sh ]]; then
-    echo "functions.sh not found"
-    exit 1
+  echo "functions.sh not found"
+  exit 1
 fi
 source ./functions.sh
 
@@ -13,7 +12,7 @@ if [[ -z "$PM" ]]; then
 fi
 
 if ! has curl; then
-    sudo ${PM} install curl -y
+  sudo ${PM} install curl -y
 fi
 
 if ! has git; then
@@ -22,28 +21,30 @@ if ! has git; then
 fi
 
 PY=$(wh python3 python)
-if [[ -n "$PY" ]]
-then
+if [[ -n "$PY" ]]; then
   PIP=$(wh pip3 pip) 
   if [[ -z "$PIP" ]]; then
     echo "Installing pip"
-    GPY="/tmp/get-pip.py"
-    del "$GPY"
-    curl ${PROXY} -sSfL https://bootstrap.pypa.io/get-pip.py > "$GPY"
-    sudo ${PY} ${GPY}
-  else
-    sudo ${PIP} install pip -U 
+    if is_debian; then
+      sudo ${PM} install python3-pip
+    else
+      GPY="/tmp/get-pip.py"
+      del "$GPY"
+      curl -sSfL https://bootstrap.pypa.io/get-pip.py > "$GPY"
+      sudo ${PY} ${GPY}
+    fi
   fi
+  sudo -H ${PIP} install pip -U 
   echo "Installing httpie"
-  sudo ${PIP} install httpie -U 
+  sudo -H ${PIP} install httpie -U 
 fi
 
 if ! has ag; then
   echo "Installing ag"
   if is_debian; then
-      AG="silversearcher-ag"
+    AG="silversearcher-ag"
   else
-      AG="the_silver_searcher"
+    AG="the_silver_searcher"
   fi
   sudo ${PM} install ${AG} -y
 fi
@@ -54,10 +55,10 @@ if ! has zsh; then
 fi
 
 if ! has lua5.3 lua; then
-    if is_debian; then 
-      sudo $PM install lua5.3
+  if is_debian; then 
+    sudo $PM install lua5.3
   else
-      sudo $PM install lua
+    sudo $PM install lua
   fi
 fi
 
@@ -68,21 +69,21 @@ OMZ="$DOT/oh-my-zsh"
 ZRC="$HOME/.zshrc"
 del "$ZRC"
 echo "Installing oh my zsh"
-ln -s -f "$DOT/zshrc" "$ZRC"
+ln -sf "$DOT/zshrc" "$ZRC"
 
 if ! has tmux; then
-    echo "Installing tmux"
-    sudo ${PM} install tmux -y
+  echo "Installing tmux"
+  sudo ${PM} install tmux -y
 fi
 TC=~/.tmux.conf
 del "$TC"
-ln -s -f "$DOT/tmux.conf" "$TC"
+ln -sf "$DOT/tmux.conf" "$TC"
 
 
 echo "Installing git config"
 GC=~/.gitconfig
 del "$GC"
-ln -s -f "$DOT/gitconfig"  "$GC"
+ln -sf "$DOT/gitconfig" "$GC"
 
 install_bat "v0.11.0"
 
