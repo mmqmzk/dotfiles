@@ -142,7 +142,6 @@ export EDITOR='vim'
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 unalias fd
-unalias lsd
 alias -g G="| ag"
 alias p="ps -ef"
 alias https="http --default-scheme https"
