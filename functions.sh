@@ -90,7 +90,7 @@ install_xsv() {
 }
 
 install_lsd() {
-    install_rust_module lsd lsd "Peltoche/lsd" $1 x86_64-unknown-linux-gnu
+    install_rust_module lsd lsd "Peltoche/lsd" $1
 }
 
 
