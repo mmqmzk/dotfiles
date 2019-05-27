@@ -142,6 +142,7 @@ export EDITOR='vim'
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 unalias fd
+unalias lsd
 alias -g G="| ag"
 alias p="ps -ef"
 alias https="http --default-scheme https"
@@ -164,11 +165,16 @@ export BAT_PAGER="less -R"
 # for Ctrl-W
 export WORDCHARS='*?_[]~=&;!#$%^(){}-.:'
 
-if command -v exa &> /dev/null; then
+if command which exa &> /dev/null; then
     alias ls="exa"
-    alias l="exa -l"
-    alias la="exa -al -a"
-    alias lt="exa -lT"
+    alias l="exa -lg"
+    alias la="exa -lga"
+    alias lt="exa -lgT"
+elif command which lsd &> /dev/null; then
+    alias ls="lsd"
+    alias l="lsd -l"
+    alias la="lsd -lA"
+    alias lt="lsd --tree"
 fi
 
 autoload -Uz proxy noproxy set_no_proxy

@@ -54,6 +54,7 @@ install_rust_module() {
     local bin=$2
     local repo=$3
     local tag=$4
+    local arch=${5:-$RUST_ARCH}
     if [[ -z "$tag" ]]; then
         return 1
     fi
@@ -62,7 +63,7 @@ install_rust_module() {
     local dir="$HOME/.cache/.$module"
     del "$dir"
     mkdir -p "$dir" && cd "$dir"
-    local file="$module-$tag-$RUST_ARCH"
+    local file="$module-$tag-$arch"
     curl $PROXY -fsSL "https://github.com/$repo/releases/download/$tag/$file.tar.gz" > "$file.tgz"
     tar -xf "$file.tgz" && rm -f "$file.tgz"
     if [[ $bin == /* ]]; then
@@ -86,6 +87,10 @@ install_ripgrep() {
 
 install_xsv() {
     install_rust_module xsv "/xsv" "BurntSushi/xsv" $1
+}
+
+install_lsd() {
+    install_rust_module lsd lsd "Peltoche/lsd" $1 x86_64-unknown-linux-gnu
 }
 
 
