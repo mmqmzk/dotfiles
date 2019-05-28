@@ -1,25 +1,25 @@
 if [[ -f /etc/profile ]]; then
-    source /etc/profile
+  source /etc/profile
 fi
 if [[ -f ~/.bashrc ]]; then
-    source ~/.bashrc
+  source ~/.bashrc
 fi
 
 stty werase undef
 bind '\C-w:unix-filename-rubout'
 
 if command -v vim &> /dev/null; then
-    export EDITOR="vim"
-    if [[ -f $SSHRCD/vimrc ]]; then
-        alias vim="command vim -u $SSHRCD/vimrc"
-    fi
+  export EDITOR="vim"
+  if [[ -f $SSHRCD/vimrc ]]; then
+    alias vim="command vim -u $SSHRCD/vimrc"
+  fi
 fi
 
 alias L="less -r"
 alias T="tail"
 alias H="head -q"
 alias h="history"
-alias l="ls -lha --color=always"
+alias l="ls -lhA --color=always"
 alias t="tail -f"
 alias p="ps -ef"
 alias g="git"
@@ -32,5 +32,5 @@ alias .....="cd ../../../.."
 alias c-="cd -"
 
 take () {
-    mkdir -p $1 && cd $1
+  mkdir -p $1 && cd $1
 }
