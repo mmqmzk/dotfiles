@@ -25,18 +25,15 @@ if [[ -n "$PY" ]]; then
   PIP=$(wh pip3 pip) 
   if [[ -z "$PIP" ]]; then
     echo "Installing pip"
-    if is_debian; then
-      sudo ${PM} install python3-pip
-    else
-      GPY="/tmp/get-pip.py"
-      del "$GPY"
-      curl -sSfL https://bootstrap.pypa.io/get-pip.py > "$GPY"
-      sudo ${PY} ${GPY}
-    fi
+    GPY="/tmp/get-pip.py"
+    del "$GPY"
+    curl -sSfL https://bootstrap.pypa.io/get-pip.py > "$GPY"
+    ${PY} ${GPY} --user
+    export PATH="$HOME/.local/bin:$PATH"
   fi
-  sudo -H ${PIP} install pip -U 
+  ${PIP} --user install pip -U 
   echo "Installing httpie"
-  sudo -H ${PIP} install httpie -U 
+  ${PIP} --user install httpie -U 
 fi
 
 if ! has ag; then

@@ -1,5 +1,5 @@
 DOT=${DOT:="$HOME/.dotfiles"}
-BIN=${BIN:="$HOME/.bin"}
+BIN=${BIN:="$HOME/.local/bin"}
 
 RUST_ARCH="x86_64-unknown-linux-musl"
 
