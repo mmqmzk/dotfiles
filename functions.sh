@@ -1,5 +1,5 @@
 DOT=${DOT:="$HOME/.dotfiles"}
-BIN=${BIN:="$HOME/.bin"}
+BIN=${BIN:="$HOME/.local/bin"}
 
 RUST_ARCH="arm-unknown-linux-gnueabihf"
 
