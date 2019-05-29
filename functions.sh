@@ -1,5 +1,6 @@
-DOT=${DOT:="$HOME/.dotfiles"}
-BIN=${BIN:="$HOME/.local/bin"}
+DOT=${DOT:-"$HOME/.dotfiles"}
+BIN=${BIN:-"$HOME/.local/bin"}
+LIB=${LIB:-"$HOME/.local/lib"}
 
 RUST_ARCH="x86_64-unknown-linux-musl"
 
@@ -33,6 +34,7 @@ version_lte() {
 
 check_bin() {
   [[ -d "$BIN" ]] || mkdir -p "$BIN"
+  [[ -d "$LIB" ]] || mkdir -p "$LIB"
 }
 
 
@@ -60,7 +62,7 @@ install_rust_module() {
   fi
   echo "Installing $module $tag"
   check_bin
-  local dir="$HOME/.cache/.$module"
+  local dir="$LIB/$module"
   del "$dir"
   mkdir -p "$dir" && cd "$dir"
   local file="$module-$tag-$arch"
