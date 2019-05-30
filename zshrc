@@ -80,12 +80,11 @@ plugins=(
   docker
   docker-compose
   fast-syntax-highlighting
-  #zsh-syntax-highlighting
   fd
   firewalld
-  forgit
   fzf
   git
+  forgit
   httpie
   mosh
   node
@@ -101,6 +100,7 @@ plugins=(
   yum
   z.lua
   zsh-autosuggestions
+  #zsh-syntax-highlighting
   #z
   fz
 )
