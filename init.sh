@@ -102,6 +102,6 @@ install_jq "1.6"
 
 install_q
 
-install_node "12"
+install_node "10"
 
 install_exa "0.8.0"
