@@ -100,7 +100,7 @@ install_fzf() {
   if [[ $1 == "init" ]]; then
     install_dot
   fi
-  if [[ -d  "$DOT/fzf" ]]; then
+  if [[ -f  "$DOT/fzf/install" ]]; then
     echo "Installing fzf"
     bash "$DOT/fzf/install" --bin
   fi
