@@ -209,7 +209,7 @@ install_exa() {
     return 1
   fi
   echo "Installing exa"
-  local EXA="$LIB/lib/exa"
+  local EXA="$LIB/exa"
   mkdir -p "$EXA" && pushd "$EXA"
   local file="exa-linux-x86_64-$tag.zip"
   local url="https://github.com/ogham/exa/releases/download/v$tag/$file"
