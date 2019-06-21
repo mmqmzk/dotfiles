@@ -6,5 +6,5 @@ fi
 cd $(dirname $0)
 MOD=$1
 VERSION=$2
-source ./functions.sh
+source ./functions.bash
 "install_$MOD" "$VERSION"
