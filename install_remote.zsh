@@ -2,10 +2,10 @@
 DOT=${DOT:-~/.dotfiles}
 TMP=$DOT/tmp
 
-local hosts=()
-local opts=()
-local port=22
-local remoteOpts=()
+hosts=()
+opts=()
+port=22
+remoteOpts=()
 while [[ -n "$1" ]]; do
   case "$1" in
     -h)
@@ -48,7 +48,7 @@ for host in $hosts; do
       host="root@$host"
     fi
     scp -P $port $opts dot.tbz2 $host:~
-    cat $DOT/init_remote.bash | ssh -p $port $opts $host "bash -s -- $remoteOpts"
+    cat $DOT/init_remote.bash | ssh -p $port $opts $host "bash -s -x -- $remoteOpts"
   fi
 done
 popd
