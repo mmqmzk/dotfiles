@@ -14,7 +14,13 @@ export ZSH="$DOT/oh-my-zsh"
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-export DEFAULT_USER="zhoukun"
+DEFAULT_USER="zhoukun"
+BULLETTRAIN_CONTEXT_DEFAULT_USER="zhoukun"
+BULLETTRAIN_IS_SSH_CLIENT=true
+BULLETTRAIN_GIT_COLORIZE_DIRTY=true
+BULLETTRAIN_STATUS_EXIT_SHOW=true
+BULLETTRAIN_PROMPT_ORDER=( time status context dir git cmd_exec_time )
+
 ZSH_THEME="bullet-train"
 
 # Set list of themes to load
