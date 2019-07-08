@@ -13,18 +13,30 @@ set smartcase
 set ruler
 set expandtab
 set encoding=utf-8
-set cursorline
 filetype plugin indent on
 
 set nocompatible
 syntax on
 
+inoremap <s-cr> <esc>o
+inoremap <c-y> <c-o>cc
+inoremap <c-a> <c-o>^
+inoremap <c-e> <c-o>$
+inoremap <c-[> <esc>
+inoremap <c-]> <esc>
+
 noremap Y y$
 noremap <F8> :let @/ = ""<cr>
+
 vnoremap < <gv
 vnoremap > >gv
+vnoremap p pgvy
+
 noremap <c-l> :bnext<cr>
 noremap <c-h> :bprevious<cr>
 noremap <leader>d :bdelete<cr>
 noremap <Up> gk
 noremap <Down> gj
+
+nnoremap <leader>r viwpgvy
+nnoremap <leader>sw "_yiw:s/\(\%#\w\+\)\(\W\+\)\(\w\+\)/\3\2\1/<cr><c-o>
