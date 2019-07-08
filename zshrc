@@ -166,6 +166,10 @@ alias sc-dr="sudo systemctl daemon-reload"
 alias jc="journalctl -x"
 alias jce="journalctl -xe"
 alias jcu="journalctl -xe -u"
+alias dp="sudo docker pull"
+alias dps="sudo docker ps"
+alias dil="sudo docker image ls"
+alias dil="sudo docker image prune"
 
 export FZF_DEFAULT_COMMAND='fd --type file --color=always'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
