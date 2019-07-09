@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 cd $(dirname "$0")
-if [[ ! -f ./functions.sh ]]; then
-  echo "functions.sh not found"
+if [[ ! -f functions.bash ]]; then
+  echo "functions.bash not found"
   exit 1
 fi
-source ./functions.sh
+source functions.bash
 
 if [[ -z "$PM" ]]; then
   echo "yum and apt not found"
@@ -29,7 +29,7 @@ if [[ -n "$PY" ]]; then
     del "$GPY"
     curl -sSfL https://bootstrap.pypa.io/get-pip.py > "$GPY"
     ${PY} ${GPY} --user
-    export PATH="$HOME/.local/bin:$PATH"
+    export PATH="$BIN:$PATH"
   fi
   ${PIP} --user install pip -U 
   echo "Installing httpie"
