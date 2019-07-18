@@ -214,7 +214,7 @@ install_exa() {
   local file="exa-linux-x86_64-$tag.zip"
   local url="https://github.com/ogham/exa/releases/download/v$tag/$file"
   curl -fsSL $url -o "$file"
-  unzip "$file" 
+  unzip -o "$file" 
   ln -sf "$EXA/exa-linux-x86_64" "$BIN/exa"  
   rm -f "$file"
   popd
