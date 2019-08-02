@@ -86,7 +86,7 @@ install_bat "v0.11.0"
 
 install_fd "v7.3.0"
 
-install_ripgrep "11.0.1"
+install_ripgrep "11.0.2"
 
 #install_xsv "0.13.0"
 
