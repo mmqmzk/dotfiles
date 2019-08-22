@@ -90,7 +90,7 @@ install_ripgrep "11.0.2"
 
 #install_xsv "0.13.0"
 
-install_lsd "0.15.1"
+install_lsd "0.16.0"
 
 install_fzf
 
