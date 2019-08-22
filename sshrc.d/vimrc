@@ -27,6 +27,7 @@ inoremap <c-]> <esc>
 
 noremap Y y$
 noremap <F8> :let @/ = ""<cr>
+noremap <space><cr> :let @/ = ""<cr>
 
 vnoremap < <gv
 vnoremap > >gv
@@ -34,9 +35,11 @@ vnoremap p pgvy
 
 noremap <c-l> :bnext<cr>
 noremap <c-h> :bprevious<cr>
-noremap <leader>d :bdelete<cr>
+nnoremap <leader>d :bdelete<cr>
+nnoremap <space>d :bdelete<cr>
 noremap <Up> gk
 noremap <Down> gj
 
 nnoremap <leader>r viwpgvy
+nnoremap <space>r viwpgvy
 nnoremap <leader>sw "_yiw:s/\(\%#\w\+\)\(\W\+\)\(\w\+\)/\3\2\1/<cr><c-o>
