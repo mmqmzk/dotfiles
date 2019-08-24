@@ -24,26 +24,40 @@ set hidden
 syntax on
 filetype plugin indent on
 
-for i in range(97,122)
-  let c = nr2char(i)
-  execute "map \e".c." <M-".c.">"
-  execute "map! \e".c." <M-".c.">"
-endfor
+" for i in range(97,122)
+  " let c = nr2char(i)
+  " execute "map \e".c." <M-".c.">"
+  " execute "map! \e".c." <M-".c.">"
+" endfor
 
 inoremap <s-cr> <esc>o
 inoremap <c-a> <c-o>^
 inoremap <c-e> <c-o>$
-inoremap <c-y> <c-o>cc
 inoremap <c-k> <c-o>D
 inoremap <c-[> <esc>
 inoremap <c-]> <esc>
 
 cnoremap w!! w !sudo tee % > /dev/null
-nnoremap K :vimgrep/\<<c-r><c-w>\>/j **<cr>:cwindow<cr>
-nnoremap ]c :cnext<cr>
+
+if executable('ag')
+  set grepprg=ag\ --vimgrep\ --hidden
+endif
+
+nnoremap K :grep! -s -r '\b<c-r><c-w>\b' .<cr>:cwindow<cr>
+vnoremap K y:grep! -s -r -F '<c-r>0' .<cr>:cwindow<cr>
+
+nnoremap [0 :cfirst<cr>
+nnoremap ]0 :clast<cr>
+nnoremap [o :copen<cr>
+nnoremap ]o :cclose<cr>
 nnoremap [c :cprevious<cr>
-nnoremap ]l :lnext<cr>
+nnoremap ]c :cnext<cr>
+nnoremap [9 :lfirst<cr>
+nnoremap ]9 :llast<cr>
+nnoremap [q :lopen<cr>
+nnoremap ]q :lclose<cr>
 nnoremap [l :lprevious<cr>
+nnoremap ]l :lnext<cr>
 
 noremap Y y$
 noremap <F8> :let @/ = ""<cr>
@@ -55,8 +69,8 @@ vnoremap < <gv
 vnoremap > >gv
 vnoremap p pgvy
 vnoremap v ^$
-vnoremap * y/\V<c-r>"<cr>
-vnoremap # y?\V<c-r>"<cr>
+vnoremap * y/\V<c-r>0<cr>
+vnoremap # y?\V<c-r>0<cr>
 
 nnoremap x "_x
 nnoremap xp xp
