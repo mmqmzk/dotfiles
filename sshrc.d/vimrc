@@ -78,8 +78,8 @@ vnoremap x "_x
 nnoremap s "_s
 vnoremap s "_s
 
-noremap <c-l> :bnext<cr>
-noremap <c-h> :bprevious<cr>
+noremap <c-j> :bnext<cr>
+noremap <c-k> :bprevious<cr>
 nnoremap <leader>d :bdelete<cr>
 nnoremap <space>d :bdelete<cr>
 noremap <Up> gk
