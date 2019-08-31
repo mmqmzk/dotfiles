@@ -196,6 +196,6 @@ elif command which lsd &> /dev/null; then
     alias lt="lsd --tree"
 fi
 
-autoload -Uz proxy noproxy set_no_proxy
+autoload -Uz proxy noproxy set_no_proxy v
 set_no_proxy
 
