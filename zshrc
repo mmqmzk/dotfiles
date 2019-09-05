@@ -85,7 +85,7 @@ plugins=(
   debian
   docker
   docker-compose
-  fast-syntax-highlighting
+  #fast-syntax-highlighting
   fd
   firewalld
   fzf
@@ -106,7 +106,7 @@ plugins=(
   yum
   z.lua
   zsh-autosuggestions
-  #zsh-syntax-highlighting
+  zsh-syntax-highlighting
   #z
   fz
 )
