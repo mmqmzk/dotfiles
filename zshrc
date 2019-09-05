@@ -200,11 +200,11 @@ fi
 autoload -Uz proxy noproxy set_no_proxy v my-backward-delete-word
 
 zle -N my-backward-delete-word
-bindkey '^W' my-backward-delete-word
-bindkey '^]' vi-find-next-char
-bindkey '^[' vi-find-prev-char
-bindkey '^;' vi-repeat-find
-bindkey '^,' vi-rev-repeat-find
+bindkey '' my-backward-delete-word
+bindkey '' vi-find-next-char
+bindkey '' vi-find-prev-char
+bindkey ';' vi-repeat-find
+bindkey ',' vi-rev-repeat-find
 
 set_no_proxy
 
