@@ -5,8 +5,7 @@ if [[ -f ~/.bashrc ]]; then
   source ~/.bashrc
 fi
 
-stty werase undef
-bind '\C-w:unix-filename-rubout'
+bind '\C-[:character-search-backward'
 
 if command -v vim &> /dev/null; then
   export EDITOR="vim"

@@ -1,0 +1,5 @@
+my-backward-delete-word() {
+  local WORDCHARS='*?_[]~=&;!#$%^(){}-.:/'
+  zle backward-delete-word
+}
+my-backward-delete-word

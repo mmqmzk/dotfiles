@@ -182,7 +182,8 @@ export FZF_COMPLETION_OPTS="$FZF_DEFAULT_OPTS"
 export BAT_PAGER="less -R"
 
 # for Ctrl-W
-export WORDCHARS='*?_[]~=&;!#$%^(){}-.:'
+# export WORDCHARS='*?_[]~=&;!#$%^(){}-.:'
+
 
 if command which exa &> /dev/null; then
     alias ls="exa"
@@ -196,6 +197,14 @@ elif command which lsd &> /dev/null; then
     alias lt="lsd --tree"
 fi
 
-autoload -Uz proxy noproxy set_no_proxy v
+autoload -Uz proxy noproxy set_no_proxy v my-backward-delete-word
+
+zle -N my-backward-delete-word
+bindkey '^W' my-backward-delete-word
+bindkey '^]' vi-find-next-char
+bindkey '^[' vi-find-prev-char
+bindkey '^;' vi-repeat-find
+bindkey '^,' vi-rev-repeat-find
+
 set_no_proxy
 
