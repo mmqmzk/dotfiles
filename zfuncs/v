@@ -1,25 +1,29 @@
-opt=()
-query=()
-editor=(${EDITOR:-vim})
-while [[ -n "$1" ]]; do
-  case $1 in
-    -h|-H|h|H)
-      opt=($opt --hidden)
-      ;;
-    -l|-L|l|L)
-      opt=($opt --type symlink)
-      ;;
-    -s|-S|s|S)
-      editor=(sudo $editor)
-      ;;
-    -*)
-      ;;
-    *)
-      query=($query $1)
-      ;;
+v() {
+  local opt=()
+  local query=()
+  local editor=(${EDITOR:-vim})
+  while [[ -n "$1" ]]; do
+    case $1 in
+      -h|-H|h|H)
+        opt=($opt --hidden)
+        ;;
+      -l|-L|l|L)
+        opt=($opt --type symlink)
+        ;;
+      -s|-S|s|S)
+        editor=(sudo $editor)
+        ;;
+      -*)
+        ;;
+      *)
+        query=($query $1)
+        ;;
     esac
     shift
-done
-file=$(fd --color=always --type file $opt .+ . ~ /etc /var | \
-  fzf -1 --ansi --preview="bat --color=always {}" --query "$query") && \
-  $editor $file
+  done
+  [[ -e "$query" ]] && $editor "$query" && return
+  file=$(fd --color=always --type file $opt .+ . ~ /etc /var | \
+    fzf -1 +m --ansi --preview="bat --color=always {}" --query "$query") && \
+    $editor "$file" || $editor "$query"
+}
+v "$@"

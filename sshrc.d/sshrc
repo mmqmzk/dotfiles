@@ -6,7 +6,7 @@ if [[ -f ~/.bashrc ]]; then
 fi
 
 stty werase undef
-bind '\C-w:unix-filename-rubout'
+# bind '^[:character-search-backward'
 
 if command -v vim &> /dev/null; then
   export EDITOR="vim"
@@ -34,3 +34,5 @@ alias c-="cd -"
 take () {
   mkdir -p $1 && cd $1
 }
+
+# export TERM=linux
