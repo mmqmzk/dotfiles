@@ -11,30 +11,17 @@ if [[ -z "$PM" ]]; then
   exit 1
 fi
 
-if ! has curl; then
-  sudo ${PM} install curl -y
-fi
+sudo ${PM} install git zsh curl zip -y
 
-if ! has git; then
-  echo "Installing git"
-  sudo ${PM} install git -y
+PIP=$(wh pip3 pip) 
+if [[ -z "$PIP" ]]; then
+  echo "Installing pip"
+  sudo ${PM} install python3-pip -y
 fi
-
-PY=$(wh python3 python)
-if [[ -n "$PY" ]]; then
-  PIP=$(wh pip3 pip) 
-  if [[ -z "$PIP" ]]; then
-    echo "Installing pip"
-    GPY="/tmp/get-pip.py"
-    del "$GPY"
-    curl -sSfL https://bootstrap.pypa.io/get-pip.py > "$GPY"
-    ${PY} ${GPY} --user
-    export PATH="$BIN:$PATH"
-  fi
-  ${PIP} --user install pip -U 
-  echo "Installing httpie"
-  ${PIP} --user install httpie -U 
-fi
+PIP=$(wh pip3 pip) 
+${PIP} --user install pip -U 
+echo "Installing httpie"
+${PIP} --user install httpie -U 
 
 if ! has ag; then
   echo "Installing ag"
@@ -44,11 +31,6 @@ if ! has ag; then
     AG="the_silver_searcher"
   fi
   sudo ${PM} install ${AG} -y
-fi
-
-if ! has zsh; then
-  echo "Installing zsh"
-  sudo ${PM} install zsh -y
 fi
 
 if ! has lua5.3 lua; then
