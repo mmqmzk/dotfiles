@@ -197,7 +197,7 @@ elif command which lsd &> /dev/null; then
     alias lt="lsd --tree"
 fi
 
-autoload -Uz proxy noproxy set_no_proxy v my-backward-delete-word
+autoload -Uz proxy noproxy set_no_proxy my-backward-delete-word
 
 zle -N my-backward-delete-word
 bindkey '' my-backward-delete-word

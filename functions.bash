@@ -48,6 +48,7 @@ install_dot() {
   check_bin
   ln -s -f "$DOT/zsh-custom/diff-so-fancy/diff-so-fancy" "$BIN/diff-so-fancy"
   ln -s -f "$DOT/sshrc.zsh" "$BIN/sshrc"
+  ln -s -f "$DOT/zfuncs/v" "$BIN/v"
   ln -s -f "$DOT/sshrc.d" ~/.sshrc.d
 }
 

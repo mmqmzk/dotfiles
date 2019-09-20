@@ -1,4 +1,6 @@
-v() {
+#!/usr/bin/env zsh
+
+_v() {
   local opt=()
   local query=()
   local editor=(${EDITOR:-vim})
@@ -26,4 +28,5 @@ v() {
     fzf -1 +m --ansi --preview="bat --color=always {}" --query "$query") && \
     $editor "$file" || $editor "$query"
 }
-v "$@"
+
+_v "$@"
