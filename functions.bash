@@ -50,6 +50,8 @@ install_dot() {
   ln -s -f "$DOT/sshrc.zsh" "$BIN/sshrc"
   ln -s -f "$DOT/zfuncs/v" "$BIN/v"
   ln -s -f "$DOT/sshrc.d" ~/.sshrc.d
+  sudo mkdir -p /root/.local
+  sudo ln -s $BIN /root/.local/bin
 }
 
 install_rust_module() {
@@ -104,6 +106,7 @@ install_fzf() {
   if [[ -f  "$DOT/fzf/install" ]]; then
     echo "Installing fzf"
     bash "$DOT/fzf/install" --bin
+    ln -s -f $DOT/fzf/bin/fzf $BIN
   fi
 }
 
