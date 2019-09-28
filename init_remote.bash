@@ -50,16 +50,27 @@ ln -sf $DOT/vim  $BASE/.vim
 ln -sf $DOT/zsh-custom/diff-so-fancy/diff-so-fancy $BIN
 ln -sf $DOT/sshrc.d  $BASE/.sshrc.d
 ln -sf $DOT/gitconfig $BASE/.gitconfig
+
+sudo ln -s $DOT/zfuncs/v /usr/local/v
+
+if [[ ! -e /root/.local/bin ]]; then
+  mkdir -p /root/.local
+  sudo ln -s $BIN /root/.local/bin
+fi
+
 _link() {
   find $LIB -type f -perm -500 -name "$1" -exec ln -sf {} $BIN/$2 \;
 }
+
 _link bat bat
 _link fd fd
 _link rg rg
 _link xsv xsv
+
 if [[ -n "$EXA" ]]; then
   _link exa-linux-x86_64 $EXA
 fi
+
 if [[ -n "$LSD" ]]; then
   _link lsd $LSD
 fi

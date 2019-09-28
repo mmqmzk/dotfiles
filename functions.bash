@@ -52,6 +52,7 @@ install_dot() {
   ln -s -f "$DOT/sshrc.d" ~/.sshrc.d
   sudo mkdir -p /root/.local
   sudo ln -s $BIN /root/.local/bin
+  sudo ln -s "$DOT/zfuncs/v" /usr/local/bin
 }
 
 install_rust_module() {

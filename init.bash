@@ -11,17 +11,14 @@ if [[ -z "$PM" ]]; then
   exit 1
 fi
 
-sudo ${PM} install git zsh curl zip -y
+sudo ${PM} install git zsh curl zip python3-pip -y
 
 PIP=$(wh pip3 pip) 
-if [[ -z "$PIP" ]]; then
-  echo "Installing pip"
-  sudo ${PM} install python3-pip -y
+if [[ -n "$PIP" ]]; then
+  ${PIP} install --user pip -U 
+  echo "Installing httpie"
+  ${PIP} install --user httpie -U 
 fi
-PIP=$(wh pip3 pip) 
-${PIP} --user install pip -U 
-echo "Installing httpie"
-${PIP} --user install httpie -U 
 
 if ! has ag; then
   echo "Installing ag"
@@ -66,7 +63,7 @@ ln -sf "$DOT/gitconfig" "$GC"
 
 install_bat "v0.12.1"
 
-anstall_fd "v7.4.0"
+install_fd "v7.4.0"
 
 install_ripgrep "11.0.2"
 
