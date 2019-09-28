@@ -151,7 +151,7 @@ unalias fd
 
 if [[ -x $(which rg 2> /dev/null) ]]; then
   alias -g G="| rg"
-elif [[ -x $(which ag 2> /dev/null) ]];n then
+elif [[ -x $(which ag 2> /dev/null) ]]; then
   alias -g G="| ag"
 fi
 
