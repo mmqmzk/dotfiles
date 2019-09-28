@@ -148,7 +148,13 @@ export EDITOR='vim'
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 unalias fd
-alias -g G="| ag"
+
+if [[ -x $(which rg 2> /dev/null) ]]; then
+  alias -g G="| rg"
+elif [[ -x $(which ag 2> /dev/null) ]];n then
+  alias -g G="| ag"
+fi
+
 alias p="ps -ef"
 alias https="http --default-scheme https"
 alias b="bat --color=always"
