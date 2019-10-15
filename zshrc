@@ -85,7 +85,7 @@ plugins=(
   debian
   docker
   docker-compose
-  #fast-syntax-highlighting
+  fast-syntax-highlighting
   fd
   firewalld
   fzf
@@ -106,8 +106,8 @@ plugins=(
   yum
   z.lua
   zsh-autosuggestions
-  zsh-syntax-highlighting
-  #z
+  # zsh-syntax-highlighting
+  # z
   fz
 )
 
@@ -186,6 +186,8 @@ export FZF_CTRL_T_OPTS="$FF_DEFAULT_OPTS"
 export FZF_COMPLETION_OPTS="$FZF_DEFAULT_OPTS"
 
 export BAT_PAGER="less -R"
+
+FAST_HIGHLIGHT[chroma-git]="chroma/-ogit.ch"
 
 # for Ctrl-W
 # export WORDCHARS='*?_[]~=&;!#$%^(){}-.:'
