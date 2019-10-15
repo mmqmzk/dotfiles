@@ -9,9 +9,9 @@ stty werase undef
 # bind '^[:character-search-backward'
 
 if command -v vim &> /dev/null; then
-  export EDITOR="vim"
+  export EDITOR="v"
   if [[ -f $SSHRCD/vimrc ]]; then
-    alias vim="command vim -u $SSHRCD/vimrc"
+    alias v="command vim -u $SSHRCD/vimrc"
   fi
 fi
 
