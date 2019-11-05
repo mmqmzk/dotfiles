@@ -204,7 +204,7 @@ install_npm() {
   fi
   npm install -g npm
   npm install -g fkill-cli
-  #npm install -g ramda-cli
+  npm install -g ramda-cli
 }
 
 
