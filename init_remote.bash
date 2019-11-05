@@ -51,7 +51,7 @@ ln -sf $DOT/zsh-custom/diff-so-fancy/diff-so-fancy $BIN
 ln -sf $DOT/sshrc.d  $BASE/.sshrc.d
 ln -sf $DOT/gitconfig $BASE/.gitconfig
 
-sudo ln -s $DOT/zfuncs/v /usr/local/v
+sudo ln -s $DOT/zfuncs/v /usr/local/bin/v
 
 if [[ ! -e /root/.local/bin ]]; then
   mkdir -p /root/.local
