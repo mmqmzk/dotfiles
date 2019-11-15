@@ -198,7 +198,7 @@ export BAT_PAGER="less -R"
 
 if command which exa &> /dev/null; then
     alias ls="exa"
-    alias lsa="exa -aa"
+    alias lsa="exa -a"
     alias l="exa -lg"
     alias la="exa -lgaa"
     alias lD="exa -D"
@@ -221,7 +221,7 @@ if command which exa &> /dev/null; then
     alias l@="exa -lga@"
 elif command which lsd &> /dev/null; then
     alias ls="lsd"
-    alias lsa="lad -a"
+    alias lsa="lad -A"
     alias l="lsd -l"
     alias la="lsd -la"
     alias lt="lsd --tree"
@@ -240,7 +240,7 @@ elif command which lsd &> /dev/null; then
 else
   alias l="command ls --color=auto -lh"
   alias la="command ls --color=auto -lha"
-  alias lsa="command ls --color=auto -a"
+  alias lsa="command ls --color=auto -A"
   alias lss="command ls --color=auto -lhS"
   alias lst="command ls --color=auto -lht"
 fi
