@@ -115,6 +115,8 @@ autoload -Uz is-at-least
 
 if is-at-least 5.0.3; then
     plugins+=("zsh-autopair")
+else
+  alias v="vim"
 fi
 
 source $ZSH/oh-my-zsh.sh
