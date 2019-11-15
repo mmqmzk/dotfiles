@@ -19,7 +19,15 @@ alias L="less -r"
 alias T="tail"
 alias H="head -q"
 alias h="history"
-alias l="ls -lhA --color=always"
+alias l="command ls --color=auto -lh"
+alias la="command ls --color=auto -lha"
+alias lsa="command ls --color=auto -a"
+alias lD="command ls --color=auto -d"
+alias laD="command ls --color=auto -ad"
+alias lld="command ls --color=auto -lhd"
+alias llad="command ls --color=auto -alhd"
+alias lss="command ls --color=auto -lhS"
+alias lst="command ls --color=auto -lht"
 alias t="tail -f"
 alias p="ps -ef"
 alias g="git"
@@ -35,4 +43,3 @@ take () {
   mkdir -p $1 && cd $1
 }
 
-# export TERM=linux

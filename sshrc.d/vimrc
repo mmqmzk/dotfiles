@@ -68,7 +68,7 @@ nnoremap gz `[v`]
 vnoremap < <gv
 vnoremap > >gv
 vnoremap p pgvy
-vnoremap v ^$
+vnoremap v ^$h
 vnoremap * y/\V<c-r>0<cr>
 vnoremap # y?\V<c-r>0<cr>
 
