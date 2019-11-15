@@ -155,19 +155,25 @@ elif [[ -x $(which ag 2> /dev/null) ]]; then
   alias -g G="| ag"
 fi
 
+alias -g L="| less -R"
+alias -g LL="2>&1 | less -R"
 alias p="ps -ef"
 alias https="http --default-scheme https"
 alias b="bat --color=always"
+alias -g B="| bat --color=always"
+alias -g BB="2>&1 | bat --color=always"
 alias fb="fzf --preview 'bat --color=always {}'"
 alias ff="fzf -f"
+alias -g F="| fzf"
 alias ft="fzf-tmux"
-alias se="sudo -E env PATH='$PATH:/usr/local/sbin:/usr/sbin:/sbin'"
+alias se='sudo -E env PATH="$PATH:/usr/local/sbin:/usr/sbin:/sbin"'
 alias s="sudo "
 alias as="apt search"
 alias al="apt list"
 alias alu="apt list --upgradable"
 alias aw="apt show"
 alias aar="sudo apt autoremove"
+alias yw="sudo yum info"
 alias sc-dr="sudo systemctl daemon-reload"
 alias jc="journalctl -x"
 alias jce="journalctl -xe"
@@ -176,6 +182,7 @@ alias dl="sudo docker pull"
 alias dp="sudo docker ps"
 alias di="sudo docker image"
 alias dil="sudo docker image ls"
+alias dii="sudo docker image inspect"
 alias dip="sudo docker image prune"
 
 export FZF_DEFAULT_COMMAND='fd --type file --color=always'
@@ -187,22 +194,55 @@ export FZF_COMPLETION_OPTS="$FZF_DEFAULT_OPTS"
 
 export BAT_PAGER="less -R"
 
-FAST_HIGHLIGHT[chroma-git]="chroma/-ogit.ch"
-
-# for Ctrl-W
-# export WORDCHARS='*?_[]~=&;!#$%^(){}-.:'
-
+# FAST_HIGHLIGHT[chroma-git]="chroma/-ogit.ch"
 
 if command which exa &> /dev/null; then
     alias ls="exa"
+    alias lsa="exa -aa"
     alias l="exa -lg"
-    alias la="exa -lga"
-    alias lt="exa -lgT"
+    alias la="exa -lgaa"
+    alias lD="exa -D"
+    alias laD="exa -Da"
+    alias lld="exa -lgD"
+    alias llad="exa -lgDa"
+    alias lt="exa -T"
+    alias lt2="exa -gT -L 2"
+    alias lt3="exa -gT -L 3"
+    alias lt4="exa -gT -L 4"
+    alias ltl="exa -T -L"
+    alias lta="exa -gTa"
+    alias ltal="exa -gTa -L"
+    alias llt="exa -lgT"
+    alias llta="exa -lgTa"
+    alias lltl="exa -lgT -L"
+    alias lltal="exa -lgTa -L"
+    alias lss="exa -lg -s size -r"
+    alias lst="exa -lg -s modified -r"
+    alias l@="exa -lga@"
 elif command which lsd &> /dev/null; then
     alias ls="lsd"
+    alias lsa="lad -a"
     alias l="lsd -l"
-    alias la="lsd -lA"
+    alias la="lsd -la"
     alias lt="lsd --tree"
+    alias lt2="lsd --tree --depth 2"
+    alias lt3="lsd --tree --depth 3"
+    alias lt4="lsd --tree --depth 4"
+    alias ltl="lsd --tree --depth"
+    alias lta="lsd --tree -a"
+    alias ltal="lsd --tree -a --depth"
+    alias llt="lsd --tree -l"
+    alias llta="lsd --tree -la"
+    alias lltl="lsd --tree -l --depth"
+    alias lltal="lsd --tree -la --depth"
+    alias lss="lsd -lS"
+    alias lst="lsd -lt"
+else
+  alias l="command ls --color=auto -lh"
+  alias la="command ls --color=auto -lha"
+  alias lsa="command ls --color=auto -a"
+  alias lss="command ls --color=auto -lhS"
+  alias lst="command ls --color=auto -lht"
 fi
 
 autoload -Uz proxy noproxy set_no_proxy my-backward-delete-word
