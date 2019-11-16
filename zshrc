@@ -197,11 +197,11 @@ export BAT_PAGER="less -R"
 # FAST_HIGHLIGHT[chroma-git]="chroma/-ogit.ch"
 
 lD () {
-  fd -t d -d 1 .+ $* | ls -d
+  fd -t d -d 1 .+ $* | xargs ls --color=auto -d
 }
 
 lld () {
-  fd -t d -d 1 .+ $* | ls -ld
+  fd -t d -d 1 .+ $* | xargs ls --color=auto -lhd
 }
 
 if command which exa &> /dev/null; then
