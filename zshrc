@@ -198,15 +198,21 @@ export BAT_PAGER="less -R"
 
 # FAST_HIGHLIGHT[chroma-git]="chroma/-ogit.ch"
 
+lD () {
+  fd -t d -d 1 .+ $* | ls -d
+}
+
+lld () {
+  fd -t d -d 1 .+ $* | ls -ld
+}
+
 if command which exa &> /dev/null; then
     alias ls="exa"
     alias lsa="exa -a"
     alias l="exa -lg"
     alias la="exa -lgaa"
     alias lD="exa -D"
-    alias laD="exa -Da"
     alias lld="exa -lgD"
-    alias llad="exa -lgDa"
     alias lt="exa -T"
     alias lt2="exa -gT -L 2"
     alias lt3="exa -gT -L 3"
