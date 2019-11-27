@@ -179,6 +179,7 @@ install_node() {
   if [[ "$NODE_TAG" != "$CURRENT_VERSION" ]]; then
     if nvm install ${NODE_TAG}; then
       echo ${NODE_TAG} > "$NVMRC"
+      nvm alias ${NODE_TAG} default
       nvm use --delete-prefix ${NODE_TAG}
       install_npm
     else
@@ -196,7 +197,7 @@ install_node() {
 
 install_npm() {
   if ! has npm; then
-    nvm use
+    nvm use default
     if ! has npm; then
       echo "npm command not found"
       return 1
