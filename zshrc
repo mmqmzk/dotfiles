@@ -83,6 +83,7 @@ plugins=(
   colored-man-pages
   common-aliases
   debian
+  dirhistory
   docker
   docker-compose
   fast-syntax-highlighting
@@ -103,6 +104,7 @@ plugins=(
   sudo
   systemd
   tmux
+  wakeonlan
   yum
   z.lua
   zsh-autosuggestions
@@ -155,8 +157,11 @@ elif [[ -x $(which ag 2> /dev/null) ]]; then
   alias -g G="| ag"
 fi
 
+alias -g HH="2>&1 | head -q"
 alias -g L="| less -R"
 alias -g LL="2>&1 | less -R"
+alias -g TT="2>&1 | tail"
+alias -g TF="2>&1 | tail -f"
 alias p="ps -ef"
 alias https="http --default-scheme https"
 alias b="bat --color=always"
