@@ -154,9 +154,11 @@ export EDITOR='vim'
 unalias fd
 
 if [[ -x $(which rg 2> /dev/null) ]]; then
-  alias -g G="| rg"
+  alias -g G="| rg -S"
 elif [[ -x $(which ag 2> /dev/null) ]]; then
-  alias -g G="| ag"
+  alias -g G="| ag -S"
+else
+  alias -g G="| egrep -i"
 fi
 
 alias -g HH="2>&1 | head -q"
