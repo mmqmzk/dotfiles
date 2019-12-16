@@ -78,6 +78,8 @@ ZSH_CUSTOM="$DOT/zsh-custom"
 export FZ_HISTORY_CD_CMD="_zlua"
 export _ZL_DATA="~/.z"
 
+export FZF_MARKS_FILE="$HOME/.config/fzf-marks"
+
 plugins=(
   alias-tips
   colored-man-pages
@@ -90,6 +92,7 @@ plugins=(
   fd
   firewalld
   fzf
+  fzf-marks
   git
   forgit
   httpie
@@ -164,14 +167,14 @@ alias -g L="| less -R"
 alias -g LL="2>&1 | less -R"
 alias -g TT="2>&1 | tail"
 alias -g TF="2>&1 | tail -f"
+alias -g B="| bat --color=always"
+alias -g BB="2>&1 | bat --color=always"
+alias -g F="| fzf"
 alias p="ps -ef"
 alias https="http --default-scheme https"
 alias b="bat --color=always"
-alias -g B="| bat --color=always"
-alias -g BB="2>&1 | bat --color=always"
 alias fb="fzf --preview 'bat --color=always {}'"
 alias ff="fzf -f"
-alias -g F="| fzf"
 alias ft="fzf-tmux"
 alias se='sudo -E env PATH="$PATH:/usr/local/sbin:/usr/sbin:/sbin"'
 alias s="sudo "
@@ -191,6 +194,8 @@ alias di="sudo docker image"
 alias dil="sudo docker image ls"
 alias dii="sudo docker image inspect"
 alias dip="sudo docker image prune"
+alias m="mark"
+alias f="fzm"
 
 export FZF_DEFAULT_COMMAND='fd --type file --color=always'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
