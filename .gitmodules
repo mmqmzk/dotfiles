@@ -43,3 +43,6 @@
 [submodule "zsh-custom/plugins/nvm-auto"]
 	path = zsh-custom/plugins/nvm-auto
 	url = https://github.com/dijitalmunky/nvm-auto.git
+[submodule "zsh-custom/plugins/fzf-marks"]
+	path = zsh-custom/plugins/fzf-marks
+	url = https://github.com/urbainvaes/fzf-marks.git
