@@ -242,6 +242,7 @@ if has exa; then
     alias lt2="exa -gT -L 2"
     alias lt3="exa -gT -L 3"
     alias lt4="exa -gT -L 4"
+    alias ltl="exa -gT -L"
     alias lss="exa -lg -s size -r"
     alias lst="exa -lg -s modified -r"
     alias l@="exa -lga@"
@@ -254,6 +255,7 @@ elif has lsd; then
     alias lt2="lsd --tree --depth 2"
     alias lt3="lsd --tree --depth 3"
     alias lt4="lsd --tree --depth 4"
+    alias ltl="lsd --tree --depth"
     alias lss="lsd -lS"
     alias lst="lsd -lt"
 else
