@@ -35,6 +35,14 @@ alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias c-="cd -"
 
+lD () {
+  fd -t d -d 1 .+ "$1" | xargs ls --color=auto -d
+}
+
+lld () {
+  fd -t d -d 1 .+ "$1" | xargs ls --color=auto -lhd
+}
+
 take () {
   mkdir -p $1 && cd $1
 }
