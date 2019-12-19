@@ -172,6 +172,7 @@ alias -g TF="2>&1 | tail -f"
 alias -g B="| bat --color=always"
 alias -g BB="2>&1 | bat --color=always"
 alias -g F="| fzf"
+alias -g Y="| yank -i"
 alias p="ps -ef"
 alias https="http --default-scheme https"
 alias b="bat --color=always"
@@ -198,6 +199,8 @@ alias dii="sudo docker image inspect"
 alias dip="sudo docker image prune"
 alias m="mark"
 alias f="fzm"
+alias yo="yank -o"
+alias goo="BROWSER=w3m googler -l cn"
 
 export FZF_DEFAULT_COMMAND='fd --type file --color=always'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -206,9 +209,22 @@ export FZF_DEFAULT_OPTS="--multi --cycle --inline-info --ansi --height 50% --bor
 export FZF_CTRL_T_OPTS="$FF_DEFAULT_OPTS"
 export FZF_COMPLETION_OPTS="$FZF_DEFAULT_OPTS"
 
+export PAGER="less -R"
 export BAT_PAGER="less -R"
 
-# FAST_HIGHLIGHT[chroma-git]="chroma/-ogit.ch"
+if which runexe &> /dev/null; then
+  export BROWSER="runexe cmd.exe /C start chrome"
+elif [[ -n "$DISPLAY" ]]; then
+  if which google-chrome &> /dev/null; then
+    export BROWSER="google-chrome"
+  elif which firefox &> /dev/null; then
+    export BROWSER="firefox"
+  fi
+fi
+if [[ -z "$BROWSER" ]]; then
+  export BROWSER="w3m"
+fi
+
 
 lD () {
   fd -t d -d 1 .+ $* | xargs ls --color=auto -d
@@ -229,13 +245,6 @@ if command which exa &> /dev/null; then
     alias lt2="exa -gT -L 2"
     alias lt3="exa -gT -L 3"
     alias lt4="exa -gT -L 4"
-    alias ltl="exa -T -L"
-    alias lta="exa -gTa"
-    alias ltal="exa -gTa -L"
-    alias llt="exa -lgT"
-    alias llta="exa -lgTa"
-    alias lltl="exa -lgT -L"
-    alias lltal="exa -lgTa -L"
     alias lss="exa -lg -s size -r"
     alias lst="exa -lg -s modified -r"
     alias l@="exa -lga@"
@@ -249,12 +258,6 @@ elif command which lsd &> /dev/null; then
     alias lt3="lsd --tree --depth 3"
     alias lt4="lsd --tree --depth 4"
     alias ltl="lsd --tree --depth"
-    alias lta="lsd --tree -a"
-    alias ltal="lsd --tree -a --depth"
-    alias llt="lsd --tree -l"
-    alias llta="lsd --tree -la"
-    alias lltl="lsd --tree -l --depth"
-    alias lltal="lsd --tree -la --depth"
     alias lss="lsd -lS"
     alias lst="lsd -lt"
 else
