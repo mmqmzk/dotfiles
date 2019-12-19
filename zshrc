@@ -116,7 +116,7 @@ plugins=(
   fz
 )
 
-autoload -Uz is-at-least
+autoload -Uz is-at-least has
 
 if is-at-least 5.0.3; then
     plugins+=("zsh-autopair")
@@ -156,9 +156,9 @@ export EDITOR='vim'
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 unalias fd
 
-if [[ -x $(which rg 2> /dev/null) ]]; then
+if has rg; then
   alias -g G="| rg -S"
-elif [[ -x $(which ag 2> /dev/null) ]]; then
+elif has ag; then
   alias -g G="| ag -S"
 else
   alias -g G="| egrep -i"
@@ -212,12 +212,12 @@ export FZF_COMPLETION_OPTS="$FZF_DEFAULT_OPTS"
 export PAGER="less -R"
 export BAT_PAGER="less -R"
 
-if which runexe &> /dev/null; then
+if has runexe; then
   export BROWSER="runexe cmd.exe /C start chrome"
 elif [[ -n "$DISPLAY" ]]; then
-  if which google-chrome &> /dev/null; then
+  if has google-chrome; then
     export BROWSER="google-chrome"
-  elif which firefox &> /dev/null; then
+  elif has firefox; then
     export BROWSER="firefox"
   fi
 fi
@@ -225,16 +225,15 @@ if [[ -z "$BROWSER" ]]; then
   export BROWSER="w3m"
 fi
 
-
 lD () {
-  fd -t d -d 1 .+ $* | xargs ls --color=auto -d
+  fd -t d -d 1 .+ "$1" | xargs ls --color=auto -d
 }
 
 lld () {
-  fd -t d -d 1 .+ $* | xargs ls --color=auto -lhd
+  fd -t d -d 1 .+ "$1" | xargs ls --color=auto -lhd
 }
 
-if command which exa &> /dev/null; then
+if has exa; then
     alias ls="exa"
     alias lsa="exa -a"
     alias l="exa -lg"
@@ -248,7 +247,7 @@ if command which exa &> /dev/null; then
     alias lss="exa -lg -s size -r"
     alias lst="exa -lg -s modified -r"
     alias l@="exa -lga@"
-elif command which lsd &> /dev/null; then
+elif has lsd; then
     alias ls="lsd"
     alias lsa="lad -A"
     alias l="lsd -l"
@@ -257,7 +256,6 @@ elif command which lsd &> /dev/null; then
     alias lt2="lsd --tree --depth 2"
     alias lt3="lsd --tree --depth 3"
     alias lt4="lsd --tree --depth 4"
-    alias ltl="lsd --tree --depth"
     alias lss="lsd -lS"
     alias lst="lsd -lt"
 else

@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh
+_has() {
+  for name in "$@"; do
+    if which "$name" &> /dev/null; then
+      return 0
+    fi
+  done
+  return 1
+}
+_has "$@"
