@@ -77,6 +77,7 @@ ZSH_CUSTOM="$DOT/zsh-custom"
 
 export FZ_HISTORY_CD_CMD="_zlua"
 export _ZL_DATA="~/.z"
+export RANGER_ZLUA="$DOT/zsh-custom/plugins/z.lua/z.lua"
 
 export FZF_MARKS_FILE="$HOME/.config/fzf-marks"
 
