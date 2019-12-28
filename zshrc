@@ -200,7 +200,6 @@ alias dii="sudo docker image inspect"
 alias dip="sudo docker image prune"
 alias m="mark"
 alias f="fzm"
-alias yo="yank -o"
 alias goo="BROWSER=w3m googler -l cn"
 
 export FZF_DEFAULT_COMMAND='fd --type file --color=always'
