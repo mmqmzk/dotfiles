@@ -32,15 +32,17 @@ filetype plugin indent on
 
 inoremap <s-cr> <esc>o
 inoremap <c-a> <c-o>^
+inoremap <c-f> <c-o>^
 inoremap <c-e> <c-o>$
 inoremap <c-k> <c-o>D
 inoremap <c-[> <esc>
 inoremap <c-]> <esc>
 
 cnoremap w!! w !sudo tee % > /dev/null
+cnoremap wq!! w !sudo tee % > /dev/null | qa!
 
 if executable('ag')
-  set grepprg=ag\ --vimgrep\ --hidden
+  set grepprg=ag\ --vimgrep\ --hidden\ --smart-case
 endif
 
 nnoremap K :grep! -s -r '\b<c-r><c-w>\b' .<cr>:cwindow<cr>
