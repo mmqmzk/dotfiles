@@ -1,5 +1,5 @@
 _fzf_compgen_dir() {
-  fd --type d --hidden --follow --exclude ".git" . "$1"
+  fd --type directory --hidden --follow --exclude ".git" --color=always . "$1"
 }
 
 _fzf_compgen_dir $@

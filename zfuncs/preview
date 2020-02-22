@@ -3,12 +3,13 @@
 _preview() {
   file="$1"
   if [[ -d "$file" ]] || [[ -h "$file" ]]; then
-    local has="${DOT:-"$HOME/.dotfiles"}/zfuncs/has"
+    fpath=("${DOT:=$HOME/.dotfiles}/zfuncs" $fpath)
+    autoload -Uz has
     local cmd="ls"
-    if "$has" exa;
+    if has exa;
     then
       cmd="exa"
-    elif "$has" lsd;
+    elif has lsd;
     then
       cmd="lsd"
     fi
