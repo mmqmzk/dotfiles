@@ -175,7 +175,6 @@ alias -g Y="| yank -i"
 alias p="ps -ef"
 alias https="http --default-scheme https"
 alias b="bat --color=always"
-alias fb="fzf --preview 'bat --color=always {}'"
 alias ff="fzf -f"
 alias ft="fzf-tmux"
 alias se='sudo -E env PATH="$PATH:/usr/local/sbin:/usr/sbin:/sbin"'
@@ -200,12 +199,19 @@ alias m="mark"
 alias f="fzm"
 alias goo="BROWSER=w3m googler -l cn"
 
-export FZF_DEFAULT_COMMAND='fd --type file --color=always'
+export PREVIEW="$DOT/zfuncs/preview"
+export FZF_DEFAULT_COMMAND='fd --color=always'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_COMPLETION_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_DEFAULT_OPTS="--multi --cycle --inline-info --ansi --height 50% --border --layout=reverse"
+export FZF_ALT_C_COMMAND="fd --type directory --color=always .+ . ~ /"
+export FZF_DEFAULT_OPTS="--multi --cycle --inline-info --ansi --height 50% --border --layout=reverse --preview '$PREVIEW {}'"
 export FZF_CTRL_T_OPTS="$FF_DEFAULT_OPTS"
-export FZF_COMPLETION_OPTS="$FZF_DEFAULT_OPTS"
+export FZF_COMPLETION_OPTS="$FZF_DEFAULT_OPTS +m"
+export FZF_ALT_C_OPTS="$FZF_DEFAULT_OPTS +m"
+
+fb() {
+  fd --hidden --type file --color=always "$@" | fzf --preview 'bat --color=always {}'
+}
 
 export PAGER="less -R"
 export BAT_PAGER="less -R"
@@ -266,7 +272,7 @@ else
   alias lst="command ls --color=auto -lht"
 fi
 
-autoload -Uz proxy noproxy set_no_proxy my-backward-delete-word
+autoload -Uz proxy noproxy set_no_proxy my-backward-delete-word preview
 
 zle -N my-backward-delete-word
 bindkey '' my-backward-delete-word

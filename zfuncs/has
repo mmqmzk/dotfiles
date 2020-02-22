@@ -1,4 +1,5 @@
 #!/usr/bin/env zsh
+
 _has() {
   for name in "$@"; do
     if which "$name" &> /dev/null; then
