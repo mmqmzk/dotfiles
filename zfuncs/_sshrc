@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+
 _sshrc() {
   SSHRCD="${SSHHOME:-$HOME}/.sshrc.d"
   local OPTS=()
