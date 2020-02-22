@@ -1,0 +1,24 @@
+#!/usr/bin/env zsh
+
+_preview() {
+  file="$1"
+  if [[ -d "$file" ]] || [[ -h "$file" ]]; then
+    local has="${DOT:-"$HOME/.dotfiles"}/zfuncs/has"
+    local cmd="ls"
+    if "$has" exa;
+    then
+      cmd="exa"
+    elif "$has" lsd;
+    then
+      cmd="lsd"
+    fi
+    $cmd -lh --color=always "$file"
+  elif [[ -f "$file" ]]; then
+    local conf="${XDG_CONFIG_HOME:-"$HOME/.config"}"
+    local rangerCfg="${RANGER_CFG:-"$conf/ranger"}"
+    local cache="/tmp/$(cat /dev/urandom | tr -dc 0-9a-zA-Z | head -q -c 32).png"
+    bash "$rangerCfg/scope.sh" "$file" "$(tput cols)" "$(($(tput lines)/2))" "$cache" "False"
+  fi
+}
+
+_preview "$@"
