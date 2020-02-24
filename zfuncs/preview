@@ -18,7 +18,7 @@ _preview() {
     local conf="${XDG_CONFIG_HOME:-"$HOME/.config"}"
     local rangerCfg="${RANGER_CFG:-"$conf/ranger"}"
     local cache="/tmp/$(cat /dev/urandom | tr -dc 0-9a-zA-Z | head -q -c 32).png"
-    bash "$rangerCfg/scope.sh" "$file" "$(tput cols)" "$(($(tput lines)/2))" "$cache" "False"
+    bash "$rangerCfg/scope.sh" "$file" "$(($(tput cols)/2))" "$(($(tput lines)/2))" "$cache" "False"
   fi
 }
 
