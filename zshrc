@@ -208,7 +208,8 @@ export FZF_DEFAULT_OPTS="--multi --cycle --inline-info --ansi --height 50% --bor
 export FZF_CTRL_T_OPTS="$FF_DEFAULT_OPTS"
 export FZF_COMPLETION_OPTS="$FZF_DEFAULT_OPTS +m"
 export FZF_ALT_C_OPTS="$FZF_DEFAULT_OPTS +m"
-export _ZL_FZF_FLAG="+s -1 +m --preview 'echo {} | sed -E \"s/^\\S+\\s*(.+)/\\1/\" | xargs $PREVIEW'"
+# export _ZL_FZF_FLAG="+s -1 +m --preview 'echo {} | sed -E \"s/^\\S+\\s*(.+)/\\1/\" | xargs $PREVIEW'"
+export _ZL_FZF_FLAG="+s -1 +m --preview 'echo {} | awk \"{print \\\$2}\" | xargs $PREVIEW'"
 
 fb() {
   fd --hidden --type file --color=always "$@" | fzf --preview 'bat --color=always {}'
