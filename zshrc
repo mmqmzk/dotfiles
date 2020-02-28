@@ -165,18 +165,22 @@ else
   alias -g G="| egrep -i"
 fi
 
+alias -g H="| head -q"
 alias -g HH="2>&1 | head -q"
 alias -g L="| less -R"
 alias -g LL="2>&1 | less -R"
+alias -g T="| tail"
 alias -g TT="2>&1 | tail"
 alias -g TF="2>&1 | tail -f"
 alias -g B="| bat --color=always"
 alias -g BB="2>&1 | bat --color=always"
 alias -g F="| fzf"
 alias -g Y="| yank -i"
+alias -g YY="2>&1 | yank -i"
+alias b="bat --color=always"
+alias c="cd"
 alias p="ps -ef"
 alias https="http --default-scheme https"
-alias b="bat --color=always"
 alias ff="fzf -f"
 alias ft="fzf-tmux"
 alias se='sudo -E env PATH="$PATH:/usr/local/sbin:/usr/sbin:/sbin"'
@@ -220,15 +224,20 @@ fb() {
 export PAGER="less -R"
 export BAT_PAGER="less -R"
 
-if has runexe; then
-  export BROWSER="runexe cmd.exe /C start chrome"
+if has winstart; then
+  export BROWSER="winstart chrome"
+  alias e="winstart EmEditor"
 elif [[ -n "$DISPLAY" ]]; then
   if has google-chrome; then
     export BROWSER="google-chrome"
   elif has firefox; then
     export BROWSER="firefox"
   fi
+  alias e="gedit"
+else
+  alias e="${EDITOR:-vim}"
 fi
+
 if [[ -z "$BROWSER" ]]; then
   export BROWSER="w3m"
 fi
