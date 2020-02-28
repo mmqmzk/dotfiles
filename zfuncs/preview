@@ -20,10 +20,17 @@ _preview() {
     if [[ -f "$scope" ]]; then
       local cache="/tmp/$(cat /dev/urandom | tr -dc 0-9a-zA-Z | head -q -c 32).png"
       bash "$scope" "$file" "$(($(tput cols)/2))" "$(($(tput lines)/2))" "$cache" "False"
-    elif has bat; then
-      bat "$file"
+      return 0
+    fi
+    info="$(file "$file")"
+    if [[ "$info" == *text* ]]; then
+      if has bat; then
+        bat --color=always "$file"
+      else
+        head -n 50 "$file"
+      fi
     else
-      file "$file"
+      echo "$info"
     fi
   fi
 }
