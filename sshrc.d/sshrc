@@ -15,7 +15,7 @@ if command -v vim &> /dev/null; then
   fi
 fi
 
-alias L="less -r"
+alias L="less -R"
 alias T="tail"
 alias H="head -q"
 alias h="history"

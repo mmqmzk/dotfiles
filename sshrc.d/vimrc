@@ -37,6 +37,8 @@ inoremap <c-e> <c-o>$
 inoremap <c-k> <c-o>D
 inoremap <c-[> <esc>
 inoremap <c-]> <esc>
+inoremap  <c-w>
+inoremap [3;5~ <c-o>dw
 
 cnoremap w!! w !sudo tee % > /dev/null
 cnoremap wq!! w !sudo tee % > /dev/null | qa!
@@ -45,8 +47,8 @@ if executable('ag')
   set grepprg=ag\ --vimgrep\ --hidden\ --smart-case
 endif
 
-nnoremap K :grep! -s -r '\b<c-r><c-w>\b' .<cr>:cwindow<cr>
-vnoremap K y:grep! -s -r -F '<c-r>0' .<cr>:cwindow<cr>
+nnoremap K :grep! -s '<c-r><c-w>' .<cr>:cwindow<cr>
+vnoremap K y:grep! -s -F '<c-r>0' .<cr>:cwindow<cr>
 
 nnoremap [0 :cfirst<cr>
 nnoremap ]0 :clast<cr>
