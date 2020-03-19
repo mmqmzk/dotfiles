@@ -158,9 +158,10 @@ export EDITOR='vim'
 unalias fd
 
 if has rg; then
-  alias -g G="| rg -S"
+  alias rg="rg --smart-case"
+  alias -g G="| rg --smart-case"
 elif has ag; then
-  alias -g G="| ag -S"
+  alias -g G="| ag --smart-case"
 else
   alias -g G="| egrep -i"
 fi
@@ -243,11 +244,11 @@ if [[ -z "$BROWSER" ]]; then
 fi
 
 lD () {
-  fd -t d -d 1 . "$1" | xargs ls --color=auto -d
+  fd --type directory --max-depth 1 . "$1" | xargs ls --color=auto -d
 }
 
 lld () {
-  fd -t d -d 1 . "$1" | xargs ls --color=auto -lhd
+  fd --type directory --max-depth 1 . "$1" | xargs ls --color=auto -lhd
 }
 
 if has exa; then
