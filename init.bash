@@ -61,9 +61,9 @@ GC=~/.gitconfig
 del "$GC"
 ln -sf "$DOT/gitconfig" "$GC"
 
-install_bat "v0.12.1"
+install_bat "v0.13.0"
 
-install_fd "v7.4.0"
+install_fd "v7.5.0"
 
 install_ripgrep "12.0.0"
 
