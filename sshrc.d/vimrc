@@ -40,15 +40,21 @@ inoremap <c-]> <esc>
 inoremap  <c-w>
 inoremap [3;5~ <c-o>dw
 
-cnoremap w!! w !sudo tee % > /dev/null
-cnoremap wq!! w !sudo tee % > /dev/null | qa!
+cnoremap w!! w !sudo tee > /dev/null %
+nnoremap <space>q :w !sudo tee % > /dev/null<cr>
+nnoremap <space>z :w !sudo tee % > /dev/null<cr>L:qa<cr>
+
+nnoremap K :grep! -F '<c-r><c-w>' .<cr>:cwindow<cr>
+vnoremap K y:grep! -F '<c-r>0' .<cr>:cwindow<cr>
 
 if executable('ag')
-  set grepprg=ag\ --vimgrep\ --hidden\ --smart-case
+  set grepprg=ag\ --vimgrep\ --smart-case\ 2>/dev/null
+elseif executable('rg')
+  set grepprg=rg\ --vimgrep\ --smart-case\ 2>/dev/null
+else
+  nnoremap K :grep! -s -r -F '<c-r><c-w>' .<cr>:cwindow<cr>
+  vnoremap K y:grep! -s -r -F '<c-r>0' .<cr>:cwindow<cr>
 endif
-
-nnoremap K :grep! -s '<c-r><c-w>' .<cr>:cwindow<cr>
-vnoremap K y:grep! -s -F '<c-r>0' .<cr>:cwindow<cr>
 
 nnoremap [0 :cfirst<cr>
 nnoremap ]0 :clast<cr>
@@ -64,6 +70,7 @@ nnoremap [l :lprevious<cr>
 nnoremap ]l :lnext<cr>
 
 noremap Y y$
+noremap <F2> :redraw<cr>
 noremap <F8> :let @/ = ""<cr>
 nnoremap <leader><cr> :nohlsearch<cr>
 nnoremap <space><cr> :nohlsearch<cr>
@@ -76,10 +83,7 @@ vnoremap v ^$h
 vnoremap * y/\V<c-r>0<cr>
 vnoremap # y?\V<c-r>0<cr>
 
-nnoremap x "_x
-nnoremap xp xp
 vnoremap x "_x
-nnoremap s "_s
 vnoremap s "_s
 
 noremap <c-j> :bnext<cr>
