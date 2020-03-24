@@ -41,8 +41,8 @@ inoremap  <c-w>
 inoremap [3;5~ <c-o>dw
 
 cnoremap w!! w !sudo tee > /dev/null %
-nnoremap <space>q :w !sudo tee % > /dev/null<cr>
-nnoremap <space>z :w !sudo tee % > /dev/null<cr>L:qa<cr>
+nnoremap <space>q :w !sudo tee % > /dev/null<cr>L:qa<cr>
+nnoremap <space>z :w !sudo tee % > /dev/null<cr>
 
 nnoremap K :grep! -F '<c-r><c-w>' .<cr>:cwindow<cr>
 vnoremap K y:grep! -F '<c-r>0' .<cr>:cwindow<cr>
@@ -93,6 +93,4 @@ nnoremap <space>d :bdelete<cr>
 noremap <Up> gk
 noremap <Down> gj
 
-nnoremap <leader>r viwpgvy
-nnoremap <space>r viwpgvy
 nnoremap <leader>sw "_yiw:s/\(\%#\w\+\)\(\W\+\)\(\w\+\)/\3\2\1/<cr><c-o>
