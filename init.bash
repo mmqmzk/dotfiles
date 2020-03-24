@@ -13,11 +13,11 @@ fi
 
 sudo ${PM} install git zsh curl zip python3-pip -y
 
-PIP=$(wh pip3 pip) 
+PIP=$(wh pip3 pip)
 if [[ -n "$PIP" ]]; then
-  ${PIP} install --user pip -U 
+  ${PIP} install --user pip -U
   echo "Installing httpie"
-  ${PIP} install --user httpie -U 
+  ${PIP} install --user httpie -U
 fi
 
 if ! has ag; then
@@ -31,7 +31,7 @@ if ! has ag; then
 fi
 
 if ! has lua5.3 lua; then
-  if is_debian; then 
+  if is_debian; then
     sudo $PM install lua5.3
   else
     sudo $PM install lua
@@ -62,25 +62,14 @@ del "$GC"
 ln -sf "$DOT/gitconfig" "$GC"
 
 install_bat "v0.13.0"
-
-install_fd "v7.5.0"
-
-install_ripgrep "12.0.0"
-
-install_xsv "0.13.0"
-
-install_lsd "0.16.0"
-
-install_fzf
-
-install_vim
-
 install_cht
-
-install_jq "1.6"
-
-install_q
-
-install_node "--lts"
-
 install_exa "0.9.0"
+install_fd "v7.5.0"
+install_fzf
+install_jq "1.6"
+install_lsd "0.16.0"
+install_node "--lts"
+install_q
+install_ripgrep "12.0.0"
+install_vim
+install_xsv "0.13.0"

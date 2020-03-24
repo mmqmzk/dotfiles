@@ -1,11 +1,13 @@
 # If you come from bash you might have to change your $PATH.
-export PATH="$HOME/.local/bin:$PATH"
-export DOT="$HOME/.dotfiles"
+if [[ "$PATH" != *"$HOME/.local/bin"* ]]; then
+  export PATH="$HOME/.local/bin:$PATH"
+fi
+export DOT="${DOT:-"$HOME/.dotfiles"}"
 
 export FZF_BASE="$DOT/fzf"
 export NVM_DIR="$DOT/nvm"
 
-fpath=($DOT/zfuncs "$fpath[@]")
+export fpath=($DOT/zfuncs "$fpath[@]")
 
 # Path to your oh-my-zsh installation.
 export ZSH="$DOT/oh-my-zsh"
@@ -50,7 +52,7 @@ DISABLE_AUTO_UPDATE="true"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # COMPLETION_WAITING_DOTS="true"
@@ -75,11 +77,11 @@ ZSH_CUSTOM="$DOT/zsh-custom"
 # Add wisely, as too many plugins slow down shell startup.
 #
 
-export FZ_HISTORY_CD_CMD="_zlua"
 export _ZL_DATA="~/.z"
-export RANGER_ZLUA="$DOT/zsh-custom/plugins/z.lua/z.lua"
+export FZ_HISTORY_CD_CMD="_zlua"
+export RANGER_ZLUA="${ZSH_CUSTOM}/plugins/z.lua/z.lua"
 
-export FZF_MARKS_FILE="$HOME/.config/fzf-marks"
+export FZF_MARKS_FILE="${XDG_CONFIG_HOME:-"$HOME/.config"}/fzf-marks"
 
 plugins=(
   alias-tips
@@ -157,52 +159,52 @@ unalias fd
 
 if has rg; then
   alias rg="rg --smart-case"
-  alias -g G="| rg --smart-case"
+  alias -g G="| rg"
 elif has ag; then
   alias -g G="| ag --smart-case"
 else
   alias -g G="| egrep -i"
 fi
 
+alias -g B="| bat --color=always"
+alias -g BB="2>&1 | bat --color=always"
+alias -g F="| fzf"
 alias -g H="| head -q"
 alias -g HH="2>&1 | head -q"
 alias -g L="| less -R"
 alias -g LL="2>&1 | less -R"
 alias -g T="| tail"
-alias -g TT="2>&1 | tail"
 alias -g TF="2>&1 | tail -f"
-alias -g B="| bat --color=always"
-alias -g BB="2>&1 | bat --color=always"
-alias -g F="| fzf"
+alias -g TT="2>&1 | tail"
 alias -g Y="| yank -i"
 alias -g YY="2>&1 | yank -i"
-alias b="bat --color=always"
-alias c="cd"
-alias p="ps -ef"
-alias https="http --default-scheme https"
-alias ff="fzf -f"
-alias ft="fzf-tmux"
-alias se='sudo -E env PATH="$PATH:/usr/local/sbin:/usr/sbin:/sbin"'
-alias s="sudo "
-alias as="apt search"
+alias aar="sudo apt autoremove"
 alias al="apt list"
 alias alu="apt list --upgradable"
+alias as="apt search"
 alias aw="apt show"
-alias aar="sudo apt autoremove"
-alias yw="sudo yum info"
-alias sc-dr="sudo systemctl daemon-reload"
+alias b="bat --color=always"
+alias c="cd"
+alias di="sudo docker image"
+alias dii="sudo docker image inspect"
+alias dil="sudo docker image ls"
+alias dip="sudo docker image prune"
+alias dl="sudo docker pull"
+alias dp="sudo docker ps"
+alias f="fzm"
+alias ff="fzf -f"
+alias ft="fzf-tmux"
+alias goo="BROWSER=w3m googler -l cn"
+alias https="http --default-scheme https"
 alias jc="journalctl -x"
 alias jce="journalctl -xe"
 alias jcu="journalctl -xe -u"
-alias dl="sudo docker pull"
-alias dp="sudo docker ps"
-alias di="sudo docker image"
-alias dil="sudo docker image ls"
-alias dii="sudo docker image inspect"
-alias dip="sudo docker image prune"
 alias m="mark"
-alias f="fzm"
-alias goo="BROWSER=w3m googler -l cn"
+alias p="ps -ef"
+alias s="sudo "
+alias sc-dr="sudo systemctl daemon-reload"
+alias se='sudo -E env PATH="$PATH:/usr/local/sbin:/usr/sbin:/sbin"'
+alias yw="sudo yum info"
 
 export PREVIEW="$DOT/zfuncs/preview"
 export FZF_DEFAULT_COMMAND='fd --color=always'
