@@ -7,7 +7,7 @@ export DOT="${DOT:-"$HOME/.dotfiles"}"
 export FZF_BASE="$DOT/fzf"
 export NVM_DIR="$DOT/nvm"
 
-export fpath=($DOT/zfuncs "$fpath[@]")
+fpath=($DOT/zfuncs "$fpath[@]")
 
 # Path to your oh-my-zsh installation.
 export ZSH="$DOT/oh-my-zsh"
