@@ -2,10 +2,19 @@
 	name = mmqmzk
 	email = mmqmzk@gmail.com
 [alias]
+  h = help
+  pl = pull
+  pl1 = pull --depth=1
+  l = log
+  f = ftech
+  f1 = fetch --depth=1
 	rb = rebase
 	rbc = rebase --continue
 	rbs = rebase --skip
 	rbm = rebase master
+  p = push
+  po = push origin --all
+  cp = cherry-pick
 	co = checkout
 	com = checkout master
 	cow = checkout work
@@ -13,20 +22,31 @@
 	mff = merge --ff
 	ms = merge --squash
 	mw = merge --ff work
+  ma = merge --abort
+  mc = merge --continue
 	s = status
-	br = branch
+  sh = show
+  shh = show --format="%H"
+	b = branch
+  br = branch --remote
 	cm = commit
+  cmm = commit -m
 	ca = commit -a
+  cma = commit --amend
 	a = add
 	A = add .
 	d = diff
 	sr = svn rebase
 	sd = svn dcommit
+  su = submodule
+  suu = submodule update --init --recursive
+  sf = submodule foreach --recursive
+  sfg = submodule foreach --recursive git
 [core]
 	editor = vim
 	autocrlf = false
 	quotepath = false
-    pager = diff-so-fancy | less --tabs=4 -RFX
+  pager = diff-so-fancy | less --tabs=4 -RFX
 [color]
 	pager = true
 [text]
