@@ -23,7 +23,7 @@ BULLETTRAIN_GIT_COLORIZE_DIRTY=true
 BULLETTRAIN_STATUS_EXIT_SHOW=true
 BULLETTRAIN_PROMPT_ORDER=( time status context dir git cmd_exec_time )
 
-ZSH_THEME="bullet-train"
+ZSH_THEME="agnoster" #"bullet-train"
 
 # Set list of themes to load
 # Setting this variable when ZSH_THEME=random
@@ -52,7 +52,7 @@ DISABLE_AUTO_UPDATE="true"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="true"
+# ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # COMPLETION_WAITING_DOTS="true"
