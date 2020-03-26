@@ -209,10 +209,10 @@ alias se='sudo -E env PATH="$PATH:/usr/local/sbin:/usr/sbin:/sbin"'
 alias yw="sudo yum info"
 
 export PREVIEW="$DOT/zfuncs/preview"
-export FZF_DEFAULT_COMMAND='fd --color=always'
+export FZF_DEFAULT_COMMAND='fd --hidden --color=always'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_COMPLETION_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_ALT_C_COMMAND="fd --type directory --color=always . . ~ /"
+export FZF_ALT_C_COMMAND="fd --hidden --type directory --color=always . . ~ /"
 export FZF_DEFAULT_OPTS="--multi --cycle --inline-info --ansi --height 50% --border --layout=reverse --preview '$PREVIEW {}'"
 export FZF_CTRL_T_OPTS="$FF_DEFAULT_OPTS"
 export FZF_COMPLETION_OPTS="$FZF_DEFAULT_OPTS +m"
