@@ -26,7 +26,7 @@ _v() {
     shift
   done
   [[ -e "$query" ]] && $editor "$query" && return
-  file=$(fd --color=always --type file $opt .+ . ~ /etc /var | \
+  file=$(fd --hidden --color=always --type file $opt .+ . ~ /etc /var | \
     fzf -1 +m --ansi --cycle --inline-info --height 50% --border \
     --layout=reverse --preview="bat --color=always {}" --query "$query") && \
     $editor "$file" || $editor "$query"
