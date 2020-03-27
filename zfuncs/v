@@ -3,7 +3,7 @@
 export PATH="$HOME/.local/bin:$PATH"
 
 _v() {
-  local opt=()
+  local opt=(--type file)
   local query=()
   local editor=(${EDITOR:-vim})
   while [[ -n "$1" ]]; do
@@ -26,10 +26,10 @@ _v() {
     shift
   done
   [[ -e "$query" ]] && $editor "$query" && return
-  file=$(fd --hidden --color=always --type file $opt .+ . ~ /etc /var | \
-    fzf -1 +m --ansi --cycle --inline-info --height 50% --border \
-    --layout=reverse --preview="bat --color=always {}" --query "$query") && \
-    $editor "$file" || $editor "$query"
+  : "$(fd --color=always $opt . . ~ /etc \
+    | fzf -1 +m --print-query -0 --query "$query" --preview="bat --color=always")"
+  [[ "$(echo $_ | wc -l)" -gt 1 ]] && : "$(echo $_ | sed '1d')"
+  [[ -n "$_" ]] && $editor "${_//,}"
 }
 
 _v "$@"
