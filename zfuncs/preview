@@ -2,7 +2,6 @@
 
 _preview() {
   local file="$1"
-  fpath=("${DOT:=$HOME/.dotfiles}/zfuncs" $fpath)
   autoload -Uz has
   if [[ -d "$file" ]] || [[ -h "$file" ]]; then
     local cmd="ls"
@@ -18,7 +17,9 @@ _preview() {
     local conf="${XDG_CONFIG_HOME:-"$HOME/.config"}"
     local scope="${RANGER_CFG:-"$conf/ranger"}/scope.sh"
     if [[ -f "$scope" ]]; then
-      local cache="/tmp/$(cat /dev/urandom | tr -dc 0-9a-zA-Z | head -q -c 32).png"
+      local cache="/tmp/preview"
+      [[ ! -d "$cache" ]] && rm -rf "$cache" && mkdir -p "$cache"
+      cache="$cache/$(cat /dev/urandom | tr -dc 0-9a-zA-Z | head -q -c 32).png"
       bash "$scope" "$file" "$(($(tput cols)/2))" "$(($(tput lines)/2))" "$cache" "False"
       return 0
     fi

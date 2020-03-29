@@ -3,30 +3,33 @@
 export PATH="$HOME/.local/bin:$PATH"
 
 _v() {
-  local opt=(--type file)
+  local options=(--type file)
   local query=()
-  local editor=(${EDITOR:-vim})
+  local editor=("${EDITOR:-vim}")
   while [[ -n "$1" ]]; do
     case $1 in
       -h|-H|h|H)
-        opt=($opt --hidden)
+        options=("${options[@]}" --hidden)
         ;;
       -l|-L|l|L)
-        opt=($opt --type symlink)
+        options=("${options[@]}" --type symlink)
         ;;
       -s|-S|s|S)
-        editor=(sudo $editor)
+        editor=(sudo "$editor")
         ;;
       -*)
         ;;
       *)
-        query=($query $1)
+        query=("${query[@]}" $1)
         ;;
     esac
     shift
   done
   [[ -e "$query" ]] && $editor "$query" && return
-  : "$(fd --color=always $opt . . ~ /etc \
+  autoload -Uz has
+  has fzf || (echo "Fzf not installed." && exit 1)
+  has fd || (echo "Fd not installed." && exit 1)
+  : "$(fd --color=always $options . . ~ /etc \
     | fzf -1 +m --print-query -0 --query "$query" --preview="bat --color=always")"
   [[ "$(echo $_ | wc -l)" -gt 1 ]] && : "$(echo $_ | sed '1d')"
   [[ -n "$_" ]] && $editor "${_//,}"
