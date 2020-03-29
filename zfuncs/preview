@@ -2,17 +2,10 @@
 
 _preview() {
   local file="$1"
-  autoload -Uz has
+  autoload -Uz has exe
   if [[ -d "$file" ]] || [[ -h "$file" ]]; then
-    local cmd="ls"
-    if has exa;
-    then
-      cmd="exa"
-    elif has lsd;
-    then
-      cmd="lsd"
-    fi
-    $cmd -lh --color=always "$file"
+    local cmd="${exe exa lsd ls}"
+    [[ -x "$cmd" ]] && $cmd -lh --color=always "$file"
   elif [[ -f "$file" ]]; then
     local conf="${XDG_CONFIG_HOME:-"$HOME/.config"}"
     local scope="${RANGER_CFG:-"$conf/ranger"}/scope.sh"
