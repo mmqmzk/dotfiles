@@ -6,6 +6,7 @@ if [[ -f ~/.bashrc ]]; then
 fi
 
 # bind "\C-[":character-search-backward
+bind "\C-f":beginning-of-line
 
 if command -v vim &> /dev/null; then
   if [[ -f $SSHRCD/vimrc ]]; then

@@ -11,9 +11,7 @@ has() {
 wh() {
   for name in $@
   do
-  if command which $name 2> /dev/null; then
-    return 0
-  fi
+    command which $name 2> /dev/null && return 0
   done
   return 1;
 }
@@ -25,7 +23,9 @@ is_debian() {
 }
 
 del() {
-  [[ -e $1 || -L $1 ]] && rm -rf $1 || true
+  for file in "$@"; do
+    [[ -e "$file" || -L "$file" ]] && mv --backup=t "$1" /tmp || true
+  done
 }
 
 version_lte() {
@@ -47,12 +47,14 @@ install_dot() {
   git submodule update --init
   check_bin
   ln -s -f "$DOT/zsh-custom/diff-so-fancy/diff-so-fancy" "$BIN/diff-so-fancy"
-  ln -s -f "$DOT/sshrc.zsh" "$BIN/sshrc"
+  ln -s -f "$DOT/zfuncs/sshrc" "$BIN/sshrc"
   ln -s -f "$DOT/zfuncs/v" "$BIN/v"
   ln -s -f "$DOT/sshrc.d" ~/.sshrc.d
-  sudo mkdir -p /root/.local
-  sudo ln -s $BIN /root/.local/bin
-  sudo ln -s "$DOT/zfuncs/v" /usr/local/bin
+  if [[ "$HOME" != /root ]]; then
+    sudo mkdir -p /root/.local
+    sudo ln -s $BIN /root/.local/bin
+    sudo ln -s "$DOT/zfuncs/v" /usr/local/bin
+  fi
 }
 
 install_rust_module() {
@@ -135,7 +137,7 @@ install_vim() {
   fi
   echo "Installing vim"
   cd ~
-  rm -rf ~/.vim*
+  del ~/.vim*
   local VIMDIR="$DOT/vim"
   ln -s -f $VIMDIR ~/.vim
   bash "$VIMDIR/install.sh"
@@ -146,7 +148,7 @@ install_cht() {
   check_bin
   local CHT="/tmp/cht"
   del "$CHT"
-  curl -sSfL http://cht.sh/:cht.sh > "$CHT"
+  curl -sSfL http://cht.sh/:cht.sh -o "$CHT"
   chmod 755 "$CHT"
   del "$BIN/cht"
   mv -f "$CHT" "$BIN"

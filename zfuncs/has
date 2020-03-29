@@ -2,9 +2,7 @@
 
 _has() {
   for name in "$@"; do
-    if which "$name" &> /dev/null; then
-      return 0
-    fi
+    command -v "$name" &> /dev/null && return 0
   done
   return 1
 }

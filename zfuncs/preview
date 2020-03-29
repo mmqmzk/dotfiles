@@ -2,25 +2,22 @@
 
 _preview() {
   local file="$1"
-  autoload -Uz has
+  autoload -Uz has exe
   if [[ -d "$file" ]] || [[ -h "$file" ]]; then
-    local cmd="ls"
-    if has exa;
-    then
-      cmd="exa"
-    elif has lsd;
-    then
-      cmd="lsd"
-    fi
-    $cmd -lh --color=always "$file"
+    local cmd="$(exe exa lsd ls)"
+    [[ -x "$cmd" ]] && $cmd -lh --color=always "$file"
   elif [[ -f "$file" ]]; then
     local conf="${XDG_CONFIG_HOME:-"$HOME/.config"}"
     local scope="${RANGER_CFG:-"$conf/ranger"}/scope.sh"
     if [[ -f "$scope" ]]; then
-      local cache="/tmp/preview"
-      [[ ! -d "$cache" ]] && rm -rf "$cache" && mkdir -p "$cache"
-      cache="$cache/$(cat /dev/urandom | tr -dc 0-9a-zA-Z | head -q -c 32).png"
-      bash "$scope" "$file" "$(($(tput cols)/2))" "$(($(tput lines)/2))" "$cache" "False"
+      : "${file##*/}"
+      : "${_##*.}"
+      local cache="$(mktemp Scope.sh.XXXXXXXX.$_)"
+      local columns="$COLUMNS"
+      local lines="$LINES"
+      [[ -t 0 ]] || ((columns=columns/2-10)) 
+      bash "$scope" "$file" "$columns" "$lines" "$cache" "False"
+      rm -f "$cache" &> /dev/null
       return 0
     fi
     info="$(file "$file")"

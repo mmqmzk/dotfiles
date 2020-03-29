@@ -303,8 +303,16 @@ else
   alias lst="command ls --color=auto -lht"
 fi
 
+toggle_commit() {
+  [[ "$LBUFFER" == \#* ]] && : ${LBUFFER#\#} && : ${_## } || : "# ${LBUFFER}"
+  LBUFFER="$_"
+}
+
 zle -N my-backward-delete-word
+zle -N toggle_commit
 bindkey '' my-backward-delete-word
+bindkey '' toggle_commit
+bindkey '' beginning-of-line
 bindkey '' vi-find-next-char
 bindkey '' vi-find-prev-char
 bindkey ';' vi-repeat-find
