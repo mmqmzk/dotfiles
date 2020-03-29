@@ -7,8 +7,6 @@ export DOT="${DOT:-"$HOME/.dotfiles"}"
 export FZF_BASE="$DOT/fzf"
 export NVM_DIR="$DOT/nvm"
 
-fpath=($DOT/zfuncs "$fpath[@]")
-
 # Path to your oh-my-zsh installation.
 export ZSH="$DOT/oh-my-zsh"
 
@@ -23,7 +21,7 @@ BULLETTRAIN_GIT_COLORIZE_DIRTY=true
 BULLETTRAIN_STATUS_EXIT_SHOW=true
 BULLETTRAIN_PROMPT_ORDER=( time status context dir git cmd_exec_time )
 
-ZSH_THEME="agnoster" #"bullet-train"
+ZSH_THEME="bullet-train" # "agnoster" 
 
 # Set list of themes to load
 # Setting this variable when ZSH_THEME=random
@@ -83,6 +81,14 @@ export RANGER_ZLUA="${ZSH_CUSTOM}/plugins/z.lua/z.lua"
 
 export FZF_MARKS_FILE="${XDG_CONFIG_HOME:-"$HOME/.config"}/fzf-marks"
 
+_fzf_compgen_dir() {
+  fd --type directory --hidden --follow --exclude ".git" --color=always . "$@"
+}
+
+_fzf_compgen_path() {
+  fd --hidden --follow --exclude ".git" --color=always . "$@"
+}
+
 plugins=(
   alias-tips
   colored-man-pages
@@ -119,7 +125,7 @@ plugins=(
   fz
 )
 
-autoload -Uz is-at-least has
+autoload -Uz is-at-least
 
 if is-at-least 5.0.3; then
     plugins+=("zsh-autopair")
@@ -158,6 +164,12 @@ export EDITOR='vim'
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 unalias fd
+
+fpath=($DOT/zfuncs "$fpath[@]")
+export FPATH
+
+autoload -Uz has proxy noproxy set_no_proxy my-backward-delete-word \
+  preview _ssh _sshrc
 
 if has rg; then
   alias rg="rg --smart-case"
@@ -199,6 +211,7 @@ alias f="fzm"
 alias ff="fzf -f"
 alias ft="fzf-tmux"
 alias goo="BROWSER=w3m googler -l cn"
+alias gpo="git push origin --all"
 alias https="http --default-scheme https"
 alias jc="journalctl -x"
 alias jce="journalctl -xe"
@@ -290,14 +303,21 @@ else
   alias lst="command ls --color=auto -lht"
 fi
 
-autoload -Uz proxy noproxy set_no_proxy my-backward-delete-word preview
-
 zle -N my-backward-delete-word
 bindkey '' my-backward-delete-word
 bindkey '' vi-find-next-char
 bindkey '' vi-find-prev-char
 bindkey ';' vi-repeat-find
 bindkey ',' vi-rev-repeat-find
+
+__fzf_complete_ssh() {
+  _fzf_complete +m -- "$@" < <(grep -iw "Host" ~/.ssh/config \
+    | awk '{for(i=2;i<=NF;i++)print $i}' | grep -v "[*?]")
+}
+
+_fzf_complete_sshrc() {
+  __fzf_complete_ssh "$@"
+}
 
 set_no_proxy
 
