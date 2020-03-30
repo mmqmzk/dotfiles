@@ -8,7 +8,7 @@ case "$MOD" in
 esac
 VERSION=$2
 MODULES=(bat exa fd fzf lsd q ripgrep xsv)
-pushd $(dirname $0) &> /dev/null
+pushd "$(dirname $0)" &> /dev/null
 source ./functions.bash
 if [[ "${MOD,,}" == "all" ]]; then
   for mod in "${MODULES[@]}"; do
