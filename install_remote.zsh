@@ -2,19 +2,20 @@
 DOT=${DOT:-~/.dotfiles}
 TMP=$DOT/tmp
 
-hosts=()
-opts=()
-port=22
-remoteOpts=()
+local hosts=()
+local opts=()
+local port=22
+local remoteOpts=()
 while [[ -n "$1" ]]; do
   case "$1" in
     -h)
-      echo "Usage:\n\
-    $0 [-u USER] [-g GROUP] [-i ssh_privkey_file] \
-[(-p|-P) ssh_port] [-o ssh_option] host...\n\
-    use -u and -g to specify USER and GROUP on target host
-    use -e to install exa, -l to install lsd
-      "
+      cat <<- 'EOF'
+			Usage:
+			  $0 [-u USER] [-g GROUP] [-i ssh_privkey_file] \
+			    [(-p|-P) ssh_port] [-o ssh_option] host...\
+			  use -u and -g to specify USER and GROUP on target host
+			  use -e to install exa, -l to install lsd
+			EOF
       exit 0
       ;;
     -p|-P)
@@ -22,25 +23,24 @@ while [[ -n "$1" ]]; do
       shift
       ;;
     -i|-o)
-      opts=($opts $1 $2)
+      opts+=("$1" "$2")
       shift
       ;;
     -u|-g)
-      remoteOpts=($remoteOpts $1 $2)
+      remoteOpts+=("$1" "$2")
       shift
       ;;
     -e|-l)
-      remoteOpts=($remoteOpts $1)
+      remoteOpts+=("$1")
       ;;
     -*)
       ;;
     *)
-      hosts=($hosts $1)
+      hosts+=("$1")
       ;;
   esac
   shift
 done
-
 pushd $TMP
 for host in $hosts; do
   if [[ -n "$host" ]]; then

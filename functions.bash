@@ -101,8 +101,9 @@ download() {
 _link() {
   check_bin
   : "$(find "$1" -name "*${2}*" -type f  -perm -555 | sed '1q')"
-  echo "Linking $_"
   ln -sf "$_" "$BIN/$2"
+  : "$(ls -l --color=always "$_")"
+  echo "Linked $_."
 }
 
 install_rust_module() {

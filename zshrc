@@ -213,6 +213,8 @@ alias ft="fzf-tmux"
 alias gcmm="git commit -m"
 alias gcoc="git checkout console"
 alias gcov="git checkout vim8"
+alias gsf="git submodule foreach"
+alias gsfg="git submodule foreach git"
 alias goo="BROWSER=w3m googler -l cn"
 alias gpo="git push origin --all"
 alias https="http --default-scheme https"
@@ -325,6 +327,7 @@ __fzf_complete_ssh() {
   _fzf_complete +m -- "$@" < <(grep -iw "Host" ~/.ssh/config \
     | awk '{for(i=2;i<=NF;i++)print $i}' | grep -v "[*?]")
 }
+functions[__fzf_complete_ssh]='__fzf_complete_ssh "$@"'
 
 _fzf_complete_sshrc() {
   __fzf_complete_ssh "$@"
