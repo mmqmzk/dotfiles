@@ -38,7 +38,7 @@ _sshrc() {
     local name=$(basename "$SSHRCD")
     local dest="$(tar -hzcf - -C "$dir" "$name" \
       | command ssh -T ${opts2} ${domain} \
-      ': "$(mktemp -d SSHRCD.XXXXXXXXXXXX)" && tar -zxf - -C $_ && echo $_')"
+      ': "$(mktemp -d /tmp/SSHRCD.XXXXXXXXXXXX)" && tar -zxf - -C $_ && echo $_')"
     if [[ -z "$cmd" ]]; then
       cmd="/usr/bin/env SSHRCD='$dest/$name' bash --rcfile '$dest/$name/sshrc'"
       opts=($opts -t)
