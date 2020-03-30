@@ -169,11 +169,11 @@ fpath=($DOT/zfuncs "$fpath[@]")
 export FPATH
 
 autoload -Uz has proxy noproxy set_no_proxy my-backward-delete-word \
-  preview _ssh _sshrc
+  preview exe del
 
 if has rg; then
   alias rg="rg --smart-case"
-  alias -g G="| rg"
+  alias -g G="| \\rg --smart-case"
 elif has ag; then
   alias -g G="| ag --smart-case"
 else
@@ -210,6 +210,9 @@ alias dp="sudo docker ps"
 alias f="fzm"
 alias ff="fzf -f"
 alias ft="fzf-tmux"
+alias gcmm="git commit -m"
+alias gcoc="git checkout console"
+alias gcov="git checkout vim8"
 alias goo="BROWSER=w3m googler -l cn"
 alias gpo="git push origin --all"
 alias https="http --default-scheme https"

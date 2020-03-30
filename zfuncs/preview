@@ -12,12 +12,10 @@ _preview() {
     if [[ -f "$scope" ]]; then
       : "${file##*/}"
       : "${_##*.}"
-      local cache="$(mktemp Scope.sh.XXXXXXXX.$_)"
+      local cache="$(mktemp -u Scope.sh.XXXXXXXX.$_)"
       local columns="$COLUMNS"
-      local lines="$LINES"
       [[ -t 0 ]] || ((columns=columns/2-10)) 
-      bash "$scope" "$file" "$columns" "$lines" "$cache" "False"
-      rm -f "$cache" &> /dev/null
+      bash "$scope" "$file" "$columns" "$LINES" "$cache" "False"
       return 0
     fi
     info="$(file "$file")"
