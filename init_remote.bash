@@ -51,10 +51,6 @@ ln -sf $DOT/zsh-custom/diff-so-fancy/diff-so-fancy $BIN
 ln -sf $DOT/sshrc.d  $BASE/.sshrc.d
 ln -sf $DOT/gitconfig $BASE/.gitconfig
 
-sudo rm -f /usr/local/bin/v
-echo "alias v=vim" >> $HOME/.zprofile
-#sudo ln -s $DOT/zfuncs/v /usr/local/bin/v
-
 if [[ ! -e /root/.local/bin ]]; then
   mkdir -p /root/.local
   sudo ln -s $BIN /root/.local/bin
