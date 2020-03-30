@@ -9,9 +9,8 @@ has() {
 }
 
 wh() {
-  for name in $@
-  do
-    command which $name 2> /dev/null && return 0
+  for name in $@; do
+    command which $name 2> /dev/null && return
   done
   return 1;
 }
@@ -42,43 +41,92 @@ install_dot() {
   if [[ ! -d "$DOT" ]]; then
     git clone https://github.com/mmqmzk/dotfiles.git "$DOT"
   fi
-  cd "$DOT"
+  pushd "$DOT" &> /dev/null
   git pull
   git submodule update --init
   check_bin
-  ln -s -f "$DOT/zsh-custom/diff-so-fancy/diff-so-fancy" "$BIN/diff-so-fancy"
-  ln -s -f "$DOT/zfuncs/sshrc" "$BIN/sshrc"
-  ln -s -f "$DOT/zfuncs/v" "$BIN/v"
-  ln -s -f "$DOT/sshrc.d" ~/.sshrc.d
+  ln -sf "$DOT/zsh-custom/diff-so-fancy/diff-so-fancy" "$BIN/diff-so-fancy"
+  ln -sf "$DOT/zfuncs/sshrc" "$BIN/sshrc"
+  ln -sf "$DOT/zfuncs/v" "$BIN/v"
+  ln -sf "$DOT/sshrc.d" ~/.sshrc.d
   if [[ "$HOME" != /root ]]; then
     sudo mkdir -p /root/.local
     sudo ln -s $BIN /root/.local/bin
     sudo ln -s "$DOT/zfuncs/v" /usr/local/bin
   fi
+  popd
+}
+
+add_v() {
+  : "$1"
+  [[ "$2" == v* ]] && [[ "$_" != v* ]] &&: "v${_}"
+  [[ "$2" == V* ]] && [[ "$_" != V* ]] && : "V${_}"
+  echo "$_"
+}
+
+check_current_tag() {
+  : "$("$1" --version 2>&1 | grep -iv "command not found" \
+    | grep -Eio 'v?[0-9]+[0-9.]*' | sed '1q')"
+  : "$(add_v "$_" $2)"
+  [[ -n "$_" ]] && version_lte "$2" "$_" \
+    && echo "Tool $1 already up to date, version: $_."
+}
+
+get_tag_url() {
+  has jq || (echo "Tool jq not Installed." && exit 1)
+  curl -fsSL "https://api.github.com/repos/$1/releases/${2:-latest}" \
+    | jq "{url:.assets[].browser_download_url,tag:.tag_name}\
+    |select(.url|contains(\"${3:-$RUST_ARCH}\"))|.url+\" \"+.tag" -r | sed '1q'
+}
+
+download() {
+  local url="$1"
+  local dir="$2"
+  local result="$3"
+  del "$dir"
+  mkdir -p "$dir" && pushd "$dir" &> /dev/null
+  curl -fsSL "$url" -o "$result"
+  case "$result" in
+    *.tar.*|*.tar)
+      tar -xf "$result" && del "$result"
+      ;;
+    *.zip)
+      zip -o "$result" && del "$result"
+      ;;
+  esac
+  popd &> /dev/null
+
+}
+
+_link() {
+  check_bin
+  : "$(find "$1" -name "*${2}*" -type f  -perm -555 | sed '1q')"
+  echo "Linking $_"
+  ln -sf "$_" "$BIN/$2"
 }
 
 install_rust_module() {
   local module=$1
   local bin=$2
   local repo=$3
-  local tag=$4
+  local tag=${4:-latest}
+  [[ "$tag" == "-f" ]] && tag="latest" && local force="YES"
   local arch=${5:-$RUST_ARCH}
-  if [[ -z "$tag" ]]; then
-    return 1
+  local url=
+  local result="$module-$tag-$arch.tar.gz"
+  if [[ "$tag" == "latest" ]]; then
+    local data="$(get_tag_url "$repo" "$tag" "$arch")"
+    url="${data%% *}"
+    tag="${data##* }"
+    [[ -z "$force" ]] && check_current_tag "$bin" "$tag" && return
+    result="${result//latest/$tag}"
+  else
+    url="https://github.com/$repo/releases/download/$tag/$result"
   fi
   echo "Installing $module $tag"
-  check_bin
   local dir="$LIB/$module"
-  del "$dir"
-  mkdir -p "$dir" && cd "$dir"
-  local file="$module-$tag-$arch"
-  curl -fsSL "https://github.com/$repo/releases/download/$tag/$file.tar.gz" > "$file.tgz"
-  tar -xf "$file.tgz" && rm -f "$file.tgz"
-  if [[ $bin == /* ]]; then
-    ln -s -f "$dir$bin" "$BIN/$(basename $bin)"
-  else
-    ln -s -f "$dir/$file/$bin" "$BIN/$(basename $bin)"
-  fi
+  download "$url" "$dir" "$result"
+  _link "$dir" "$bin"
 }
 
 install_bat() {
@@ -94,11 +142,11 @@ install_ripgrep() {
 }
 
 install_xsv() {
-  install_rust_module xsv "/xsv" "BurntSushi/xsv" $1
+  install_rust_module xsv "xsv" "BurntSushi/xsv" $1
 }
 
 install_lsd() {
-  install_rust_module lsd lsd "Peltoche/lsd" $1 x86_64-unknown-linux-gnu
+  install_rust_module lsd lsd "Peltoche/lsd" "${1:-latest}" x86_64-unknown-linux-gnu
 }
 
 
@@ -106,10 +154,10 @@ install_fzf() {
   if [[ $1 == "init" ]]; then
     install_dot
   fi
-  if [[ -f  "$DOT/fzf/install" ]]; then
+  if [[ -f "$DOT/fzf/install" ]]; then
     echo "Installing fzf"
     bash "$DOT/fzf/install" --bin
-    ln -s -f $DOT/fzf/bin/fzf $BIN
+    ln -sf $DOT/fzf/bin/fzf $BIN
   fi
 }
 
@@ -118,15 +166,14 @@ install_jq() {
     sudo ${PM} install jq jo -y
   else
     local JQ_TAG=$1
-    if [[ -z "$JQ_TAG" ]]; then
-      return 1
-    fi
+    [[ -z "$JQ_TAG" ]] && return 1
     echo "Installing jq $JQ_TAG"
-    check_bin
-    local JQ_BIN="$BIN/jq"
-    del "$JQ_BIN"
-    curl -fsSL "https://github.com/stedolan/jq/releases/download/jq-$JQ_TAG/jq-linux64" > "$JQ_BIN"
-    chmod 755 "$JQ_BIN"
+    local result="jq-linux64"
+    local dir="$LIB/jq"
+    : "https://github.com/stedolan/jq/releases/download/jq-$JQ_TAG/$result"
+    download  "$_" "$dir" "$result"
+    chmod 755 "$dir/$result"
+    _link "$dir" "jq"
   fi
 }
 
@@ -136,37 +183,47 @@ install_vim() {
     install_dot
   fi
   echo "Installing vim"
-  cd ~
+  pushd ~ &> /dev/null
   del ~/.vim*
   local VIMDIR="$DOT/vim"
-  ln -s -f $VIMDIR ~/.vim
+  ln -sf $VIMDIR ~/.vim
   bash "$VIMDIR/install.sh"
+  popd &> /dev/null
 }
 
 install_cht() {
   echo "Installing cheat.sh"
+  : "/tmp/cht"
+  del "$_"
+  curl -sSfL http://cht.sh/:cht.sh -o "$_"
+  chmod 755 "$_"
   check_bin
-  local CHT="/tmp/cht"
-  del "$CHT"
-  curl -sSfL http://cht.sh/:cht.sh -o "$CHT"
-  chmod 755 "$CHT"
-  del "$BIN/cht"
-  mv -f "$CHT" "$BIN"
+  mv -f "$_" "$BIN"
 }
 
 install_q() {
-  echo "Installing q"
-  check_bin
-  local Q="$BIN/q"
-  del "$Q"
-  curl -fsSL https://github.com/harelba/q/raw/master/bin/q -o "$Q"
-  chmod 755 "$Q"
+  local tag=${1:-latest}
+  [[ "$tag" == "-f" ]] && tag="latest" && local force="YES"
+  local result="q-x86_64-Linux"
+  local url="https://github.com/harelba/q/releases/download/$tag/$result"
+  if [[ "$tag" == "latest" ]]; then
+    local data="$(get_tag_url "harelba/q" "$tag" "$result")"
+    url="${data%% *}"
+    tag="${data##* }"
+    [[ -z "$force" ]] && check_current_tag "q" "$tag" && return
+    result="${result//latest/$tag}"
+  fi
+  echo "Installing q $tag"
+  local dir="$LIB/q"
+  download "$url" "$dir" "$result"
+  chmod 755 "$dir/$result"
+  _link "$dir" "q"
 }
 
 install_node() {
-  local NVM="${NVM_DIR:-"$DOT/nvm"}/nvm.sh"
-  if [[ -f "$NVM" ]]; then
-    source "$NVM"
+  : "${NVM_DIR:-"$DOT/nvm"}/nvm.sh"
+  if [[ -f "$_" ]]; then
+    source "$_"
   else
     echo "nvm not installed"
     return 1
@@ -212,18 +269,20 @@ install_npm() {
 
 
 install_exa() {
-  local tag=$1
-  if [[ -z "$tag" ]]; then 
-    return 1
+  local tag=${1:-latest}
+  [[ "$tag" == "-f" ]] && tag="latest" && local force="YES"
+  local url="https://github.com/ogham/exa/releases/download/$tag/$file"
+  local result="exa-linux-x86_64-$tag.zip"
+  if [[ "$tag" == "latest" ]]; then
+    local data="$(get_tag_url "ogham/exa" "$tag" "exa-linux-x86_64")"
+    url="${data%% *}"
+    tag="${data##* }"
+    [[ -z "$force" ]] && check_current_tag "exa" "$tag" && return
+    result="${result//latest/$tag}"
   fi
-  echo "Installing exa"
-  local EXA="$LIB/exa"
-  mkdir -p "$EXA" && pushd "$EXA"
-  local file="exa-linux-x86_64-$tag.zip"
-  local url="https://github.com/ogham/exa/releases/download/v$tag/$file"
-  curl -fsSL $url -o "$file"
-  unzip -o "$file" 
-  ln -sf "$EXA/exa-linux-x86_64" "$BIN/exa"  
-  rm -f "$file"
-  popd
+  echo "Installing exa $tag"
+  local lib="$LIB/exa"
+  download "$url" "lib" "$result"
+  _link "$lib" "exa"
 }
+

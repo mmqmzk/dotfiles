@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-cd $(dirname "$0")
+pushd $(dirname "$0")
 if [[ ! -f functions.bash ]]; then
   echo "functions.bash not found"
   exit 1
@@ -19,15 +19,16 @@ if [[ -n "$PIP" ]]; then
   echo "Installing httpie"
   ${PIP} install --user httpie -U
 fi
+has python || (: "$(wh python3)" && [[ -x "$_" ]] && sudo ln -sf "$_" "${_%3}")
 
 if ! has ag; then
   echo "Installing ag"
   if is_debian; then
-    AG="silversearcher-ag"
+    : "silversearcher-ag"
   else
-    AG="the_silver_searcher"
+    : "the_silver_searcher"
   fi
-  sudo ${PM} install ${AG} -y
+  sudo ${PM} install "$_" -y
 fi
 
 if ! has lua5.3 lua; then
@@ -41,35 +42,37 @@ fi
 check_bin
 install_dot
 
-OMZ="$DOT/oh-my-zsh"
-ZRC="$HOME/.zshrc"
-del "$ZRC"
+: "$HOME/.zshrc"
+del "$_"
 echo "Installing oh my zsh"
-ln -sf "$DOT/zshrc" "$ZRC"
+ln -sf "$DOT/zshrc" "$_"
 
 if ! has tmux; then
   echo "Installing tmux"
   sudo ${PM} install tmux -y
 fi
-TC=~/.tmux.conf
-del "$TC"
-ln -sf "$DOT/tmux.conf" "$TC"
+: "~/.tmux.conf"
+del "$_"
+ln -sf "$DOT/tmux.conf" "$_"
 
 
 echo "Installing git config"
-GC=~/.gitconfig
-del "$GC"
-ln -sf "$DOT/gitconfig" "$GC"
+: "~/.gitconfig"
+del "$_"
+ln -sf "$DOT/gitconfig" "$_"
 
-install_bat "v0.13.0"
-install_cht
-install_exa "0.9.0"
-install_fd "v7.5.0"
-install_fzf
 install_jq "1.6"
-install_lsd "0.16.0"
-install_node "--lts"
+
+install_bat
+install_cht
+install_exa
+install_fd
+install_fzf
+install_lsd
 install_q
-install_ripgrep "12.0.0"
+install_ripgrep
 install_vim
 install_xsv "0.13.0"
+install_node "--lts"
+
+popd
