@@ -23,12 +23,14 @@ is_debian() {
 
 del() {
   for file in "$@"; do
-    [[ -e "$file" || -L "$file" ]] && mv --backup=t "$1" /tmp || true
+    [[ -e "$file" || -L "$file" ]] \
+      && mv --backup=t "$1" /tmp &> /dev/null \
+      || rm -rf "$file" &> /dev/null
   done
 }
 
 version_lte() {
-  [[ "$1" == "$(printf "%s\n%s" $1 $2 | sort -V | head -n 1)" ]]
+  [[ "$1" == "$(printf "%s\n%s" "$1" "$2" | sort -V | head -n 1)" ]]
 }
 
 check_bin() {
@@ -95,7 +97,6 @@ download() {
       ;;
   esac
   popd &> /dev/null
-
 }
 
 _link() {
@@ -124,26 +125,27 @@ install_rust_module() {
   else
     url="https://github.com/$repo/releases/download/$tag/$result"
   fi
-  echo "Installing $module $tag"
+  echo "Installing $module $tag."
   local dir="$LIB/$module"
   download "$url" "$dir" "$result"
   _link "$dir" "$bin"
 }
 
 install_bat() {
-  install_rust_module bat bat "sharkdp/bat" $1
+  install_rust_module bat bat "sharkdp/bat" "$1"
 }
 
 install_fd() {
-  install_rust_module fd fd "sharkdp/fd" $1
+  install_rust_module fd fd "sharkdp/fd" "$1"
 }
 
 install_ripgrep() {
-  install_rust_module ripgrep rg "BurntSushi/ripgrep" $1
+
+  install_rust_module ripgrep rg "BurntSushi/ripgrep" "$1"
 }
 
 install_xsv() {
-  install_rust_module xsv "xsv" "BurntSushi/xsv" $1
+  install_rust_module xsv "xsv" "BurntSushi/xsv" "$1"
 }
 
 install_lsd() {
@@ -156,7 +158,7 @@ install_fzf() {
     install_dot
   fi
   if [[ -f "$DOT/fzf/install" ]]; then
-    echo "Installing fzf"
+    echo "Installing fzf."
     bash "$DOT/fzf/install" --bin
     ln -sf $DOT/fzf/bin/fzf $BIN
   fi
@@ -194,11 +196,11 @@ install_vim() {
 
 install_cht() {
   echo "Installing cheat.sh"
+  check_bin
   : "/tmp/cht"
   del "$_"
   curl -sSfL http://cht.sh/:cht.sh -o "$_"
   chmod 755 "$_"
-  check_bin
   mv -f "$_" "$BIN"
 }
 
@@ -214,7 +216,7 @@ install_q() {
     [[ -z "$force" ]] && check_current_tag "q" "$tag" && return
     result="${result//latest/$tag}"
   fi
-  echo "Installing q $tag"
+  echo "Installing q $tag."
   local dir="$LIB/q"
   download "$url" "$dir" "$result"
   chmod 755 "$dir/$result"
@@ -226,16 +228,13 @@ install_node() {
   if [[ -f "$_" ]]; then
     source "$_"
   else
-    echo "nvm not installed"
+    echo "Tool nvm not installed."
     return 1
   fi
   local NVMRC="$HOME/.nvmrc"
   local CURRENT_VERSION="$(nvm current 2> /dev/null)"
   local NODE_TAG="$(nvm ls-remote $1 2> /dev/null | egrep -o 'v[0-9.]+' | sort -V | tail -n 1)"
-  if [[ -z "$NODE_TAG" ]]; then
-    echo "Node version $1 not found"
-    return 1
-  fi
+  [[ -z "$NODE_TAG" ]] && echo "Node version $1 not found." && return 1
   if [[ "$NODE_TAG" != "$CURRENT_VERSION" ]]; then
     if nvm install ${NODE_TAG}; then
       echo ${NODE_TAG} > "$NVMRC"
@@ -243,14 +242,14 @@ install_node() {
       nvm use --delete-prefix default
       install_npm
     else
-      echo "Install node version $NODE_TAG failed"
+      echo "Install node version $NODE_TAG failed."
       return 1
     fi
     if nvm version ${CURRENT_VERSION} &> /dev/null; then
       nvm uninstall ${CURRENT_VERSION}
     fi
   else
-    echo "Node version $NODE_TAG alreday installed"
+    echo "Node version $NODE_TAG alreday installed."
   fi
 }
 
@@ -258,10 +257,7 @@ install_node() {
 install_npm() {
   if ! has npm; then
     nvm use default
-    if ! has npm; then
-      echo "npm command not found"
-      return 1
-    fi
+    has npm || (echo "Npm command not found." && return 1)
   fi
   npm install -g npm
   npm install -g fkill-cli
@@ -281,9 +277,9 @@ install_exa() {
     [[ -z "$force" ]] && check_current_tag "exa" "$tag" && return
     result="${result//latest/$tag}"
   fi
-  echo "Installing exa $tag"
-  local lib="$LIB/exa"
-  download "$url" "lib" "$result"
-  _link "$lib" "exa"
+  echo "Installing exa $tag."
+  local dir="$LIB/exa"
+  download "$url" "dir" "$result"
+  _link "$dir" "exa"
 }
 
