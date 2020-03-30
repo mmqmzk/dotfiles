@@ -66,7 +66,7 @@ add_v() {
 
 check_current_tag() {
   : "$("$1" --version 2>&1 | grep -iv "command not found" \
-    | grep -Eio 'v?[0-9]+[0-9.]*' | sed '1q')"
+    | grep -v '未找到命令' | grep -Eio 'v?[0-9]+[0-9.]*' | sed '1q')"
   : "$(add_v "$_" $2)"
   [[ -n "$_" ]] && version_lte "$2" "$_" \
     && echo "Tool $1 already up to date, version: $_."
