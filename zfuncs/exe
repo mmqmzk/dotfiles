@@ -2,7 +2,7 @@
 
 _exe() {
   for name in "$@"; do
-    command which "$name" 2> /dev/null && return 0
+    command which "$name" 2> /dev/null && return
   done
   return 1
 }
