@@ -235,7 +235,8 @@ export FZF_DEFAULT_OPTS="--multi --cycle --inline-info --ansi --height 100% \
   --border --layout=default --preview '$PREVIEW {}' --preview-window 'right:70%:wrap'"
 export FZF_CTRL_T_OPTS="$FZF_DEFAULT_OPTS"
 export FZF_COMPLETION_OPTS="$FZF_DEFAULT_OPTS +m"
-export FZF_ALT_C_OPTS="$FZF_DEFAULT_OPTS +m"
+export FZF_CTRL_R_OPTS="+m --cycle --ansi --border --preview-window 'right:0%'"
+export FZF_ALT_C_OPTS="$FZF_DEFAULT_OPTS +m --preview-window 'right:50%'"
 # export _ZL_FZF_FLAG="+s -1 +m --preview 'echo {} | sed -E \"s/^\\S+\\s*(.+)/\\1/\" | xargs $PREVIEW'"
 export _ZL_FZF_FLAG="+s -1 +m --preview 'echo {} | awk \"{print \\\$2}\" | xargs $PREVIEW'"
 
