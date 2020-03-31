@@ -232,7 +232,7 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_COMPLETION_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd --hidden --type directory --color=always . . ~ /"
 export FZF_DEFAULT_OPTS="--multi --cycle --inline-info --ansi --height 100% \
-  --border --layout=reverse --preview '$PREVIEW {}' --preview-window 'right:70%:wrap'"
+  --border --layout=default --preview '$PREVIEW {}' --preview-window 'right:70%:wrap'"
 export FZF_CTRL_T_OPTS="$FZF_DEFAULT_OPTS"
 export FZF_COMPLETION_OPTS="$FZF_DEFAULT_OPTS +m"
 export FZF_ALT_C_OPTS="$FZF_DEFAULT_OPTS +m"
