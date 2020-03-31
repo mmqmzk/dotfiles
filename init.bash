@@ -55,11 +55,13 @@ fi
 del "$_"
 ln -sf "$DOT/tmux.conf" "$_"
 
-
 echo "Installing git config."
 : "~/.gitconfig"
 del "$_"
 ln -sf "$DOT/gitconfig" "$_"
+
+ln -sf "$DOT/synczk.zsh" "$BIN/synczk"
+
 
 install_jq "1.6"
 
