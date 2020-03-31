@@ -1,5 +1,4 @@
-set number
-set relativenumber
+set number relativenumber
 set autoindent
 set smartindent
 set showcmd
@@ -12,7 +11,7 @@ set backspace=indent,eol,start
 set showmatch
 set hlsearch
 set incsearch
-set smartcase
+set smartcase ignorecase
 set ruler
 set expandtab
 set encoding=utf-8
