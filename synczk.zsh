@@ -6,7 +6,7 @@ popd
 local linux="$GOOGLE_DRIVE/Config/Linux"
 local cfg="${XDG_CONFIG_HOME:-"$HOME/.config"}"
 local ranger="$cfg/ranger"
-if [[ -e "ranger_" ]]; then
+if [[ -e "$ranger" ]]; then
   pushd "$ranger"
   git pull
   : "$linux"
