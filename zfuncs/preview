@@ -13,9 +13,9 @@ _preview() {
       : "${file##*/}"
       : "${_##*.}"
       local cache="$(mktemp -u /tmp/Scope.sh.XXXXXXXX.$_)"
-      local columns="$COLUMNS"
-      [[ -t 0 ]] || ((columns=columns/2-10)) 
-      bash "$scope" "$file" "$columns" "$LINES" "$cache" "False"
+      local columns="${FZF_PREVIEW_COLUMNS:-$COLUMNS}"
+      local lines="${FZF_PREVIEW_LINES:-$Lines}"
+      bash "$scope" "$file" "$columns" "$lines" "$cache" "False"
       return 0
     fi
     info="$(file "$file")"
