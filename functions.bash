@@ -41,7 +41,8 @@ check_bin() {
 
 install_dot() {
   if [[ ! -d "$DOT" ]]; then
-    git clone https://github.com/mmqmzk/dotfiles.git "$DOT"
+    git clone git@github.com:mmqmzk/dotfiles.git "$DOT" \
+      || git clone https://github.com/mmqmzk/dotfiles.git "$DOT"
   fi
   pushd "$DOT" &> /dev/null
   git pull
