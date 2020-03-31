@@ -2,6 +2,7 @@
 
 pushd "${DOT:-"$HOME/.dotfiles"}"
 git pull && git submodule update --init
+bash update.bash
 popd
 local linux="$GOOGLE_DRIVE/Config/Linux"
 local cfg="${XDG_CONFIG_HOME:-"$HOME/.config"}"
