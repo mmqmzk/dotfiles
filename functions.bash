@@ -106,6 +106,10 @@ _link() {
   ln -sf "$_" "$BIN/$2"
   : "$(ls -l --color=always "$_")"
   echo "Linked $_."
+  : "$(find "$1" -name "*.1" -type f)"
+  [[ -n "$_" ]] && (echo $_ \
+    | xargs -I{} sudo \cp -f "{}" /usr/local/share/man/man1) \
+    && sudo mandb || true
 }
 
 install_rust_module() {
