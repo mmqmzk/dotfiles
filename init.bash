@@ -11,7 +11,7 @@ if [[ -z "$PM" ]]; then
   exit 1
 fi
 
-sudo ${PM} install git zsh curl zip python3-pip -y
+sudo ${PM} install git zsh curl zip unzip python3-pip -y
 
 PIP=$(wh pip3 pip)
 if [[ -n "$PIP" ]]; then
