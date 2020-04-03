@@ -46,3 +46,6 @@
 [submodule "zsh-custom/plugins/fzf-marks"]
 	path = zsh-custom/plugins/fzf-marks
 	url = https://github.com/urbainvaes/fzf-marks.git
+[submodule "zsh-custom/themes/powerlevel10k"]
+	path = zsh-custom/themes/powerlevel10k
+	url = https://github.com/romkatv/powerlevel10k.git

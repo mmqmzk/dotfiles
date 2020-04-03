@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # If you come from bash you might have to change your $PATH.
 if [[ "$PATH" != *"$HOME/.local/bin"* ]]; then
   export PATH="$HOME/.local/bin:$PATH"
@@ -21,7 +28,7 @@ BULLETTRAIN_GIT_COLORIZE_DIRTY=true
 BULLETTRAIN_STATUS_EXIT_SHOW=true
 BULLETTRAIN_PROMPT_ORDER=( time status context dir git cmd_exec_time )
 
-ZSH_THEME="bullet-train" # "agnoster" 
+ZSH_THEME="powerlevel10k/powerlevel10k" # "bullet-train"
 
 # Set list of themes to load
 # Setting this variable when ZSH_THEME=random
@@ -337,3 +344,5 @@ _fzf_complete_sshrc() {
 
 set_no_proxy
 
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+: "$DOT/p10k.zsh"  && [[ -f "$_" ]] && source "$_"
