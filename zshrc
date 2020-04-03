@@ -28,7 +28,7 @@ BULLETTRAIN_GIT_COLORIZE_DIRTY=true
 BULLETTRAIN_STATUS_EXIT_SHOW=true
 BULLETTRAIN_PROMPT_ORDER=( time status context dir git cmd_exec_time )
 
-ZSH_THEME="powerlevel10k/powerlevel10k" # "bullet-train"
+ZSH_THEME="bullet-train"
 
 # Set list of themes to load
 # Setting this variable when ZSH_THEME=random
