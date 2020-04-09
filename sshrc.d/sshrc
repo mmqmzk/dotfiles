@@ -1,9 +1,7 @@
-if [[ -f /etc/profile ]]; then
-  source /etc/profile
-fi
-if [[ -f ~/.bashrc ]]; then
-  source ~/.bashrc
-fi
+#! /usr/bin/env bash
+
+: "/etc/profile" && [[ -f "$_" ]] && source "$_"
+: "$HOME/.bashrc" && [[ -f "$_" ]] && source "$_"
 
 # bind "\C-[":character-search-backward
 bind "\C-f":beginning-of-line
@@ -45,6 +43,6 @@ lld () {
 }
 
 take () {
-  mkdir -p "$1" && cd "$1"
+  mkdir -p "$1" && cd "$1" 
 }
 

@@ -28,36 +28,37 @@ BIN=$LOCAL/bin
 LIB=$LOCAL/lib
 DOT_BALL=${DOT_BALL:-$HOME/dot.tbz2}
 
-rm -rf $DOT $LOCAL
-find $BASE -maxdepth 1 -type l -delete
-tar -xf $DOT_BALL -C $BASE
+rm -rf "$DOT" "$LOCAL"
+: "$BASE/.vim" && [[ -d "$_" ]] && rm -rf "$_"
+: "/root/.vim" && [[ -d "$_" ]] && sudo rm -rf "$_"
+find "$BASE" -maxdepth 1 -type l -delete
+tar -xf "$DOT_BALL" -C "$BASE"
 
 _chown() {
-  if [[ $(stat -c "%U" $1) != "$user" ]] || [[ $(stat -c "%G" $1) != "$group" ]]; then
+  if [[ $(stat -c "%U" "$1") != "$user" ]] || [[ $(stat -c "%G" "$1") != "$group" ]]; then
     local cmd="chown $user:$group -R"
     if [[ "$user" != "$USER" ]]; then
       cmd="sudo $cmd"
     fi
-    $cmd $1
+    $cmd "$1"
   fi
 }
 
-_chown $DOT
-_chown $LOCAL
-chmod -R go-w .dotfiles
-ln -sf $DOT/zshrc  $BASE/.zshrc
-ln -sf $DOT/vim  $BASE/.vim
-ln -sf $DOT/zsh-custom/diff-so-fancy/diff-so-fancy $BIN
-ln -sf $DOT/sshrc.d  $BASE/.sshrc.d
-ln -sf $DOT/gitconfig $BASE/.gitconfig
+_chown "$DOT"
+_chown "$LOCAL"
+chmod -R go-w "$DOT"
+ln -sf "$DOT/zshrc"  "$BASE/.zshrc"
+# ln -sf "$DOT/vim"  "$BASE/.vim"
+ln -sf "$DOT/sshrc.d/vimrc" "$BASE/.vimrc"
+[[ "$user" != "root" ]] && sudo ln -sf "$BASE/.vimrc" /root
+ln -sf "$DOT/zsh-custom/diff-so-fancy/diff-so-fancy" "$BIN"
+ln -sf "$DOT/gitconfig" "$BASE/.gitconfig"
 
-if [[ ! -e /root/.local/bin ]]; then
-  mkdir -p /root/.local
-  sudo ln -s $BIN /root/.local/bin
-fi
+[[ -e /root/.local/bin ]] \
+  || sudo bash -c "mkdir -p /root/.local && ln -s '$BIN' /root/.local/bin"
 
 _link() {
-  find $LIB -type f -perm -500 -name "$1" -exec ln -sf {} $BIN/$2 \;
+  find "$LIB" -type f -perm -500 -name "$1" -exec ln -sf {} "$BIN/$2" \;
 }
 
 _link bat bat
@@ -65,10 +66,5 @@ _link fd fd
 _link rg rg
 _link xsv xsv
 
-if [[ -n "$EXA" ]]; then
-  _link exa-linux-x86_64 $EXA
-fi
-
-if [[ -n "$LSD" ]]; then
-  _link lsd $LSD
-fi
+[[ -n "$EXA" ]] && _link exa-linux-x86_64 $EXA
+[[ -n "$LSD" ]] && _link lsd $LSD

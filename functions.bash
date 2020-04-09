@@ -5,17 +5,17 @@ LIB=${LIB:-"$HOME/.local/lib"}
 RUST_ARCH="x86_64-unknown-linux-musl"
 
 has() {
-  wh $@ &> /dev/null
+  wh "$@" &> /dev/null
 }
 
 wh() {
-  for name in $@; do
-    command which $name 2> /dev/null && return
+  for name in "$@"; do
+    command which "$name" 2> /dev/null && return
   done
   return 1;
 }
-
-export PM=$(wh yum apt)
+PM=$(wh yum apt)
+export PM
 
 is_debian() {
   [[ "$PM" != *yum* ]]
@@ -23,8 +23,8 @@ is_debian() {
 
 del() {
   for file in "$@"; do
-    [[ -e "$file" || -L "$file" ]] \
-      && mv --backup=t "$1" /tmp &> /dev/null \
+    ([[ -e "$file" || -L "$file" ]] \
+      && mv --backup=t "$1" /tmp &> /dev/null) \
       || rm -rf "$file" &> /dev/null
   done
 }
@@ -54,7 +54,7 @@ install_dot() {
   ln -sf "$DOT/sshrc.d" ~/.sshrc.d
   if [[ "$HOME" != /root ]]; then
     sudo mkdir -p /root/.local
-    sudo ln -s $BIN /root/.local/bin
+    sudo ln -s "$BIN" /root/.local/bin
     sudo ln -s "$DOT/zfuncs/v" /usr/local/bin
   fi
   popd
@@ -70,7 +70,7 @@ add_v() {
 check_current_tag() {
   : "$("$1" --version 2>&1 | grep -iv "command not found" \
     | grep -v '未找到命令' | grep -Eio 'v?[0-9]+[0-9.]*' | sed '1q')"
-  : "$(add_v "$_" $2)"
+  : "$(add_v "$_" "$2")"
   [[ -n "$_" ]] && version_lte "$2" "$_" \
     && echo "Tool $1 already up to date, version: $_."
 }
@@ -107,9 +107,9 @@ _link() {
   : "$(ls -l --color=always "$_")"
   echo "Linked $_."
   : "$(find "$1" -name "*.1" -type f)"
-  [[ -n "$_" ]] && (echo $_ \
+  ([[ -n "$_" ]] && (echo "$_" \
     | xargs -I{} sudo \cp -f "{}" /usr/local/share/man/man1) \
-    && sudo mandb || true
+    && sudo mandb) || true
 }
 
 install_rust_module() {
@@ -165,7 +165,7 @@ install_fzf() {
   if [[ -f "$DOT/fzf/install" ]]; then
     echo "Installing fzf."
     bash "$DOT/fzf/install" --bin
-    ln -sf $DOT/fzf/bin/fzf $BIN
+    ln -sf "$DOT/fzf/bin/fzf" "$BIN"
     sudo \cp -rf "$DOT/fzf/man/man1" /usr/share/man
     sudo mandb
   fi
@@ -196,7 +196,7 @@ install_vim() {
   pushd ~ &> /dev/null
   del ~/.vim*
   local VIMDIR="$DOT/vim"
-  ln -sf $VIMDIR ~/.vim
+  ln -sf "$VIMDIR" ~/.vim
   bash "$VIMDIR/install.sh"
   popd &> /dev/null
 }
@@ -240,20 +240,20 @@ install_node() {
   fi
   local NVMRC="$HOME/.nvmrc"
   local CURRENT_VERSION="$(nvm current 2> /dev/null)"
-  local NODE_TAG="$(nvm ls-remote $1 2> /dev/null | egrep -o 'v[0-9.]+' | sort -V | tail -n 1)"
+  local NODE_TAG="$(nvm ls-remote "$1" 2> /dev/null | grep -Eo 'v[0-9.]+' | sort -V | tail -n 1)"
   [[ -z "$NODE_TAG" ]] && echo "Node version $1 not found." && return 1
   if [[ "$NODE_TAG" != "$CURRENT_VERSION" ]]; then
-    if nvm install ${NODE_TAG}; then
-      echo ${NODE_TAG} > "$NVMRC"
-      nvm alias default ${NODE_TAG}
+    if nvm install "$NODE_TAG"; then
+      echo "$NODE_TAG" > "$NVMRC"
+      nvm alias default "$NODE_TAG"
       nvm use --delete-prefix default
       install_npm
     else
       echo "Install node version $NODE_TAG failed."
       return 1
     fi
-    if nvm version ${CURRENT_VERSION} &> /dev/null; then
-      nvm uninstall ${CURRENT_VERSION}
+    if nvm version "$CURRENT_VERSION" &> /dev/null; then
+      nvm uninstall "$CURRENT_VERSION"
     fi
   else
     echo "Node version $NODE_TAG alreday installed."
