@@ -29,8 +29,8 @@ LIB=$LOCAL/lib
 DOT_BALL=${DOT_BALL:-$HOME/dot.tbz2}
 
 rm -rf "$DOT" "$LOCAL"
-: "$BASE/.vim" && [[ -d "$_" ]] && rm -rf "$_"
-: "/root/.vim" && [[ -d "$_" ]] && sudo rm -rf "$_"
+: "$BASE/.vim" && [[ -e "$_" ]] && rm -rf "$_"
+: "/root/.vim" && [[ -e "$_" ]] && sudo rm -rf "$_"
 find "$BASE" -maxdepth 1 -type l -delete
 tar -xf "$DOT_BALL" -C "$BASE"
 
