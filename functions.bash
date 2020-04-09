@@ -269,6 +269,8 @@ install_npm() {
   npm install -g npm
   npm install -g fkill-cli
   npm install -g ramda-cli
+  npm install -g typescript
+  npm install -g eslint
 }
 
 
