@@ -51,12 +51,12 @@ if ! has tmux; then
   echo "Installing tmux."
   sudo ${PM} install tmux -y
 fi
-: "~/.tmux.conf"
+: "$HOME/.tmux.conf"
 del "$_"
 ln -sf "$DOT/tmux.conf" "$_"
 
 echo "Installing git config."
-: "~/.gitconfig"
+: "$HOME/.gitconfig"
 del "$_"
 ln -sf "$DOT/gitconfig" "$_"
 
