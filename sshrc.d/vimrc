@@ -51,8 +51,8 @@ if executable('ag')
 elseif executable('rg')
   set grepprg=rg\ --vimgrep\ --smart-case\ 2>/dev/null
 else
-  nnoremap K :grep! -s -r -F '<c-r><c-w>' .<cr>:cwindow<cr>
-  vnoremap K y:grep! -s -r -F '<c-r>0' .<cr>:cwindow<cr>
+  nnoremap K :grep! -srF '<c-r><c-w>' .<cr>:cwindow<cr>
+  vnoremap K y:grep! -srF '<c-r>0' .<cr>:cwindow<cr>
 endif
 
 nnoremap [0 :cfirst<cr>
@@ -69,7 +69,7 @@ nnoremap [l :lprevious<cr>
 nnoremap ]l :lnext<cr>
 
 noremap Y y$
-noremap <F2> :redraw<cr>
+noremap <F5> :redraw<cr>
 noremap <F8> :let @/ = ""<cr>
 nnoremap <leader><cr> :nohlsearch<cr>
 nnoremap <space><cr> :nohlsearch<cr>
