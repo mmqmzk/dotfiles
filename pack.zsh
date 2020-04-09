@@ -3,13 +3,16 @@ BASE=${BASE:-$HOME}
 DOT=${DOT:-$BASE/.dotfiles}
 TMP=${TMP:-$DOT/tmp}
 LOCAL=${LOCAL:-$BASE/.local}
-pushd $DOT/vim
+pushd "$DOT"
+pushd "$DOT/vim"
 git checkout console
 bash install.sh
-rsync -a --progress -f "-s .git" -f "-s tmp" -f "-s youcompleteme/" --delete --delete-excluded $DOT $TMP
-git checkout vim8
+rsync -a --progress -f "-s .git" -f "-s tmp" -f "-s youcompleteme/" --delete \
+  --delete-excluded $DOT $TMP
 popd
+git submodule update
 rsync -a --progress --delete $LOCAL $TMP
+popd
 mkdir -p $TMP
 pushd $TMP
 rm -f dot.tbz2
