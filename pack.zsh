@@ -7,8 +7,8 @@ pushd "$DOT"
 pushd "$DOT/vim"
 git checkout console
 bash install.sh
-rsync -a --progress -f "-s .git" -f "-s tmp" -f "-s youcompleteme/" --delete \
-  --delete-excluded $DOT $TMP
+rsync -a --progress -f "-s .git" -f "-s tmp" -f "-s youcompleteme/" \
+  -f "-s .cache" --delete --delete-excluded $DOT $TMP
 popd
 git submodule update
 rsync -a --progress --delete $LOCAL $TMP
