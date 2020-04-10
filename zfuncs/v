@@ -28,6 +28,7 @@ _v() {
     shift
   done
   [[ -e "$query" ]] && $editor $args "$query" && return
+  [[ -z "$query" ]] && $editor $args && return
   autoload -Uz has
   has fzf || (echo "Tool fzf not installed." && exit 1)
   has fd || (echo "Tool fd not installed." && exit 1)

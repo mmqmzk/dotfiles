@@ -108,7 +108,7 @@ _link() {
   echo "Linked $_."
   : "$(find "$1" -name "*.1" -type f)"
   ([[ -n "$_" ]] && (echo "$_" \
-    | xargs -I{} sudo \cp -f "{}" /usr/local/share/man/man1) \
+    | xargs -I{} sudo cp -f "{}" /usr/local/share/man/man1) \
     && sudo mandb) || true
 }
 
@@ -166,7 +166,7 @@ install_fzf() {
     echo "Installing fzf."
     bash "$DOT/fzf/install" --bin
     ln -sf "$DOT/fzf/bin/fzf" "$BIN"
-    sudo \cp -rf "$DOT/fzf/man/man1" /usr/share/man
+    sudo cp -rf "$DOT/fzf/man/man1" /usr/share/man
     sudo mandb
   fi
 }
