@@ -8,6 +8,7 @@ bind "\C-f":beginning-of-line
 
 if command -v vim &> /dev/null; then
   if [[ -f $SSHRCD/vimrc ]]; then
+    # shellcheck disable=SC2139
     alias v="command vim -u $SSHRCD/vimrc"
     export EDITOR="v"
   fi
@@ -31,7 +32,7 @@ alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
-alias c-="cd -"
+alias -- -="cd -"
 alias rg="rg --smart-case"
 
 lD () {
@@ -43,6 +44,6 @@ lld () {
 }
 
 take () {
-  mkdir -p "$1" && cd "$1" 
+  mkdir -p "$1" && cd "$1" || return
 }
 

@@ -1,25 +1,28 @@
 set number relativenumber
-set autoindent
-set smartindent
+set autoindent smartindent
 set showcmd
-set showmode
 set tabstop=2
 set shiftwidth=2
 set scrolloff=4
+set sidescrolloff=4
 set softtabstop=2
+set nojoinspaces
 set backspace=indent,eol,start
 set showmatch
 set hlsearch
 set incsearch
-set smartcase ignorecase
+set ignorecase smartcase
 set ruler
 set expandtab
+set smarttab
 set encoding=utf-8
 set timeoutlen=500
+set ttimeoutlen=100
 set nocompatible
 set autoread
 set autowrite
 set hidden
+set showmode
 syntax on
 filetype plugin indent on
 
