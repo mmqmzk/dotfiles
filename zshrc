@@ -181,23 +181,32 @@ autoload -Uz has proxy noproxy set_no_proxy my-backward-delete-word \
 if has rg; then
   alias rg="rg --smart-case"
   alias -g G="| \\rg --smart-case"
+  alias -g GC="| \\rg --smart-case --color=always"
 elif has ag; then
   alias -g G="| ag --smart-case"
+  alias -g GC="| ag --smart-case --color"
 else
-  alias -g G="| egrep -i"
+  alias -g G="| grep -Ei"
+  alias -g GC="| grep -Ei --color=always"
 fi
 
 alias -g B="| bat --color=always"
 alias -g BB="2>&1 | bat --color=always"
+alias -g C="| wc -l"
 alias -g F="| fzf"
 alias -g H="| head -q"
 alias -g HH="2>&1 | head -q"
 alias -g J="| jq . | bat -l json"
 alias -g L="| less -R"
 alias -g LL="2>&1 | less -R"
+alias -g S="| sort"
+alias -g SN="| sort -n"
+alias -g SR="| sort -r"
+alias -g SNR="| sort -nr"
 alias -g T="| tail"
-alias -g TF="2>&1 | tail -f"
+alias -g TF="| tail -f"
 alias -g TT="2>&1 | tail"
+alias -g TTF="2>&1 | tail -f"
 alias -g X="| bat -l xml"
 alias -g Y="| yank -i"
 alias -g YY="2>&1 | yank -i"
@@ -219,7 +228,6 @@ alias ff="fzf -f"
 alias ft="fzf-tmux"
 alias gcmm="git commit -m"
 alias gcoc="git checkout console"
-alias gcov="git checkout vim8"
 alias gsf="git submodule foreach"
 alias gsfg="git submodule foreach git"
 alias goo="BROWSER=w3m googler -l cn"
@@ -274,21 +282,13 @@ if [[ -z "$BROWSER" ]]; then
   export BROWSER="w3m"
 fi
 
-lD () {
-  fd --type directory --max-depth 1 . "$1" | xargs ls --color=auto -d
-}
-
-lld () {
-  fd --type directory --max-depth 1 . "$1" | xargs ls --color=auto -lhd
-}
+: "$DOT/sshrc.d/lsd.sh" && [[ -f "$_" ]] && source "$_"
 
 if has exa; then
     alias ls="exa"
     alias lsa="exa -a"
     alias l="exa -lg"
     alias la="exa -lgaa"
-    alias lD="exa -D"
-    alias lld="exa -lgD"
     alias lt="exa -T"
     alias lt2="exa -gT -L 2"
     alias lt3="exa -gT -L 3"
@@ -336,7 +336,7 @@ __fzf_complete_ssh() {
   _fzf_complete +m -- "$@" < <(grep -iw "Host" ~/.ssh/config \
     | awk '{for(i=2;i<=NF;i++)print $i}' | grep -v "[*?]")
 }
-functions[__fzf_complete_ssh]='__fzf_complete_ssh "$@"'
+functions[_fzf_complete_ssh]='__fzf_complete_ssh "$@"'
 
 _fzf_complete_sshrc() {
   __fzf_complete_ssh "$@"

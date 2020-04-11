@@ -7,12 +7,13 @@
 bind "\C-f":beginning-of-line
 
 if command -v vim &> /dev/null; then
-  if [[ -f $SSHRCD/vimrc ]]; then
-    # shellcheck disable=SC2139
-    alias v="command vim -u $SSHRCD/vimrc"
-    export EDITOR="v"
-  fi
+  # shellcheck disable=SC2139
+  : "$SSHRCD/vimrc" && [[ -f "$_" ]] \
+    && alias v="command vim -u '$_'" \
+    && export EDITOR="v"
 fi
+
+: "$SSHRCD/lsd.sh" && [[ -f "$_" ]] && source "$_"
 
 alias L="less -R"
 alias T="tail"
@@ -33,17 +34,29 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias -- -="cd -"
-alias rg="rg --smart-case"
+if command -v ag &> /dev/null; then
+  alias agc="ag --color"
+  alias G="ag"
+  alias GC="ag --color"
+elif command -v rg &> /dev/null; then
+  alias rg="rg --smart-case"
+  alias rgc="rg --smart-case --color=awryas"
+  alias G="rg --smart-case"
+  alias GC="rg --smart-case --color=awryas"
+else
+  alias G="grep -Ei"
+  alias GC="grep -Ei --color=awryas"
+fi
 
-lD () {
-  fd --type directory --max-depth 1 . "$1" | xargs ls --color=auto -d
-}
-
-lld () {
-  fd --type directory --max-depth 1 . "$1" | xargs ls --color=auto -lhd
-}
-
-take () {
+take() {
   mkdir -p "$1" && cd "$1" || return
+}
+
+del() {
+  local tmp="/tmp"
+  for file in "$@"; do
+    [[ -e "$file" || -L "$file" ]] && mv --backup=t "$file" "$tmp" && continue
+    rm -rf "$file" || true
+  done
 }
 
