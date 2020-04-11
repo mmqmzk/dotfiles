@@ -7,7 +7,7 @@ __lfd() {
     [ $# -gt 1 ] && echo "${name}:"
     find "$name" -maxdepth 1 -type "$type" \
       | sed -E 's|^\./||;s|/$||;/^\.$/d' \
-      | xargs -n 1 ls --color=auto ${args:+"$args"}
+      | xargs -r -n 1 ls --color=auto ${args:+"$args"}
   done
 }
 
