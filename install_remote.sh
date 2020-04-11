@@ -1,11 +1,11 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 DOT=${DOT:-~/.dotfiles}
 TMP=$DOT/tmp
 
-local hosts=()
-local opts=()
-local port=22
-local remoteOpts=()
+declare -a hosts
+declare -a opts
+port=22
+remoteOpts=
 while [[ -n "$1" ]]; do
   case "$1" in
     -h)
@@ -27,11 +27,11 @@ while [[ -n "$1" ]]; do
       shift
       ;;
     -u|-g)
-      remoteOpts+=("$1" "$2")
+      remoteOpts="$remoteOpts '$1' '$2'"
       shift
       ;;
     -e|-l)
-      remoteOpts+=("$1")
+      remoteOpts="$remoteOpts '$1'"
       ;;
     -*)
       ;;
@@ -41,14 +41,15 @@ while [[ -n "$1" ]]; do
   esac
   shift
 done
-pushd $TMP
-for host in $hosts; do
+pushd "$TMP"
+for host in "${hosts[@]}"; do
   if [[ -n "$host" ]]; then
     if [[ "$host" !=  *@* ]]; then
       host="root@$host"
     fi
-    scp -P $port $opts dot.tbz2 $host:~
-    cat $DOT/init_remote.bash | ssh -p $port $opts $host "bash -s -x -- $remoteOpts"
+    scp -P "$port" "${opts[@]}" dot.tbz2 "$host":~
+    # shellcheck disable=SC2029
+    ssh -p "$port" "${opts[@]}"  "$host" "bash -s -x -- $remoteOpts" < "$DOT/init_remote.bash"
   fi
 done
 popd
