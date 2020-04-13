@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 DOT=${DOT:-"$HOME/.dotfiles"}
 BIN=${BIN:-"$HOME/.local/bin"}
 LIB=${LIB:-"$HOME/.local/lib"}
@@ -108,7 +110,7 @@ _link() {
   echo "Linked $_."
   : "$(find "$1" -name "*.1" -type f)"
   ([[ -n "$_" ]] && (echo "$_" \
-    | xargs -I{} sudo cp -f "{}" /usr/local/share/man/man1) \
+    | xargs -I{} sudo command cp -f "{}" /usr/local/share/man/man1) \
     && sudo mandb) || true
 }
 
@@ -166,14 +168,14 @@ install_fzf() {
     echo "Installing fzf."
     bash "$DOT/fzf/install" --bin
     ln -sf "$DOT/fzf/bin/fzf" "$BIN"
-    sudo cp -rf "$DOT/fzf/man/man1" /usr/share/man
+    sudo command cp -rf "$DOT/fzf/man/man1" /usr/share/man
     sudo mandb
   fi
 }
 
 install_jq() {
   if is_debian; then
-    sudo ${PM} install jq jo -y
+    sudo "$PM" install jq jo -y
   else
     local JQ_TAG=$1
     [[ -z "$JQ_TAG" ]] && return 1
