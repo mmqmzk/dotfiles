@@ -24,5 +24,5 @@ if [[ -e "$copyq" && -d "$linux" ]]; then
 fi
 gist="$HOME/.local/lib/gist"
 if [[ -d "$gist" ]]; then
-  pushd "$gist" && gitl pull && popd
+  pushd "$gist" && git pull && popd
 fi
