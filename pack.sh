@@ -3,14 +3,14 @@ BASE=${BASE:-$HOME}
 DOT=${DOT:-$BASE/.dotfiles}
 TMP=${TMP:-$DOT/tmp}
 LOCAL=${LOCAL:-$BASE/.local}
-pushd "$DOT"
 pushd "$DOT/vim"
 git checkout console
-bash install.sh
+vim +PlugInstall +PlugUpdate
 rsync -a --progress -f "-s .git" -f "-s tmp" -f "-s youcompleteme/" \
   -f "-s .cache" --delete --delete-excluded "$DOT" "$TMP"
 popd
-git submodule update
+pushd "$DOT"
+git submodule update --init
 rsync -a --progress --delete "$LOCAL" "$TMP"
 popd
 mkdir -p "$TMP"
