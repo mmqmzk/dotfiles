@@ -9,15 +9,15 @@ _sshrc() {
   while [[ -n "$1" ]]; do
     case "$1" in
       -D|-E|-e|-L|-O|-Q|-R|-S|-W|-w)
-        opts=+("$1" "$2")
+        opts+=("$1" "$2")
         shift
         ;;
       -b|-c|-F|-i|-I|-l|-m|-o|-p)
-        opts2=+("$1" $2)
+        opts2+=("$1" "$2")
         shift
         ;;
       -*)
-        opts=+("$1");
+        opts+=("$1");
         ;;
       *)
         if [[ -z "$domain" ]]; then
@@ -30,15 +30,15 @@ _sshrc() {
     shift
   done
   if [[ -z "$domain" ]]; then
-    command ssh ${opts} ${opts2}
+    command ssh "${opts[@]}" "${opts2[@]}"
     return 1
   fi
   if [[ -e "$SSHRCD" ]] && [[ "$opts" != *(-N|-D|-L|-R|-W|-w)* ]]; then
     local dir=$(dirname "$SSHRCD")
     local name=$(basename "$SSHRCD")
     local dest="$(tar -hzcf - -C "$dir" "$name" \
-      | command ssh -T ${opts2} ${domain} \
-      ': "$(mktemp -d /tmp/SSHRCD.XXXXXXXXXXXX)" && tar -zxf - -C $_ && echo $_')"
+      | command ssh -T "${opts2[@]}" "$domain" \
+      ': "$(mktemp -d /tmp/SSHRCD.XXXXXXXXXX)" && tar -zxf - -C $_ && echo $_')"
     if [[ -z "$cmd" ]]; then
       cmd="/usr/bin/env SSHRCD='$dest/$name' bash --rcfile '$dest/$name/sshrc'"
       opts=($opts -t)
@@ -46,8 +46,7 @@ _sshrc() {
       cmd="export SSHRCD='$dest/$name'; source '$dest/$name/sshrc'; $cmd"
     fi
   fi
-
-  command ssh ${opts} ${opts2} ${domain} ${cmd}
+  command ssh "${opts[@]}" "${opts2[@]}" "$domain" "$cmd"
 }
 
 _sshrc "$@"
