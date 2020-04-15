@@ -1,0 +1,193 @@
+
+__lpass_complete_uniqenames() {
+  lpass ls --sync auto --format '"%an"' --color=never
+}
+
+__lpass_complete_groups() {
+  lpass ls --sync auto --format '"%ag/"' --color=never | sort -u
+}
+
+__generateItems() {
+  local args="$@"
+  local -a cmds
+  local -a colors
+  local -a sync
+  colors=(
+  "--color=auto"
+  "--color=always"
+  "--color=never"
+  )
+  sync=(
+  "--sync=auto"
+  "--sync=now"
+  "--sync=no"
+  )
+  case "$args" in
+    'lpass login'*)
+      cmds=(
+      "--trust"
+      "--plaintext-key"
+      "-f"
+      "--force"
+      "${colors[@]}"
+      )
+      [[ -n "$LAST_PASS_USERNAME" ]] && echo "$LAST_PASS_USERNAME"
+      printf '%s\n' "${cmds[@]}"
+      ;;
+    'lpass logout'*)
+      cmds=(
+      "-f"
+      "--force"
+      "${colors[@]}"
+      )
+      printf '%s\n' "${cmds[@]}"
+      ;;
+    'lpass show'*)
+      cmds=(
+      "-c"
+      "--clip"
+      "--all"
+      "-p"
+      "--password"
+      "-u"
+      "--username"
+      "--url"
+      "--notes"
+      "--field="
+      "--id"
+      "--name"
+      "--attach="
+      "-G"
+      "--basic-regexp"
+      "-F"
+      "--fixed-strings"
+      "--json"
+      "-x"
+      "--expand-multi"
+      "--fomart="
+      "${colors[@]}"
+      "${sync[@]}"
+      )
+      printf '%s\n' "${cmds[@]}"
+      __lpass_complete_uniqenames
+      ;;
+    'lpass ls'*)
+      cmds=(
+      "-l"
+      "--long"
+      "-m"
+      "-u"
+      "--fomart="
+      "${colors[@]}"
+      "${sync[@]}"
+      )
+      printf '%s\n' "${cmds[@]}"
+      __lpass_complete_groups
+      ;;
+    'lpass mv'*)
+      cmds=(
+      "${colors[@]}"
+      "${sync[@]}"
+      )
+      printf '%s\n' "${cmds[@]}"
+      __lpass_complete_uniqenames
+      __lpass_complete_groups
+      ;;
+    'lpass add'*|'lpass edit'*)
+      cmds=(
+      "--non-interactive"
+      "-p"
+      "--password"
+      "-u"
+      "--username"
+      "--url"
+      "--notes"
+      "--field="
+      "--id"
+      "--name"
+      "${colors[@]}"
+      "${sync[@]}"
+      )
+      [[ "$args" == 'lpass add'* ]] && cmds+=("--note-type=")
+      printf '%s\n' "${cmds[@]}"
+      __lpass_complete_uniqenames
+      ;;
+    'lpass generate'*)
+      cmds=(
+      "-c"
+      "--clip"
+      "--username="
+      "--url="
+      "--no-symbols"
+      "${colors[@]}"
+      "${sync[@]}"
+      )
+      printf '%s\n' "${cmds[@]}"
+      __lpass_complete_groups
+      ;;
+    'lpass duplicate'*|'lpass rm'*|'lpass sync'*)
+      cmds=(
+      "${colors[@]}"
+      )
+      if [[ $args == 'lpass sync'* ]]; then
+        cmds+=("-b" "--backgroud")
+      else
+        cmds+=("${sync[@]}")
+      fi
+      printf '%s\n' "${cmds[@]}"
+      __lpass_complete_uniqenames
+      ;;
+    'lpass status'*)
+      cmds=(
+      "-q"
+      "--quiet"
+      "${colors[@]}"
+      )
+      printf '%s\n' "${cmds[@]}"
+      ;;
+    'lpass import'*)
+      cmds=(
+      "--keep-dupes"
+      "${sync[@]}"
+      )
+      printf '%s\n' "${cmds[@]}"
+      ;;
+    'lpass export'*)
+      cmds=(
+      "--fields="
+      "${colors[@]}"
+      "${sync[@]}"
+      )
+      printf '%s\n' "${cmds[@]}"
+      ;;
+    lpass*)
+      cmds=(
+      "login"
+      "logout"
+      "passwd"
+      "show"
+      "ls"
+      "mv"
+      "add"
+      "edit"
+      "generate"
+      "duplicate"
+      "rm"
+      "status"
+      "sync"
+      "export"
+      "import"
+      "share"
+      "--help"
+      "--version"
+      )
+      printf '%s\n' "${cmds[@]}"
+      ;;
+  esac
+}
+
+__fzf_complete_lpass() {
+  _fzf_complete --no-preview -- "$@" < <(__generateItems "$@")
+}
+
+__fzf_complete_lpass "$@"

@@ -132,7 +132,7 @@ plugins=(
   fz
 )
 
-autoload -Uz is-at-least
+autoload -Uz is-at-least has
 
 if is-at-least 5.0.3; then
     plugins+=("zsh-autopair")
@@ -173,8 +173,8 @@ unalias fd
 fpath=($DOT/zfuncs "$fpath[@]")
 export FPATH
 
-autoload -Uz has proxy noproxy set_no_proxy my-backward-delete-word \
-  preview exe del
+autoload -Uz proxy noproxy set_no_proxy my-backward-delete-word \
+  preview exe del _fzf_complete_lpass
 
 if has rg; then
   alias rg="rg --smart-case"
@@ -214,6 +214,24 @@ alias alu="apt list --upgradable"
 alias as="apt search"
 alias aw="apt show"
 alias b="bat --color=always"
+alias bca="brew cat"
+alias bcl="brew cleanup"
+alias bcm="brew command"
+alias bcms="brew commands"
+alias bd="brew update"
+alias bh="brew home"
+alias bi="brew install"
+alias bl="brew list"
+alias bln="brew link"
+alias bo="brew outdated"
+alias bp="brew pin"
+alias br="brew remove"
+alias bre="brew reinstall"
+alias bs="brew search"
+alias bu="brew upgrade"
+alias bul="brew unlink"
+alias bup="brew unpin"
+alias bw="brew info"
 alias c="cd"
 alias di="sudo docker image"
 alias dii="sudo docker image inspect"
@@ -249,8 +267,9 @@ export FZF_ALT_C_COMMAND="fd --hidden --type directory --color=always . . ~ /"
 export FZF_DEFAULT_OPTS="--multi --cycle --inline-info --ansi --height 100% \
   --border --layout=default --preview '$PREVIEW {}' --preview-window 'right:70%:wrap'"
 export FZF_CTRL_T_OPTS="$FZF_DEFAULT_OPTS"
-export FZF_COMPLETION_OPTS="$FZF_DEFAULT_OPTS +m"
-export FZF_CTRL_R_OPTS="+m --cycle --ansi --border --preview-window 'right:0%'"
+export FZF_COMPLETION_OPTS="+m -1 --cycle --inline-info --ansi --height 60% \
+  --border --layout=reverse --preview '$PREVIEW {}' --preview-window 'right:70%:wrap'"
+export FZF_CTRL_R_OPTS="+m -1 --cycle --ansi --border --no-preview"
 export FZF_ALT_C_OPTS="$FZF_DEFAULT_OPTS +m --preview-window 'right:50%'"
 # export _ZL_FZF_FLAG="+s -1 +m --preview 'echo {} | sed -E \"s/^\\S+\\s*(.+)/\\1/\" | xargs $PREVIEW'"
 export _ZL_FZF_FLAG="+s -1 +m --preview 'echo {} | awk \"{print \\\$2}\" | xargs $PREVIEW'"
@@ -331,7 +350,7 @@ bindkey ';' vi-repeat-find
 bindkey ',' vi-rev-repeat-find
 
 __fzf_complete_ssh() {
-  _fzf_complete +m -- "$@" < <(grep -iw "Host" ~/.ssh/config \
+  _fzf_complete --no-preview -- "$@" < <(grep -iw "Host" ~/.ssh/config \
     | awk '{for(i=2;i<=NF;i++)print $i}' | grep -v "[*?]")
 }
 functions[_fzf_complete_ssh]='__fzf_complete_ssh "$@"'
