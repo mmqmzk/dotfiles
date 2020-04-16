@@ -11,6 +11,7 @@ if command -v vim &> /dev/null; then
   : "$SSHRCD/vimrc" && [[ -f "$_" ]] \
     && alias v="command vim -u '$_'" \
     && export EDITOR="v"
+  alias vd="vimdiff"
 fi
 
 : "$SSHRCD/lsd.sh" && [[ -f "$_" ]] && source "$_"
