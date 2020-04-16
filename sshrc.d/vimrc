@@ -59,6 +59,14 @@ else
   vnoremap K y:grep! -srF '<c-r>0' .<cr>:cwindow<cr>
 endif
 
+if &diff
+  nmap [ [c
+  nmap ] ]c
+  nmap <c-F5> :diffupdate<cr>
+  set background=dark
+  colorscheme evening
+endif
+
 nnoremap [0 :cfirst<cr>
 nnoremap ]0 :clast<cr>
 nnoremap [o :copen<cr>
@@ -77,6 +85,7 @@ noremap <F5> :redraw<cr>
 noremap <F8> :let @/ = ""<cr>
 nnoremap <leader><cr> :nohlsearch<cr>
 nnoremap <space><cr> :nohlsearch<cr>
+nmap <tab> <c-w>w
 
 nnoremap gz `[v`]
 vnoremap < <gv
