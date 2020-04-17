@@ -269,27 +269,31 @@ alias m="mark"
 alias p="ps -ef"
 alias s="sudo "
 alias sc-dr="sudo systemctl daemon-reload"
-alias se='sudo -E env PATH="$PATH:/usr/local/sbin:/usr/sbin:/sbin"'
+alias se='sudo -E env PATH="$PATH"'
 alias vd="vimdiff"
 alias yw="sudo yum info"
 
 export PREVIEW="$DOT/zfuncs/preview"
+FZF_PREVIEW_KEY_BIND="--bind 'ctrl-j:preview-down,ctrl-k:preview-up'"
 export FZF_DEFAULT_COMMAND='fd --hidden --color=always'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_COMPLETION_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd --hidden --type directory --color=always . . ~ /"
 export FZF_DEFAULT_OPTS="--multi --cycle --inline-info --ansi --height 100% \
-  --border --layout=default --preview '$PREVIEW {}' --preview-window 'right:70%:wrap'"
+  --border --layout=default --preview '$PREVIEW {}' --preview-window \
+  'right:70%:wrap' $FZF_PREVIEW_KEY_BIND"
 export FZF_CTRL_T_OPTS="$FZF_DEFAULT_OPTS"
 export FZF_COMPLETION_OPTS="+m -1 --cycle --inline-info --ansi --height 60% \
-  --border --layout=reverse --preview '$PREVIEW {}' --preview-window 'right:70%:wrap'"
+  --border --layout=reverse --preview '$PREVIEW {}' --preview-window \
+  'right:70%:wrap' $FZF_PREVIEW_KEY_BIND"
 export FZF_CTRL_R_OPTS="+m -1 --cycle --ansi --border --no-preview"
 export FZF_ALT_C_OPTS="$FZF_DEFAULT_OPTS +m --preview-window 'right:50%'"
-# export _ZL_FZF_FLAG="+s -1 +m --preview 'echo {} | sed -E \"s/^\\S+\\s*(.+)/\\1/\" | xargs $PREVIEW'"
-export _ZL_FZF_FLAG="+s -1 +m --preview 'echo {} | awk \"{print \\\$2}\" | xargs $PREVIEW'"
+export _ZL_FZF_FLAG="+s -1 +m --preview 'echo {} | awk \"{print \\\$2}\" \
+  | xargs $PREVIEW' $FZF_PREVIEW_KEY_BIND"
 
 fb() {
-  fd --hidden --type file --color=always "$@" | fzf --preview 'bat --color=always {}'
+  fd --hidden --type file --color=always "$@" \
+    | fzf --preview 'bat --color=always {}'
 }
 
 export PAGER="less -R"
@@ -352,11 +356,18 @@ toggle_commit() {
   [[ "$LBUFFER" == \#* ]] && : ${LBUFFER#\#} && : ${_## } || : "# ${LBUFFER}"
   LBUFFER="$_"
 }
+fzf_history_find() {
+  : "$(history | fzf --tac --no-sort -q "$LBUFFER" +m -1 \
+    | awk '{for(i=4;i<=NF;i++)printf("%s ",$i)}')"
+  LBUFFER="$_"
+}
 
 zle -N my-backward-delete-word
 zle -N toggle_commit
+zle -N fzf_history_find
 bindkey '' my-backward-delete-word
 bindkey '' toggle_commit
+bindkey 'h' fzf_history_find
 bindkey '' beginning-of-line
 bindkey '' vi-find-next-char
 bindkey '' vi-find-prev-char
