@@ -274,7 +274,8 @@ alias vd="vimdiff"
 alias yw="sudo yum info"
 
 export PREVIEW="$DOT/zfuncs/preview"
-FZF_PREVIEW_KEY_BIND="--bind 'ctrl-j:preview-down,ctrl-k:preview-up'"
+export FZF_PREVIEW_KEY_BIND="--bind 'ctrl-j:preview-down,ctrl-k:preview-up'"
+export FZF_COMPLETION_TRIGGER=',,'
 export FZF_DEFAULT_COMMAND='fd --hidden --color=always'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_COMPLETION_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -353,7 +354,11 @@ else
 fi
 
 toggle_commit() {
-  [[ "$LBUFFER" == \#* ]] && : ${LBUFFER#\#} && : ${_## } || : "# ${LBUFFER}"
+  if [[ "$LBUFFER" == \#* ]]; then
+    : "${LBUFFER#\#}" && : "${_## }"
+  else
+    : "# ${LBUFFER}"
+  fi
   LBUFFER="$_"
 }
 fzf_history_find() {
