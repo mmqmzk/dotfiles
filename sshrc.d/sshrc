@@ -3,7 +3,6 @@
 : "/etc/profile" && [[ -f "$_" ]] && source "$_"
 : "$HOME/.bashrc" && [[ -f "$_" ]] && source "$_"
 
-# bind "\C-[":character-search-backward
 bind "\C-f":beginning-of-line
 
 if command -v vim &> /dev/null; then
@@ -12,20 +11,27 @@ if command -v vim &> /dev/null; then
     && alias v="command vim -u '$_'" \
     && export EDITOR="v"
   alias vd="vimdiff"
+  alias e="vim"
 fi
 
 : "$SSHRCD/lsd.sh" && [[ -f "$_" ]] && source "$_"
 
-alias L="less -R"
-alias T="tail"
-alias H="head -q"
+bind '"e": "2>&1 "'
+bind '"l": "| less -R "'
+bind '"t": "| tail "'
+bind '"f": "| tail -f "'
+bind '"h": "| head -q "'
+bind '"n": ">/dev/null "'
+alias le="less -R"
 alias h="history"
+alias he="head"
+alias t="tail"
+alias tf="tail -f"
 alias l="command ls --color=auto -lh"
 alias la="command ls --color=auto -lha"
 alias lsa="command ls --color=auto -A"
 alias lss="command ls --color=auto -lhS"
 alias lst="command ls --color=auto -lht"
-alias t="tail -f"
 alias p="ps -ef"
 alias g="git"
 alias md="mkdir -p"
@@ -37,16 +43,15 @@ alias .....="cd ../../../.."
 alias -- -="cd -"
 if command -v ag &> /dev/null; then
   alias agc="ag --color"
-  alias G="ag"
-  alias GC="ag --color"
+  bind '"g": "| ag --color "'
 elif command -v rg &> /dev/null; then
   alias rg="rg --smart-case"
-  alias rgc="rg --smart-case --color=awryas"
-  alias G="rg --smart-case"
-  alias GC="rg --smart-case --color=awryas"
+  alias rgc="\\rg --smart-case --color=always "
+  bind '"g": "| \rg --smart-case --color=always "'
 else
-  alias G="grep -Ei"
-  alias GC="grep -Ei --color=awryas"
+  alias ag="grep -Eir"
+  alias agc="grep -Eir --color=always"
+  bind '"g": "| grep -Ei --color=always "'
 fi
 
 take() {
