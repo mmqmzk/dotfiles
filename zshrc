@@ -115,7 +115,7 @@ plugins=(
   mosh
   node
   npm
-  nvm  
+  nvm
   nvm-auto
   pip
   python
@@ -261,7 +261,9 @@ alias gsf="git submodule foreach"
 alias gsfg="git submodule foreach git"
 alias goo="BROWSER=w3m googler -l cn"
 alias gpo="git push origin --all"
+alias he="head"
 alias https="http --default-scheme https"
+alias le="less -R"
 alias jc="journalctl -x"
 alias jce="journalctl -xe"
 alias jcu="journalctl -xe -u"
@@ -269,6 +271,8 @@ alias m="mark"
 alias p="ps -ef"
 alias s="sudo "
 alias sc-dr="sudo systemctl daemon-reload"
+alias t="tail"
+alias tf="tail -f"
 alias se='sudo -E env PATH="$PATH"'
 alias vd="vimdiff"
 alias yw="sudo yum info"
@@ -288,7 +292,7 @@ export FZF_COMPLETION_OPTS="+m -1 --cycle --inline-info --ansi --height 60% \
   --border --layout=reverse --preview '$PREVIEW {}' --preview-window \
   'right:70%:wrap' $FZF_PREVIEW_KEY_BIND"
 export FZF_CTRL_R_OPTS="+m -1 --cycle --ansi --border --no-preview"
-export FZF_ALT_C_OPTS="$FZF_DEFAULT_OPTS +m --preview-window 'right:50%'"
+export FZF_ALT_C_OPTS="$FZF_DEFAULT_OPTS +m --preview-window 'right:60%'"
 export _ZL_FZF_FLAG="+s -1 +m --preview 'echo {} | awk \"{print \\\$2}\" \
   | xargs $PREVIEW' $FZF_PREVIEW_KEY_BIND"
 
@@ -361,10 +365,11 @@ toggle_commit() {
   fi
   LBUFFER="$_"
 }
+
 fzf_history_find() {
-  : "$(history | fzf --tac --no-sort -q "$LBUFFER" +m -1 \
+  : "$(history | fzf --tac --no-sort -q "$LBUFFER" +m -1 --no-preview\
     | awk '{for(i=4;i<=NF;i++)printf("%s ",$i)}')"
-  LBUFFER="$_"
+  [[ -n "$_" ]] && LBUFFER="$_"
 }
 
 zle -N my-backward-delete-word
