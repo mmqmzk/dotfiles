@@ -96,7 +96,7 @@ download() {
       tar -xf "$result" && del "$result"
       ;;
     *.zip)
-      zip -o "$result" && del "$result"
+      unzip -o "$result" && del "$result"
       ;;
   esac
   popd &> /dev/null
