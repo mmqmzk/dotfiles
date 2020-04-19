@@ -290,7 +290,7 @@ install_exa() {
   fi
   echo "Installing exa $tag."
   local dir="$LIB/exa"
-  download "$url" "dir" "$result"
+  download "$url" "$dir" "$result"
   _link "$dir" "exa"
 }
 
