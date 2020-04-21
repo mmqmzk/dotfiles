@@ -171,7 +171,7 @@ install_fzf() {
     bash "$DOT/fzf/install" --bin
     ln -sf "$DOT/fzf/bin/fzf" "$BIN"
     sudo cp -rf "$DOT/fzf/man/man1" /usr/share/man
-    sudo mandb
+    sudo mandb || true
   fi
 }
 
