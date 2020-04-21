@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 DOT=${DOT:-"$HOME/.dotfiles"}
 BIN=${BIN:-"$HOME/.local/bin"}
 LIB=${LIB:-"$HOME/.local/lib"}
