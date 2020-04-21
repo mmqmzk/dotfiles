@@ -2,12 +2,7 @@
 
 set -e
 
-if [[ -n "$PROXY" ]]; then
-  export HTTP_PROXY="$PROXY"
-  export HTTPS_PROXY="$PROXY"
-  export http_proxy="$PROXY"
-  export https_proxy="$PROXY"
-fi
+: "${XDG_CONFIG_HOME:-"$HOME/.config"}/proxy" && [[ -f "$_" ]] && source "$_"
 
 sudo bash -c "${PM_UPDATE:-"apt update && apt upgrade -y"}"
 
