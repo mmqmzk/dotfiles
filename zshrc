@@ -83,6 +83,8 @@ ZSH_CUSTOM="$DOT/zsh-custom"
 #
 
 export _ZL_DATA="~/.z"
+export _ZL_MATCH_MODE=1
+export _ZL_ADD_ONCE=1
 export FZ_HISTORY_CD_CMD="_zlua"
 export RANGER_ZLUA="${ZSH_CUSTOM}/plugins/z.lua/z.lua"
 
@@ -97,7 +99,6 @@ _fzf_compgen_path() {
 }
 
 plugins=(
-  alias-tips
   colored-man-pages
   common-aliases
   debian
@@ -129,7 +130,7 @@ plugins=(
   zsh-autosuggestions
   zsh-syntax-highlighting
   # z
-  fz
+  # fz
 )
 
 autoload -Uz is-at-least has
@@ -138,6 +139,11 @@ if is-at-least 5.0.3; then
     plugins+=("zsh-autopair")
 else
   alias v="vim"
+fi
+if is-at-least 5.1; then
+  plugins+=("you-should-use")
+else
+  plugins+=("alias-tips")
 fi
 
 source $ZSH/oh-my-zsh.sh

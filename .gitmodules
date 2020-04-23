@@ -49,3 +49,6 @@
 [submodule "zsh-custom/themes/powerlevel10k"]
 	path = zsh-custom/themes/powerlevel10k
 	url = https://github.com/romkatv/powerlevel10k.git
+[submodule "zsh-custom/plugins/zsh-you-should-use"]
+	path = zsh-custom/plugins/you-should-use
+	url = https://github.com/MichaelAquilina/zsh-you-should-use.git
