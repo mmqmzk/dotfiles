@@ -321,14 +321,17 @@ elif [[ -n "$DISPLAY" ]]; then
   elif has firefox; then
     export BROWSER="firefox"
   fi
-  alias e="gedit"
+  if has gedit; then
+    alias e="gedit"
+  else
+    alias e="${EDITOR:-vim}"
+  fi
 else
   alias e="${EDITOR:-vim}"
 fi
+has wslview && export BROWSER="wslview"
 
-if [[ -z "$BROWSER" ]]; then
-  export BROWSER="w3m"
-fi
+[[ -z "$BROWSER" ]] && has w3m && export BROWSER="w3m"
 
 : "$DOT/sshrc.d/lsd.sh" && [[ -f "$_" ]] && source "$_"
 
