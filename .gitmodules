@@ -52,3 +52,6 @@
 [submodule "zsh-custom/plugins/zsh-you-should-use"]
 	path = zsh-custom/plugins/you-should-use
 	url = https://github.com/MichaelAquilina/zsh-you-should-use.git
+[submodule "zsh-custom/plugins/fzf-tab"]
+	path = zsh-custom/plugins/fzf-tab
+	url = https://github.com/Aloxaf/fzf-tab.git

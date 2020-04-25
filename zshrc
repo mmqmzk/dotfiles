@@ -105,11 +105,11 @@ plugins=(
   dirhistory
   docker
   docker-compose
-  # fast-syntax-highlighting
   fd
   firewalld
   fzf
   fzf-marks
+  fzf-tab
   git
   forgit
   httpie
@@ -129,6 +129,7 @@ plugins=(
   z.lua
   zsh-autosuggestions
   zsh-syntax-highlighting
+  # fast-syntax-highlighting
   # z
   # fz
 )
@@ -286,7 +287,13 @@ alias vd="vimdiff"
 alias yw="sudo yum info"
 
 export PREVIEW="$DOT/zfuncs/preview"
-export FZF_PREVIEW_KEY_BIND="--bind 'ctrl-j:preview-down,ctrl-k:preview-up'"
+FZF_PREVIEW_KEY_BIND="--bind 'ctrl-j:preview-down,"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}ctrl-k:preview-up,"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-p:toggle-preview,"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-w:toggle-preview-wrap,"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}ctrl-s:toggle-sort,"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-a:toggle-all'"
+export FZF_PREVIEW_KEY_BIND
 export FZF_COMPLETION_TRIGGER=',,'
 export FZF_DEFAULT_COMMAND='fd --hidden --color=always'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -303,6 +310,7 @@ export FZF_CTRL_R_OPTS="+m -1 --cycle --ansi --border --no-preview"
 export FZF_ALT_C_OPTS="$FZF_DEFAULT_OPTS +m --preview-window 'right:60%'"
 export _ZL_FZF_FLAG="+s -1 +m --preview 'echo {} | awk \"{print \\\$2}\" \
   | xargs $PREVIEW' $FZF_PREVIEW_KEY_BIND"
+export FORGIT_FZF_DEFAULT_OPTS="$FZF_PREVIEW_KEY_BIND"
 
 fb() {
   fd --hidden --type file --color=always "$@" \
