@@ -28,6 +28,8 @@ _preview() {
     else
       echo "$info"
     fi
+  else
+    echo "$file"
   fi
 }
 

@@ -290,7 +290,11 @@ FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}ctrl-k:preview-up,"
 FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-p:toggle-preview,"
 FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-w:toggle-preview-wrap,"
 FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}ctrl-s:toggle-sort,"
-FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-a:toggle-all'"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-a:toggle-all,"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-n:toggle+down,"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-p:toggle+up,"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}tab:toggle+down,"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}btab:toggle+up'"
 export FZF_PREVIEW_KEY_BIND
 export FZF_COMPLETION_TRIGGER=',,'
 export FZF_DEFAULT_COMMAND='fd --hidden --color=always'
@@ -301,7 +305,7 @@ export FZF_DEFAULT_OPTS="--multi --cycle --inline-info --ansi --height 100% \
   --border --layout=default --preview '$PREVIEW {}' --preview-window \
   'right:70%:wrap' $FZF_PREVIEW_KEY_BIND"
 export FZF_CTRL_T_OPTS="$FZF_DEFAULT_OPTS"
-export FZF_COMPLETION_OPTS="+m -1 --cycle --inline-info --ansi --height 60% \
+export FZF_COMPLETION_OPTS="-1 --cycle --inline-info --ansi --height 60% \
   --border --layout=reverse --preview '$PREVIEW {}' --preview-window \
   'right:70%:wrap' $FZF_PREVIEW_KEY_BIND"
 export FZF_CTRL_R_OPTS="+m -1 --cycle --ansi --border --no-preview"
@@ -309,6 +313,7 @@ export FZF_ALT_C_OPTS="$FZF_DEFAULT_OPTS +m --preview-window 'right:60%'"
 export _ZL_FZF_FLAG="+s -1 +m --preview 'echo {} | awk \"{print \\\$2}\" \
   | xargs $PREVIEW' $FZF_PREVIEW_KEY_BIND"
 export FORGIT_FZF_DEFAULT_OPTS="$FZF_PREVIEW_KEY_BIND"
+export FZF_TAB_OPTS=($FZF_COMPLETION_OPTS --expect=/ --delimiter='\x00')
 
 fb() {
   fd --hidden --type file --color=always "$@" \
