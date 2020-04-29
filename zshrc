@@ -313,11 +313,11 @@ export FZF_ALT_C_OPTS="$FZF_DEFAULT_OPTS +m --preview-window 'right:60%'"
 export _ZL_FZF_FLAG="+s -1 +m --preview 'echo {} | awk \"{print \\\$2}\" \
   | xargs $PREVIEW' $FZF_PREVIEW_KEY_BIND"
 export FORGIT_FZF_DEFAULT_OPTS="$FZF_PREVIEW_KEY_BIND"
-local extract="local in=\"\${\${\"\$(<{f})\"%\$'\0'*}#*\$'\0'}\";
-  local -A ctxt=(\"\${(@ps:\2:)CTXT}\");
-  in=\"\${ctxt[IPREFIX]}\${ctxt[hpre]}\$in\";
-  in=\"\${(Qe)~in}\";
-  eval in=\$in"
+local extract="local in=\${\${\"\$(<{f})\"%\$'\0'*}#*\$'\0'}
+  local -A ctxt=(\"\${(@ps:\2:)CTXT}\")
+  in=\${ctxt[IPREFIX]}\${ctxt[hpre]}\$in
+  in=\${(Qe)~in}"
+
 export FZF_TAB_OPTS=(-1 --cycle --inline-info --ansi --height 40% \
   --border --layout=reverse  --expect=/ "$FZF_PREVIEW_KEY_BIND")
 zstyle ':fzf-tab:complete:*:*' extra-opts --preview="$extract;$PREVIEW \"\$in\""
