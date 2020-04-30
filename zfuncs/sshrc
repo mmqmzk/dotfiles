@@ -2,10 +2,11 @@
 
 _sshrc() {
   SSHRCD="${SSHHOME:-$HOME}/.sshrc.d"
-  local opts=()
-  local opts2=()
-  local domain=""
-  local cmd=""
+  [[ -d "SSHRCD" ]] || export SSHRCD="${DOT:-"$HOME/.dotfiles"}/sshrc.d"
+  local -a opts
+  local -a opts2
+  local domain
+  local cmd
   while [[ -n "$1" ]]; do
     case "$1" in
       -D|-E|-e|-L|-O|-Q|-R|-S|-W|-w)

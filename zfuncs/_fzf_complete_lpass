@@ -8,7 +8,7 @@ __lpass_complete_groups() {
 }
 
 __generateItems() {
-  local args="$@"
+  local args="$*"
   local -a cmds
   local -a colors
   local -a sync
@@ -93,7 +93,24 @@ __generateItems() {
       __lpass_complete_uniqenames
       __lpass_complete_groups
       ;;
-    'lpass add'*|'lpass edit'*)
+    'lpass add'*)
+      cmds=(
+        "--non-interactive"
+        "-p"
+        "--password"
+        "-u"
+        "--username"
+        "--url"
+        "--notes"
+        "--field="
+        "--id"
+        "--note-type="
+        "${colors[@]}"
+        "${sync[@]}"
+      )
+      printf '%s\n' "${cmds[@]}"
+      ;;
+    'lpass edit'*)
       cmds=(
       "--non-interactive"
       "-p"
@@ -108,7 +125,6 @@ __generateItems() {
       "${colors[@]}"
       "${sync[@]}"
       )
-      [[ "$args" == 'lpass add'* ]] && cmds+=("--note-type=")
       printf '%s\n' "${cmds[@]}"
       __lpass_complete_uniqenames
       ;;
@@ -191,3 +207,5 @@ __fzf_complete_lpass() {
 }
 
 __fzf_complete_lpass "$@"
+
+# vim: ft=zsh

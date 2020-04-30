@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
+
 pushd "$(dirname "$0")"
+
 if [[ ! -f functions.bash ]]; then
   echo "Functions.bash not found."
   exit 1
 fi
+
 source functions.bash
 
 if [[ -z "$PM" ]]; then
@@ -42,25 +45,22 @@ fi
 check_bin
 install_dot
 
-: "$HOME/.zshrc"
-del "$_"
 echo "Installing oh my zsh."
-ln -sf "$DOT/zshrc" "$_"
+: "$HOME/.zshrc" && del "$_" && ln -sf "$DOT/zshrc" "$_"
 
 if ! has tmux; then
   echo "Installing tmux."
   sudo "$PM" install tmux -y
 fi
-: "$HOME/.tmux.conf"
-del "$_"
-ln -sf "$DOT/tmux.conf" "$_"
+
+: "$HOME/.tmux.conf" && del "$_" && ln -sf "$DOT/tmux.conf" "$_"
 
 echo "Installing git config."
-: "$HOME/.gitconfig"
-del "$_"
-ln -sf "$DOT/gitconfig" "$_"
+: "$HOME/.gitconfig" && del "$_" && ln -sf "$DOT/gitconfig" "$_"
 
-ln -sf "$DOT/synczk.zsh" "$BIN/synczk"
+: "$DOT/syncdot.sh" && [[ -x "$_" ]] && ln -sf "$_" "$BIN/syncdot"
+: "$DOT/sshrc.d/del" && [[ -x "$_" ]] && sudo ln -sf "$_" /usr/local/bin
+: "$DOT/zfuncs/v" && [[ -x "$_" ]] && sudo ln -sf "$_" /usr/local/bin
 
 
 install_jq "1.6"

@@ -59,7 +59,6 @@ install_dot() {
   if [[ "$HOME" != /root ]]; then
     sudo mkdir -p /root/.local
     sudo ln -s "$BIN" /root/.local/bin
-    sudo ln -s "$DOT/zfuncs/v" /usr/local/bin
   fi
   popd
 }
@@ -86,7 +85,7 @@ get_tag_url() {
     |select(.url|contains(\"${3:-$RUST_ARCH}\"))|.url+\" \"+.tag" -r | sed '1q'
 }
 
-download() {
+_download() {
   local url="$1"
   local dir="$2"
   local result="$3"
@@ -116,7 +115,7 @@ _link() {
     && sudo mandb) || true
 }
 
-install_rust_module() {
+install_rust () {
   local module=$1
   local bin=$2
   local repo=$3
@@ -136,29 +135,29 @@ install_rust_module() {
   fi
   echo "Installing $module $tag."
   local dir="$LIB/$module"
-  download "$url" "$dir" "$result"
+  _download "$url" "$dir" "$result"
   _link "$dir" "$bin"
 }
 
 install_bat() {
-  install_rust_module bat bat "sharkdp/bat" "$1"
+  install_rust bat bat "sharkdp/bat" "$1"
 }
 
 install_fd() {
-  install_rust_module fd fd "sharkdp/fd" "$1"
+  install_rust fd fd "sharkdp/fd" "$1"
 }
 
 install_ripgrep() {
 
-  install_rust_module ripgrep rg "BurntSushi/ripgrep" "$1"
+  install_rust ripgrep rg "BurntSushi/ripgrep" "$1"
 }
 
 install_xsv() {
-  install_rust_module xsv "xsv" "BurntSushi/xsv" "$1"
+  install_rust xsv "xsv" "BurntSushi/xsv" "$1"
 }
 
 install_lsd() {
-  install_rust_module lsd lsd "Peltoche/lsd" "${1:-latest}" x86_64-unknown-linux-gnu
+  install_rust lsd lsd "Peltoche/lsd" "${1:-latest}" x86_64-unknown-linux-gnu
 }
 
 
@@ -166,12 +165,11 @@ install_fzf() {
   if [[ $1 == "init" ]]; then
     install_dot
   fi
-  if [[ -f "$DOT/fzf/install" ]]; then
+  local fzf_base="${FZF_BASE:-"$DOT/fzf"}"
+  if [[ -d "$fzf_base" ]]; then
     echo "Installing fzf."
-    bash "$DOT/fzf/install" --bin
-    ln -sf "$DOT/fzf/bin/fzf" "$BIN"
-    sudo cp -rf "$DOT/fzf/man/man1" /usr/share/man
-    sudo mandb || true
+    bash "$fzf_base/install" --bin
+    _link "$fzf_base" fzf
   fi
 }
 
@@ -185,7 +183,7 @@ install_jq() {
     local result="jq-linux64"
     local dir="$LIB/jq"
     : "https://github.com/stedolan/jq/releases/download/jq-$JQ_TAG/$result"
-    download  "$_" "$dir" "$result"
+    _download  "$_" "$dir" "$result"
     chmod 755 "$dir/$result"
     _link "$dir" "jq"
   fi
@@ -229,7 +227,7 @@ install_q() {
   fi
   echo "Installing q $tag."
   local dir="$LIB/q"
-  download "$url" "$dir" "$result"
+  _download "$url" "$dir" "$result"
   chmod 755 "$dir/$result"
   _link "$dir" "q"
 }
@@ -244,7 +242,8 @@ install_node() {
   fi
   local NVMRC="$HOME/.nvmrc"
   local CURRENT_VERSION="$(nvm current 2> /dev/null)"
-  local NODE_TAG="$(nvm ls-remote "$1" 2> /dev/null | grep -Eo 'v[0-9.]+' | sort -V | tail -n 1)"
+  local NODE_TAG="$(nvm ls-remote "$1" 2> /dev/null \
+    | grep -Eo 'v[0-9.]+' | sort -V | tail -n 1)"
   [[ -z "$NODE_TAG" ]] && echo "Node version $1 not found." && return 1
   if [[ "$NODE_TAG" != "$CURRENT_VERSION" ]]; then
     if nvm install "$NODE_TAG"; then
@@ -292,7 +291,7 @@ install_exa() {
   fi
   echo "Installing exa $tag."
   local dir="$LIB/exa"
-  download "$url" "$dir" "$result"
+  _download "$url" "$dir" "$result"
   _link "$dir" "exa"
 }
 

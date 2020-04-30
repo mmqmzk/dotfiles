@@ -111,6 +111,7 @@ plugins=(
   fzf-marks
   fzf-tab
   git
+  gpg-agent
   forgit
   httpie
   mosh
@@ -123,7 +124,9 @@ plugins=(
   ripgrep
   sudo
   systemd
+  themes
   tmux
+  urltools
   wakeonlan
   yum
   z.lua
@@ -183,7 +186,7 @@ fpath=($DOT/zfuncs "$fpath[@]")
 export FPATH
 
 autoload -Uz proxy noproxy set_no_proxy my-backward-delete-word \
-  preview exe del _fzf_complete_lpass
+  preview exe _fzf_complete_lpass
 
 if has rg; then
   alias rg="rg --smart-case"
@@ -273,6 +276,7 @@ alias gpo="git push origin --all"
 alias he="head"
 alias https="http --default-scheme https"
 alias le="less -R"
+alias npmi="npm install"
 alias jc="journalctl -x"
 alias jce="journalctl -xe"
 alias jcu="journalctl -xe -u"
@@ -289,6 +293,8 @@ alias yw="sudo yum info"
 export PREVIEW="$DOT/zfuncs/preview"
 FZF_PREVIEW_KEY_BIND="--bind 'ctrl-j:preview-down,"
 FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}ctrl-k:preview-up,"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}ctrl-e:preview-down+preview-down+preview-down,"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}ctrl-y:preview-up+preview-up+preview-up,"
 FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-p:toggle-preview,"
 FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-w:toggle-preview-wrap,"
 FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}ctrl-s:toggle-sort,"
@@ -397,18 +403,17 @@ toggle_commit() {
   LBUFFER="$_"
 }
 
-fzf_history_find() {
-  : "$(history | fzf --tac --no-sort -q "$LBUFFER" +m -1 --no-preview\
-    | awk '{for(i=4;i<=NF;i++)printf("%s ",$i)}')"
-  [[ -n "$_" ]] && LBUFFER="$_"
+yank_bufer() {
+  echo -n "$LBUFFER" | yank -i
 }
 
 zle -N my-backward-delete-word
 zle -N toggle_commit
 zle -N fzf_history_find
+zle -N yank_bufer
 bindkey '' my-backward-delete-word
 bindkey '' toggle_commit
-bindkey 'h' fzf_history_find
+bindkey 'y' yank_bufer
 bindkey '' beginning-of-line
 bindkey '' vi-find-next-char
 bindkey '' vi-find-prev-char
