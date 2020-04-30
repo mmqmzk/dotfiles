@@ -3,3 +3,5 @@ my-backward-delete-word() {
   zle backward-delete-word
 }
 my-backward-delete-word
+
+# vim: ft=zsh

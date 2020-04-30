@@ -1,4 +1,5 @@
 #! /usr/bin/env bash
+# shellcheck disable=SC2139
 
 : "/etc/profile" && [[ -f "$_" ]] && source "$_"
 : "$HOME/.bashrc" && [[ -f "$_" ]] && source "$_"
@@ -6,7 +7,6 @@
 bind "\C-f":beginning-of-line
 
 if command -v vim &> /dev/null; then
-  # shellcheck disable=SC2139
   : "$SSHRCD/vimrc" && [[ -f "$_" ]] \
     && alias v="command vim -u '$_'" \
     && export EDITOR="v"
@@ -15,54 +15,49 @@ if command -v vim &> /dev/null; then
 fi
 
 : "$SSHRCD/lsd.sh" && [[ -f "$_" ]] && source "$_"
+: "$SSHRCD/del" && [[ -x "$_" ]] && alias del="$_"
 
-bind '"e": "2>&1 "'
-bind '"l": "| less -R "'
-bind '"t": "| tail "'
+bind '"2": "2>&1 "'
+bind '"e": "2>/dev/null"'
 bind '"f": "| tail -f "'
 bind '"h": "| head -q "'
+bind '"l": "| less -r "'
 bind '"n": ">/dev/null "'
-alias le="less -R"
+bind '"t": "| tail "'
+alias c="cd"
+alias g="git"
 alias h="history"
 alias he="head"
-alias t="tail"
-alias tf="tail -f"
 alias l="command ls --color=auto -lh"
 alias la="command ls --color=auto -lha"
+alias le="less -r"
 alias lsa="command ls --color=auto -A"
 alias lss="command ls --color=auto -lhS"
 alias lst="command ls --color=auto -lht"
-alias p="ps -ef"
-alias g="git"
 alias md="mkdir -p"
-alias c="cd"
+alias p="ps -ef"
+alias s="sudo "
+alias t="tail"
+alias tf="tail -f"
+alias -- -="cd -"
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
-alias -- -="cd -"
 if command -v ag &> /dev/null; then
   alias agc="ag --color"
-  bind '"g": "| ag --color "'
+  bind '"g": "| ag --color"'
 elif command -v rg &> /dev/null; then
   alias rg="rg --smart-case"
   alias rgc="\\rg --smart-case --color=always "
-  bind '"g": "| \rg --smart-case --color=always "'
+  bind '"g": "| \\rg --smart-case --color=always "'
 else
-  alias ag="grep -Eir"
-  alias agc="grep -Eir --color=always"
+  alias ag="grep -Ei"
+  alias agc="grep -Ei --color=always"
   bind '"g": "| grep -Ei --color=always "'
 fi
 
 take() {
   mkdir -p "$1" && cd "$1" || return
-}
-
-del() {
-  local tmp="/tmp"
-  for file in "$@"; do
-    [[ -e "$file" || -L "$file" ]] && mv --backup=t "$file" "$tmp" && continue
-    rm -rf "$file" || true
-  done
 }
 
