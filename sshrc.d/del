@@ -2,7 +2,9 @@
 
 _del() {
   local tmp="/tmp"
-  [[ -w "$tmp" ]] || [[ -w "$TMPDIR" ]] && tmp="$TMPDIR"
+  if [[ ! -w "$tmp" ]] && [[ -w "$TMPDIR" ]]; then
+    tmp="$TMPDIR"
+  fi
   for file in "$@"; do
     [[ -e "$file" || -L "$file" ]] \
       && mv -f --backup=t "$file" "$tmp" && continue
