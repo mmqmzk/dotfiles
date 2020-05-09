@@ -49,16 +49,16 @@ install_dot() {
       || git clone https://github.com/mmqmzk/dotfiles.git "$DOT"
   fi
   pushd "$DOT" &> /dev/null
-  git pull
+  git pull || true
   git submodule update --init
   check_bin
   ln -sf "$DOT/zsh-custom/diff-so-fancy/diff-so-fancy" "$BIN/diff-so-fancy"
   ln -sf "$DOT/zfuncs/sshrc" "$BIN/sshrc"
   ln -sf "$DOT/zfuncs/v" "$BIN/v"
-  ln -sf "$DOT/sshrc.d" ~/.sshrc.d
+  [[ -e ~/.sshrc.d ]] || ln -s "$DOT/sshrc.d" ~/.sshrc.d
   if [[ "$HOME" != /root ]]; then
     sudo mkdir -p /root/.local
-    sudo ln -s "$BIN" /root/.local/bin
+    sudo ln -s "$BIN" /root/.local/bin || true
   fi
   popd
 }
