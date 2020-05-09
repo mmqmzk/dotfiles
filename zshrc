@@ -218,17 +218,23 @@ alias -g X="| bat -l xml"
 alias -g Y="| yank -i"
 alias -g YY="2>&1 | yank -i"
 alias aar="sudo apt autoremove"
+alias ad="sudo apt update"
+alias adg="sudo apt update && sudo apt upgrade"
+alias adg="sudo apt update && sudo apt dist-upgrade"
+alias ai="sudo apt install"
 alias al="apt list"
+alias all="apt list --installed"
 alias alu="apt list --upgradable"
 alias as="apt search"
+alias au="sudo apt upgrade"
 alias aw="apt show"
 alias b="bat --color=always"
-alias bai="brew cask install"
-alias bah="brew cask home"
-alias bal="brew cask list"
-alias bar="brew cask remove"
-alias bau="brew cask upgrade"
-alias baw="brew cask info"
+# alias bai="brew cask install"
+# alias bah="brew cask home"
+# alias bal="brew cask list"
+# alias bar="brew cask remove"
+# alias bau="brew cask upgrade"
+# alias baw="brew cask info"
 alias bca="brew cat"
 alias bcl="brew cleanup"
 alias bcp="brew cleanup --prune"
@@ -239,6 +245,7 @@ alias bh="brew home"
 alias bi="brew install"
 alias bif="brew install -f"
 alias bl="brew list"
+alias bll="brew list -l"
 alias bln="brew link"
 alias bo="brew outdated"
 alias bp="brew pin"
@@ -392,7 +399,7 @@ else
   alias lst="command ls --color=auto -lht"
 fi
 
-toggle_commit() {
+toggle_comment() {
   if [[ "$LBUFFER" == \#* ]]; then
     : "${LBUFFER#\#}" && : "${_## }"
   else
@@ -406,7 +413,7 @@ yank_bufer() {
 }
 
 zle -N my-backward-delete-word
-zle -N toggle_commit
+zle -N toggle_comment
 zle -N fzf_history_find
 zle -N yank_bufer
 bindkey '' my-backward-delete-word
