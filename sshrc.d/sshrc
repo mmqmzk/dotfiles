@@ -18,7 +18,7 @@ fi
 : "$SSHRCD/del" && [[ -x "$_" ]] && alias del="$_"
 
 bind '"2": "2>&1 "'
-bind '"e": "2>/dev/null"'
+bind '"e": "2>/dev/null "'
 bind '"f": "| tail -f "'
 bind '"h": "| head -q "'
 bind '"l": "| less -r "'
@@ -46,15 +46,15 @@ alias ....="cd ../../.."
 alias .....="cd ../../../.."
 if command -v ag &> /dev/null; then
   alias agc="ag --color"
-  bind '"g": "| ag --color"'
+  bind '"g": "| ag --color "'
 elif command -v rg &> /dev/null; then
   alias rg="rg --smart-case"
-  alias rgc="\\rg --smart-case --color=always "
+  alias rgc="\\rg --smart-case --color=always"
   bind '"g": "| \\rg --smart-case --color=always "'
 else
-  alias ag="grep -Ei"
-  alias agc="grep -Ei --color=always"
-  bind '"g": "| grep -Ei --color=always "'
+  alias ag="grep -Ein"
+  alias agc="grep -Ein --color=always"
+  bind '"g": "| grep -Ein --color=always "'
 fi
 
 take() {
