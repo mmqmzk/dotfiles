@@ -169,7 +169,7 @@ install_fzf() {
   if [[ -d "$fzf_base" ]]; then
     echo "Installing fzf."
     bash "$fzf_base/install" --bin
-    _link "$fzf_base" fzf
+    ln -sf "$fzf_base/bin/fzf" "$BIN"
   fi
 }
 
