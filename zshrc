@@ -206,9 +206,9 @@ alias -g C="| wc -l"
 alias -g F="| fzf"
 alias -g H="| head -q"
 alias -g HH="2>&1 | head -q"
-alias -g J="| jq . | bat -l json"
-alias -g L="| less -R"
-alias -g LL="2>&1 | less -R"
+alias -g J="| jq -C . | less -r"
+alias -g L="| less -r"
+alias -g LL="2>&1 | less -r"
 alias -g S="| sort"
 alias -g T="| tail"
 alias -g TF="| tail -f"
@@ -280,7 +280,7 @@ alias goo="BROWSER=w3m googler -l cn"
 alias gpo="git push origin --all"
 alias he="head"
 alias https="http --default-scheme https"
-alias le="less -R"
+alias le="less -r"
 alias npmi="npm install"
 alias jc="journalctl -x"
 alias jce="journalctl -xe"
@@ -340,8 +340,8 @@ fb() {
     | fzf --preview 'bat --color=always {}'
 }
 
-export PAGER="less -R"
-export BAT_PAGER="less -R"
+export PAGER="less -r"
+export BAT_PAGER="less -r"
 
 if has winstart; then
   export BROWSER="chrome"
