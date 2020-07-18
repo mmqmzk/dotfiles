@@ -6,7 +6,7 @@ __lfd() {
   for name in "$@"; do
     [ $# -gt 1 ] && echo "${name}:"
     find "$name" -maxdepth 1 -type "$type" \
-      | sed -E 's|^\./||;s|/$||;/^\.$/d' \
+      | sed -E 's|^\./||;s|/$||;/^\.$/d;s/.+/"\0"/' \
       | xargs -r -n 1 ls --color=auto ${args:+"$args"}
   done
 }
