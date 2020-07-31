@@ -198,6 +198,8 @@ elif has ag; then
   alias -g G="| ag --smart-case"
   alias -g GC="| ag --smart-case --color"
 else
+  alias ag="grep -Ei"
+  alias agc="grep -Ei --color=always"
   alias -g G="| grep -Ei"
   alias -g GC="| grep -Ei --color=always"
 fi
@@ -219,17 +221,6 @@ alias -g TTF="2>&1 | tail -f"
 alias -g X="| bat -l xml"
 alias -g Y="| yank -i"
 alias -g YY="2>&1 | yank -i"
-alias aar="sudo apt autoremove"
-alias ad="sudo apt update"
-alias adg="sudo apt update && sudo apt upgrade"
-alias adg="sudo apt update && sudo apt dist-upgrade"
-alias ai="sudo apt install"
-alias al="apt list"
-alias all="apt list --installed"
-alias alu="apt list --upgradable"
-alias as="apt search"
-alias au="sudo apt upgrade"
-alias aw="apt show"
 alias b="bat --color=always"
 # alias bai="brew cask install"
 # alias bah="brew cask home"
@@ -264,7 +255,6 @@ alias bul="brew unlink"
 alias bup="brew unpin"
 alias but="brew untap"
 alias bw="brew info"
-alias c="cd"
 alias di="sudo docker image"
 alias dii="sudo docker image inspect"
 alias dil="sudo docker image ls"
@@ -274,28 +264,10 @@ alias dp="sudo docker ps"
 alias f="fzm"
 alias ff="fzf -f"
 alias ft="fzf-tmux"
-alias gcmm="git commit -m"
-alias gcoc="git checkout console"
-alias gsf="git submodule foreach"
-alias gsfg="git submodule foreach git"
-alias goo="BROWSER=w3m googler -l cn"
-alias gpo="git push origin --all"
-alias he="head"
 alias https="http --default-scheme https"
-alias le="less -r"
 alias npmi="npm install"
-alias jc="journalctl -x"
-alias jce="journalctl -xe"
-alias jcu="journalctl -xe -u"
 alias m="mark"
-alias p="ps -ef"
-alias s="sudo "
-alias sc-dr="sudo systemctl daemon-reload"
-alias t="tail"
-alias tf="tail -f"
 alias se='sudo -E env PATH="$PATH"'
-alias vd="vimdiff"
-alias yw="sudo yum info"
 
 export PREVIEW="$DOT/zfuncs/preview"
 FZF_PREVIEW_KEY_BIND="--bind 'ctrl-j:preview-down,"
@@ -311,11 +283,13 @@ FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-p:toggle+up,"
 FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}tab:toggle+down,"
 FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}btab:toggle+up'"
 export FZF_PREVIEW_KEY_BIND
+
 export FZF_COMPLETION_TRIGGER=',,'
 export FZF_DEFAULT_COMMAND='fd --hidden --color=always'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_COMPLETION_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd --hidden --type directory --color=always . . ~ /"
+
 export FZF_DEFAULT_OPTS="--multi --cycle --inline-info --ansi --height 100% \
   --border --layout=default --preview '$PREVIEW {}' --preview-window \
   'right:70%:wrap' $FZF_PREVIEW_KEY_BIND"
@@ -327,7 +301,7 @@ export FZF_CTRL_R_OPTS="+m -1 --cycle --ansi --border --no-preview"
 export FZF_ALT_C_OPTS="$FZF_DEFAULT_OPTS +m --preview-window 'right:60%'"
 export _ZL_FZF_FLAG="+s -1 +m --preview 'echo {} | awk \"{print \\\$2}\" \
   | xargs $PREVIEW' $FZF_PREVIEW_KEY_BIND"
-export FORGIT_FZF_DEFAULT_OPTS="$FZF_PREVIEW_KEY_BIND"
+export FORGIT_FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"
 local extract="local in=\${\${\"\$(<{f})\"%\$'\0'*}#*\$'\0'}
   local -A ctxt=(\"\${(@ps:\2:)CTXT}\")
   in=\${ctxt[IPREFIX]}\${ctxt[hpre]}\$in
@@ -342,7 +316,6 @@ fb() {
     | fzf --preview 'bat --color=always {}'
 }
 
-export PAGER="less -r"
 export BAT_PAGER="less -r"
 
 if has winstart; then
@@ -366,7 +339,7 @@ has wslview && export BROWSER="wslview"
 
 [[ -z "$BROWSER" ]] && has w3m && export BROWSER="w3m"
 
-: "$DOT/sshrc.d/lsd.sh" && [[ -f "$_" ]] && source "$_"
+: "$DOT/sshrc.d/common.sh" && [[ -f "$_" ]] && source "$_"
 
 if has exa; then
     alias ls="exa"
@@ -393,12 +366,6 @@ elif has lsd; then
     alias ltl="lsd --tree --depth"
     alias lss="lsd -lS"
     alias lst="lsd -lt"
-else
-  alias l="command ls --color=auto -lh"
-  alias la="command ls --color=auto -lha"
-  alias lsa="command ls --color=auto -A"
-  alias lss="command ls --color=auto -lhS"
-  alias lst="command ls --color=auto -lht"
 fi
 
 toggle_comment() {
