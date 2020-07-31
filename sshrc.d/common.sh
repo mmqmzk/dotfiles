@@ -46,3 +46,21 @@ lL() {
 llL() {
   _lfd l -lh "$@"
 }
+
+export PAGER="less -r"
+
+alias c="cd"
+alias h="history"
+alias he="head"
+alias l="command ls --color=auto -lh"
+alias la="command ls --color=auto -lha"
+alias le="less -r"
+alias lsa="command ls --color=auto -A"
+alias lss="command ls --color=auto -lhS"
+alias lst="command ls --color=auto -lht"
+alias p="ps -ef"
+alias s="sudo "
+alias t="tail"
+alias tf="tail -f"
+alias vd="vimdiff"
+alias yw="sudo yum info"

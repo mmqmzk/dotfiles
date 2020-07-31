@@ -14,7 +14,7 @@ if command -v vim &> /dev/null; then
   alias e="vim"
 fi
 
-: "$SSHRCD/lsd.sh" && [[ -f "$_" ]] && source "$_"
+: "$SSHRCD/common.sh" && [[ -f "$_" ]] && source "$_"
 : "$SSHRCD/del" && [[ -x "$_" ]] && alias del="$_"
 
 bind '"2": "2>&1 "'
@@ -24,21 +24,10 @@ bind '"h": "| head -q "'
 bind '"l": "| less -r "'
 bind '"n": ">/dev/null "'
 bind '"t": "| tail "'
-alias c="cd"
+
 alias g="git"
-alias h="history"
-alias he="head"
-alias l="command ls --color=auto -lh"
-alias la="command ls --color=auto -lha"
-alias le="less -r"
-alias lsa="command ls --color=auto -A"
-alias lss="command ls --color=auto -lhS"
-alias lst="command ls --color=auto -lht"
 alias md="mkdir -p"
-alias p="ps -ef"
-alias s="sudo "
-alias t="tail"
-alias tf="tail -f"
+
 alias -- -="cd -"
 alias ..="cd .."
 alias ...="cd ../.."
