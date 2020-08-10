@@ -270,6 +270,7 @@ alias m="mark"
 alias se='sudo -E env PATH="$PATH"'
 alias sni="sudo snap install"
 alias snf="snap find"
+alias snl="snap list"
 alias snr="sudo snap remove"
 alias sns="snap find"
 alias snu="sudo snap refresh"
