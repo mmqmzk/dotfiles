@@ -268,6 +268,13 @@ alias https="http --default-scheme https"
 alias npmi="npm install"
 alias m="mark"
 alias se='sudo -E env PATH="$PATH"'
+alias sni="sudo snap install"
+alias snf="snap find"
+alias snr="sudo snap remove"
+alias sns="snap find"
+alias snu="sudo snap refresh"
+alias snw="snap info"
+
 
 export PREVIEW="$DOT/zfuncs/preview"
 FZF_PREVIEW_KEY_BIND="--bind 'ctrl-j:preview-down,"
