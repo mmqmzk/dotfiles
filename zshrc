@@ -316,11 +316,13 @@ local extract="local in=\${\${\"\$(<{f})\"%\$'\0'*}#*\$'\0'}
 
 export FZF_TAB_OPTS=(-1 --cycle --inline-info --ansi --height 40% \
   --border --layout=reverse  --expect=/ "$FZF_PREVIEW_KEY_BIND")
-zstyle ':fzf-tab:complete:*:*' extra-opts --preview="$extract;$PREVIEW \"\$in\""
-zstyle ':completion:*:*:*:*:processes' command 'ps -ef --no-headers -w -w'
+zstyle ':fzf-tab:complete:*:*' extra-opts --preview="$extract;$PREVIEW \$in"
+zstyle ':completion:*:*:*:*:processes' command \
+  'ps -eo user,pid,ppid,start,tty,time,cmd --no-headers -w -w'
 zstyle ':fzf-tab:complete:kill:argument-rest' extra-opts \
-  --preview=$extract';ps --pid=$in[(w)2] u -w -w' \
-  --preview-window='down:15%:wrap'
+  --preview=$extract';ps --pid=$in[(w)2] uww' \
+  --preview-window='down:3:wrap'
+zstyle ':completion:*:kill:*' ignored-patterns '0'
 
 fb() {
   fd --hidden --type file --color=always "$@" \
