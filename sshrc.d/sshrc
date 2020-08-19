@@ -32,6 +32,7 @@ alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
+alias ssl="ss -ltnp"
 
 if command -v ag &> /dev/null; then
   alias agc="ag --color"
