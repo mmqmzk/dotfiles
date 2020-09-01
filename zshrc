@@ -210,9 +210,9 @@ alias -g C="| wc -l"
 alias -g F="| fzf"
 alias -g H="| head -q"
 alias -g HH="2>&1 | head -q"
-alias -g J="| jq -C . | less -r"
-alias -g L="| less -r"
-alias -g LL="2>&1 | less -r"
+alias -g J="| jq -C . | less -iR"
+alias -g L="| less -iR"
+alias -g LL="2>&1 | less -iR"
 alias -g S="| sort"
 alias -g T="| tail"
 alias -g TF="| tail -f"
@@ -331,7 +331,8 @@ fb() {
     | fzf --preview 'bat --color=always {}'
 }
 
-export BAT_PAGER="less -r"
+export BAT_PAGER="less -iFR"
+export LESS="-iR"
 
 if has winstart; then
   export BROWSER="chrome"
@@ -417,6 +418,10 @@ functions[_fzf_complete_ssh]='__fzf_complete_ssh "$@"'
 
 _fzf_complete_sshrc() {
   __fzf_complete_ssh "$@"
+}
+
+hex() {
+  hexyl "$@" | less -iFRX
 }
 
 set_no_proxy
