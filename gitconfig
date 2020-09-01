@@ -56,7 +56,7 @@
   editor = vim
   autocrlf = false
   quotepath = false
-  pager = bash -c '(which diff-so-fancy &>/dev/null && diff-so-fancy "$@" || cat "$@") | less -rFX'
+  pager = bash -c '(which diff-so-fancy &>/dev/null && diff-so-fancy "$@" || cat "$@") | less -iFRX'
 [color]
   pager = true
   ui = true
