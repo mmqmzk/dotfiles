@@ -52,9 +52,9 @@ install_dot() {
   git pull || true
   git submodule update --init
   check_bin
-  ln -sf "$DOT/zsh-custom/diff-so-fancy/diff-so-fancy" "$BIN/diff-so-fancy"
-  ln -sf "$DOT/zfuncs/sshrc" "$BIN/sshrc"
-  ln -sf "$DOT/zfuncs/v" "$BIN/v"
+  ln -sfn "$DOT/zsh-custom/diff-so-fancy/diff-so-fancy" "$BIN/diff-so-fancy"
+  ln -sfn "$DOT/zfuncs/sshrc" "$BIN/sshrc"
+  ln -sfn "$DOT/zfuncs/v" "$BIN/v"
   [[ -e ~/.sshrc.d ]] || ln -s "$DOT/sshrc.d" ~/.sshrc.d
   if [[ "$HOME" != /root ]]; then
     sudo mkdir -p /root/.local
@@ -106,7 +106,7 @@ _download() {
 _link() {
   check_bin
   : "$(find "$1" -name "*${2}*" -type f  -perm -555 | sed '1q')"
-  ln -sf "$_" "$BIN/$2"
+  ln -sfn "$_" "$BIN/$2"
   : "$(ls -l --color=always "$_")"
   echo "Linked $_."
   : "$(find "$1" -name "*.1" -type f)"
@@ -169,7 +169,7 @@ install_fzf() {
   if [[ -d "$fzf_base" ]]; then
     echo "Installing fzf."
     bash "$fzf_base/install" --bin
-    ln -sf "$fzf_base/bin/fzf" "$BIN"
+    ln -sfn "$fzf_base/bin/fzf" "$BIN"
   fi
 }
 
@@ -198,7 +198,7 @@ install_vim() {
   pushd ~ &> /dev/null
   del ~/.vim*
   local VIMDIR="$DOT/vim"
-  ln -sf "$VIMDIR" ~/.vim
+  ln -sfn "$VIMDIR" ~/.vim
   bash "$VIMDIR/install.sh"
   popd &> /dev/null
 }

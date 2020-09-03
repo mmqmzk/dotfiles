@@ -22,7 +22,7 @@ if [[ -n "$PIP" ]]; then
   echo "Installing httpie."
   ${PIP} install --user httpie -U
 fi
-has python || (: "$(wh python3)" && [[ -x "$_" ]] && sudo ln -sf "$_" "${_%3}")
+has python || (: "$(wh python3)" && [[ -x "$_" ]] && sudo ln -sfn "$_" "${_%3}")
 
 if ! has ag; then
   echo "Installing ag."
@@ -46,21 +46,21 @@ check_bin
 install_dot
 
 echo "Installing oh my zsh."
-: "$HOME/.zshrc" && del "$_" && ln -sf "$DOT/zshrc" "$_"
+: "$HOME/.zshrc" && del "$_" && ln -sfn "$DOT/zshrc" "$_"
 
 if ! has tmux; then
   echo "Installing tmux."
   sudo "$PM" install tmux -y
 fi
 
-: "$HOME/.tmux.conf" && del "$_" && ln -sf "$DOT/tmux.conf" "$_"
+: "$HOME/.tmux.conf" && del "$_" && ln -sfn "$DOT/tmux.conf" "$_"
 
 echo "Installing git config."
-: "$HOME/.gitconfig" && del "$_" && ln -sf "$DOT/gitconfig" "$_"
+: "$HOME/.gitconfig" && del "$_" && ln -sfn "$DOT/gitconfig" "$_"
 
-: "$DOT/syncdot.sh" && [[ -x "$_" ]] && ln -sf "$_" "$BIN/syncdot"
-: "$DOT/sshrc.d/del" && [[ -x "$_" ]] && sudo ln -sf "$_" /usr/local/bin
-: "$DOT/zfuncs/v" && [[ -x "$_" ]] && sudo ln -sf "$_" /usr/local/bin
+: "$DOT/syncdot.sh" && [[ -x "$_" ]] && ln -sfn "$_" "$BIN/syncdot"
+: "$DOT/sshrc.d/del" && [[ -x "$_" ]] && sudo ln -sfn "$_" /usr/local/bin
+: "$DOT/zfuncs/v" && [[ -x "$_" ]] && sudo ln -sfn "$_" /usr/local/bin
 
 
 install_jq "1.6"
