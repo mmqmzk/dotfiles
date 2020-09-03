@@ -47,18 +47,18 @@ _chown() {
 _chown "$DOT"
 _chown "$LOCAL"
 chmod -R go-w "$DOT"
-ln -sf "$DOT/zshrc"  "$BASE/.zshrc"
-# ln -sf "$DOT/vim"  "$BASE/.vim"
-ln -sf "$DOT/sshrc.d/vimrc" "$BASE/.vimrc"
-[[ "$user" != "root" ]] && sudo ln -sf "$BASE/.vimrc" /root
-ln -sf "$DOT/zsh-custom/diff-so-fancy/diff-so-fancy" "$BIN"
-ln -sf "$DOT/gitconfig" "$BASE/.gitconfig"
+ln -sfn "$DOT/zshrc"  "$BASE/.zshrc"
+# ln -sfn "$DOT/vim"  "$BASE/.vim"
+ln -sfn "$DOT/sshrc.d/vimrc" "$BASE/.vimrc"
+[[ "$user" != "root" ]] && sudo ln -sfn "$BASE/.vimrc" /root
+ln -sfn "$DOT/zsh-custom/diff-so-fancy/diff-so-fancy" "$BIN"
+ln -sfn "$DOT/gitconfig" "$BASE/.gitconfig"
 
 [[ -e /root/.local/bin ]] \
   || sudo bash -c "mkdir -p /root/.local && ln -s '$BIN' /root/.local/bin"
 
 _link() {
-  find "$LIB" -type f -perm -500 -name "$1" -exec ln -sf {} "$BIN/$2" \;
+  find "$LIB" -type f -perm -500 -name "$1" -exec ln -sfn {} "$BIN/$2" \;
 }
 
 _link bat bat
