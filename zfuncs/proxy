@@ -1,5 +1,5 @@
 _proxy() {
-  local proxy=${1:-"http://127.0.0.1:8888"}
+  local proxy="${1:-"http://127.0.0.1:8888"}"
   export http_proxy=$proxy
   export HTTP_PROXY=$proxy
   export https_proxy=$proxy
@@ -7,3 +7,5 @@ _proxy() {
 }
 
 _proxy $@
+
+# vim: ft=zsh

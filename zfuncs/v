@@ -3,17 +3,19 @@
 export PATH="$HOME/.local/bin:$PATH"
 
 _v() {
-  local options=(--type file)
-  local query=()
-  local editor=("${EDITOR:-vim}")
-  local args=()
+  local -a options
+  options=("--type" "file")
+  local -a query
+  local -a editor
+  editor=("${EDITOR:-vim}")
+  local -a args
   while [[ -n "$1" ]]; do
     case "$1" in
       -h|-H|h|H)
-        options+=(--hidden)
+        options+=("--hidden")
         ;;
       -l|-L|l|L)
-        options+=(--type symlink)
+        options+=("--type" "symlink")
         ;;
       -s|-S|s|S)
         editor=(sudo "$editor")
@@ -27,15 +29,18 @@ _v() {
     esac
     shift
   done
-  [[ -e "$query" ]] && $editor $args "$query" && return
-  [[ -z "$query" ]] && $editor $args && return
+  [[ -e "${query[*]}" ]] && "${editor[@]}" "${args[@]}" "${query[@]}" && return
+  [[ -z "${query[*]}" ]] && "${editor[@]}" "${args[@]}" && return
   autoload -Uz has
-  has fzf || (echo "Tool fzf not installed." && exit 1)
-  has fd || (echo "Tool fd not installed." && exit 1)
+  if ! has fzf; then
+    echo "Tool fzf not installed." && exit 1
+  fi
+  if ! has fd; then
+    echo "Tool fd not installed." && exit 1
+  fi
   : "$(fd --color=always $options . . ~ /etc \
-    | fzf -1 +m --print-query -0 --query "$query" --preview="bat --color=always")"
-  [[ "$(echo $_ | wc -l)" -gt 1 ]] && : "$(echo $_ | sed '1d')"
-  [[ -n "$_" ]] && $editor $args "${_//,}"
+    | fzf -1 +m --print-query -0 --query "${query[@]}")"
+  [[ -n "$_" ]] && "${editor[@]}" "${args[@]}" "${_//,}"
 }
 
 _v "$@"
