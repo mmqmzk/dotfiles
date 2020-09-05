@@ -1,6 +1,9 @@
 set_no_proxy() {
- local ips=$(printf "%s," 192.168.{0,1,5,31}.{1..255} $@)
+ local ips
+ ips="$(printf "%s," 192.168.{0,1,5,31}.{1..255} "$@")"
  export no_proxy="${ips//,/ }"
 }
 
 set_no_proxy $@
+
+# vim: ft=zsh

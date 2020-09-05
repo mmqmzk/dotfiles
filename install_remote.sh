@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
-DOT=${DOT:-~/.dotfiles}
-TMP=$DOT/tmp
+
+set -e
+
+DOT="${DOT:-"${HOME}/.dotfiles"}"
+TMP="${DOT}/tmp"
 
 declare -a hosts
 declare -a opts
@@ -19,7 +22,7 @@ while [[ -n "$1" ]]; do
       exit 0
       ;;
     -p|-P)
-      port=$2
+      port="$2"
       shift
       ;;
     -i|-o)
@@ -27,11 +30,11 @@ while [[ -n "$1" ]]; do
       shift
       ;;
     -u|-g)
-      remoteOpts="$remoteOpts '$1' '$2'"
+      remoteOpts="${remoteOpts} '$1' '$2'"
       shift
       ;;
     -e|-l)
-      remoteOpts="$remoteOpts '$1'"
+      remoteOpts="${remoteOpts} '$1'"
       ;;
     -*)
       ;;
@@ -41,15 +44,11 @@ while [[ -n "$1" ]]; do
   esac
   shift
 done
-pushd "$TMP"
+pushd "${TMP}"
 for host in "${hosts[@]}"; do
-  if [[ -n "$host" ]]; then
-    if [[ "$host" !=  *@* ]]; then
-      host="root@$host"
-    fi
-    scp -P "$port" "${opts[@]}" dot.tbz2 "$host":~
-    # shellcheck disable=SC2029
-    ssh -p "$port" "${opts[@]}"  "$host" "bash -s -x -- $remoteOpts" < "$DOT/init_remote.bash"
+  if [[ -n "${host}" ]]; then
+    rsync --ssh "ssh -p ${port} ${opts[*]}" dot.tbz2 "${host}":~
+    ssh -p "${port}" "${opts[@]}"  "${host}" "bash -s -x -- ${remoteOpts}" < "${DOT}/init_remote.bash"
   fi
 done
 popd

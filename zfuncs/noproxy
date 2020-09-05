@@ -1,4 +1,6 @@
 _noproxy() {
+  unset all_proxy
+  unset ALL_PROXY
   unset http_proxy
   unset HTTP_PROXY
   unset https_proxy
@@ -6,3 +8,5 @@ _noproxy() {
 }
 
 _noproxy $@
+
+# vim: ft=zsh
