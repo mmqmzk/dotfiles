@@ -196,10 +196,10 @@ elif has ag; then
   alias -g G="| ag --smart-case"
   alias -g GC="| ag --smart-case --color"
 else
-  alias ag="grep -Ei"
-  alias agc="grep -Ei --color=always"
-  alias -g G="| grep -Ei"
-  alias -g GC="| grep -Ei --color=always"
+  alias ag="grep -Pi"
+  alias agc="grep -Pi --color=always"
+  alias -g G="| grep -Pi"
+  alias -g GC="| grep -Pi --color=always"
 fi
 
 alias -g B="| bat --color=always"

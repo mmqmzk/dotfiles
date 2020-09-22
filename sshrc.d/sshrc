@@ -34,17 +34,17 @@ alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias ssl="ss -ltnp"
 
-if command -v ag &> /dev/null; then
+if command -v ag &>/dev/null; then
   alias agc="ag --color"
   bind '"g": "| ag --color "'
-elif command -v rg &> /dev/null; then
+elif command -v rg &>/dev/null; then
   alias rg="rg --smart-case"
   alias rgc="\\rg --smart-case --color=always"
   bind '"g": "| \\rg --smart-case --color=always "'
 else
-  alias ag="grep -Ein"
-  alias agc="grep -Ein --color=always"
-  bind '"g": "| grep -Ein --color=always "'
+  alias ag="grep -Pin"
+  alias agc="grep -Pin --color=always"
+  bind '"g": "| grep -Pin --color=always "'
 fi
 
 take() {
