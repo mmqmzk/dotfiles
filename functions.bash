@@ -294,7 +294,6 @@ install_npm() {
   npm install -g typescript
   npm install -g eslint
   npm install -g pm2
-  npm install -g youtube-dl-interactive
 }
 
 
