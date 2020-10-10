@@ -79,6 +79,8 @@ check_current_tag() {
   : "$(add_v "$_" "$2")"
   if [[ -n "$_" ]] && version_lte "$2" "$_"; then
     echo "Tool $1 already up to date, version: $_."
+  else
+    return 1
   fi
 }
 

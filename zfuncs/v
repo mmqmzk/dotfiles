@@ -38,9 +38,14 @@ _v() {
   if ! has fd; then
     echo "Tool fd not installed." && exit 1
   fi
-  : "$(fd --color=always $options . . ~ /etc \
-    | fzf -1 +m --print-query -0 --query "${query[@]}")"
-  [[ -n "$_" ]] && "${editor[@]}" "${args[@]}" "${_//,}"
+  local -a result
+  result=("${(@f)$(fd --color=always $options . . ~ /etc \
+    | fzf -1 -0 --print-query --query "${query[*]}")}")
+  if [[ ${#result} -gt 1 ]]; then
+    result=(${(@)result:1})
+  fi
+  result=(${(@)result//,/})
+  [[ -n "${result[*]}" ]] && "${editor[@]}" "${args[@]}" "${result[@]}"
 }
 
 _v "$@"
