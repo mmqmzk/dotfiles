@@ -188,13 +188,13 @@ export FPATH
 autoload -Uz proxy noproxy set_no_proxy my-backward-delete-word \
   preview exe _fzf_complete_lpass
 
+alias agc="ag --smart-case --color"
+alias rg="rg --smart-case"
+alias rgc="\\rg --smart-case --color=always"
 if has rg; then
-  alias rg="rg --smart-case"
-  alias rgc="\\rg --smart-case --color=always"
   alias -g G="| \\rg --smart-case"
   alias -g GC="| \\rg --smart-case --color=always"
 elif has ag; then
-  alias agc="ag --smart-case --color"
   alias -g G="| ag --smart-case"
   alias -g GC="| ag --smart-case --color"
 else
@@ -210,9 +210,9 @@ alias -g C="| wc -l"
 alias -g F="| fzf"
 alias -g H="| head -q"
 alias -g HH="2>&1 | head -q"
-alias -g J="| jq -C . | less -iR"
-alias -g L="| less -iR"
-alias -g LL="2>&1 | less -iR"
+alias -g J="| jq -C . | less ${LESS:-"imwR"}"
+alias -g L="| less ${LESS}"
+alias -g LL="2>&1 | less ${LESS:-"imwR"}"
 alias -g S="| sort"
 alias -g T="| tail"
 alias -g TF="| tail -f"
@@ -331,8 +331,9 @@ fb() {
     | fzf --preview 'bat --color=always {}'
 }
 
-export BAT_PAGER="less -iFR"
-export LESS="-iR"
+: "$DOT/sshrc.d/common.sh" && [[ -f "$_" ]] && source "$_"
+export BAT_PAGER="less ${LESS:-"imwR"}"
+export BAT_PAGER="less ${LESS:-"imwR"}"
 
 if has winstart; then
   export BROWSER="chrome"
@@ -355,21 +356,20 @@ has wslview && export BROWSER="wslview"
 
 [[ -z "$BROWSER" ]] && has w3m && export BROWSER="w3m"
 
-: "$DOT/sshrc.d/common.sh" && [[ -f "$_" ]] && source "$_"
 
 if has exa; then
   alias ls="exa --icons"
   alias lsa="exa -a --icons"
-  alias l="exa -lg --icons"
-  alias la="exa -lgaa --icons"
+  alias l="exa -lg --git --time-style long-iso --icons"
+  alias la="exa -lgaa --git --time-style long-iso --icons"
   alias lt="exa -T --icons"
-  alias lt2="exa -gT -L 2 --icons"
-  alias lt3="exa -gT -L 3 --icons"
-  alias lt4="exa -gT -L 4 --icons"
-  alias ltl="exa -gT --icons -L"
-  alias lss="exa -lg -s size --icons -r"
-  alias lst="exa -lg -s modified --icons -r"
-  alias l@="exa -lga@ --icons"
+  alias lt2="exa -gT --icons --level 2"
+  alias lt3="exa -gT --icons --level 3"
+  alias lt4="exa -gT --icons --level 4"
+  alias ltl="exa -gT --icons --level"
+  alias lss="exa -lg --git --time-style long-iso --sort size -r --icons"
+  alias lst="exa -lg --git --time-style long-iso --sort modified -r --icons"
+  alias l@="exa -lg --git --time-style long-iso --extend --icons"
 elif has lsd; then
   alias ls="lsd"
   alias lsa="lad -A"
@@ -421,7 +421,7 @@ _fzf_complete_sshrc() {
 }
 
 hex() {
-  hexyl "$@" | less -iFRX
+  hexyl "$@" | less "${LESS:-"imwR"}"
 }
 
 set_no_proxy

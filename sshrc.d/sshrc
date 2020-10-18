@@ -1,4 +1,4 @@
-#! /usr/bin/env bash
+#!/usr/bin/env bash
 # shellcheck disable=SC2139
 
 : "/etc/profile" && [[ -f "$_" ]] && source "$_"
@@ -21,7 +21,7 @@ bind '"2": "2>&1 "'
 bind '"e": "2>/dev/null "'
 bind '"f": "| tail -f "'
 bind '"h": "| head -q "'
-bind '"l": "| less -r "'
+bind '"l": "| less -imwR"'
 bind '"n": ">/dev/null "'
 bind '"t": "| tail "'
 
