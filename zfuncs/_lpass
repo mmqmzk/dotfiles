@@ -5,7 +5,7 @@ _lpass() {
   	if (( CURRENT > 2)); then
         cmd=${words[2]}
         # Set the context for the subcommand.
-        curcontext="${curcontext%:*:*}:lpass-$cmd"
+        curcontext="${curcontext%:*:*}:lpass-${cmd}"
         # Narrow the range of words we are looking at to exclude `lpass'
         (( CURRENT-- ))
         shift words
@@ -97,18 +97,18 @@ _lpass() {
             ;;
         esac
 
-        if [ -n "$has_sync" ] || [ -n "$has_color" ] || [ -n "$has_interactive" ]; then
+        if [ -n "${has_sync}" ] || [ -n "${has_color}" ] || [ -n "${has_interactive}" ]; then
             local -a generic_options
-            if [ "$has_sync" -eq 1 ]; then
+            if [ "${has_sync}" -eq 1 ]; then
                 generic_options+=('--sync=[Synchronize local cache with server: auto | now | no]')
             fi
-            if [ "$has_color" -eq 1 ]; then
+            if [ "${has_color}" -eq 1 ]; then
                 generic_options+=('--color=[Color: auto | never | always]')
             fi
-            if [ "$has_interactive" -eq 1 ]; then
-                generic_options+=("--non-interactive[Use stardard input instead of $EDITOR]")
+            if [ "${has_interactive}" -eq 1 ]; then
+                generic_options+=("--non-interactive[Use stardard input instead of ${EDITOR}]")
             fi
-            _arguments $generic_options
+            _arguments ${generic_options}
         fi
     else
         local -a subcommands

@@ -2,7 +2,7 @@
 
 _has() {
   for name in "$@"; do
-    command -v "$name" &>/dev/null && return
+    command -v "${name}" &>/dev/null && return
   done
   return 1
 }

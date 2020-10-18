@@ -1,8 +1,8 @@
 #!/usr/bin/env zsh
 
 _sshrc() {
-  SSHRCD="${SSHHOME:-$HOME}/.sshrc.d"
-  [[ -d "${SSHRCD}" ]] || export SSHRCD="${DOT:-"$HOME/.dotfiles"}/sshrc.d"
+  SSHRCD="${SSHHOME:-"${HOME}"}/.sshrc.d"
+  [[ -d "${SSHRCD}" ]] || export SSHRCD="${DOT:-"${HOME}/.dotfiles"}/sshrc.d"
   local -a opts
   local -a opts2
   local domain
