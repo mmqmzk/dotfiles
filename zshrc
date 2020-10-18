@@ -420,7 +420,7 @@ _fzf_complete_sshrc() {
 }
 
 hex() {
-  hexyl "$@" | less "${LESS:-"-imwR"}"
+  hexyl "$@" | less -P"%btB./%ltL./%dtP.?e END" -iwR
 }
 
 set_no_proxy
