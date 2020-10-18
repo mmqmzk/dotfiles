@@ -1,21 +1,21 @@
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+if [[ -r "${XDG_CACHE_HOME:-"${HOME}/.cache"}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-"${HOME}/.cache"}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 # If you come from bash you might have to change your $PATH.
-if [[ "$PATH" != *"$HOME/.local/bin"* ]]; then
-  export PATH="$HOME/.local/bin:$PATH"
+if [[ "${PATH}" != *"${HOME}/.local/bin"* ]]; then
+  export PATH="${HOME}/.local/bin:${PATH}"
 fi
-export DOT="${DOT:-"$HOME/.dotfiles"}"
+export DOT="${DOT:-"${HOME}/.dotfiles"}"
 
-export FZF_BASE="$DOT/fzf"
-export NVM_DIR="$DOT/nvm"
+export FZF_BASE="${DOT}/fzf"
+export NVM_DIR="${DOT}/nvm"
 
 # Path to your oh-my-zsh installation.
-export ZSH="$DOT/oh-my-zsh"
+export ZSH="${DOT}/oh-my-zsh"
 
 
 # Set name of the theme to load. Optionally, if you set this to "random"
@@ -74,7 +74,7 @@ DISABLE_AUTO_UPDATE="true"
 HIST_STAMPS="yyyy-mm-dd"
 
 # Would you like to use another custom folder than $ZSH/custom?
-ZSH_CUSTOM="$DOT/zsh-custom"
+ZSH_CUSTOM="${DOT}/zsh-custom"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
@@ -88,7 +88,7 @@ export _ZL_ADD_ONCE=1
 export FZ_HISTORY_CD_CMD="_zlua"
 export RANGER_ZLUA="${ZSH_CUSTOM}/plugins/z.lua/z.lua"
 
-export FZF_MARKS_FILE="${XDG_CONFIG_HOME:-"$HOME/.config"}/fzf-marks"
+export FZF_MARKS_FILE="${XDG_CONFIG_HOME:-"${HOME}/.config"}/fzf-marks"
 
 _fzf_compgen_dir() {
   fd --type directory --hidden --follow --exclude ".git" --color=always . "$@"
@@ -148,7 +148,7 @@ else
   plugins+=("alias-tips")
 fi
 
-source $ZSH/oh-my-zsh.sh
+source "${ZSH}/oh-my-zsh.sh"
 
 # User configuration
 
@@ -180,7 +180,7 @@ export EDITOR='vim'
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 unalias fd
 
-fpath=($DOT/zfuncs "$fpath[@]")
+fpath=("${DOT}/zfuncs" "${fpath[@]}")
 export FPATH
 
 autoload -Uz proxy noproxy set_no_proxy my-backward-delete-word \
@@ -208,9 +208,9 @@ alias -g C="| wc -l"
 alias -g F="| fzf"
 alias -g H="| head -q"
 alias -g HH="2>&1 | head -q"
-alias -g J="| jq -C . | less ${LESS:-"imwR"}"
-alias -g L="| less ${LESS}"
-alias -g LL="2>&1 | less ${LESS:-"imwR"}"
+alias -g J="| jq -C . | less ${LESS:-"-imwR"}"
+alias -g L="| less ${LESS:-"-imwR"}"
+alias -g LL="2>&1 | less ${LESS:-"-imwR"}"
 alias -g S="| sort"
 alias -g T="| tail"
 alias -g TF="| tail -f"
@@ -266,7 +266,7 @@ alias ft="fzf-tmux"
 alias https="http --default-scheme https"
 alias npmi="npm install"
 alias m="mark"
-alias se='sudo -E env PATH="$PATH"'
+alias se='sudo -E'
 alias sni="sudo snap install"
 alias snf="snap find"
 alias snl="snap list"
@@ -276,7 +276,7 @@ alias snu="sudo snap refresh"
 alias snw="snap info"
 
 
-export PREVIEW="$DOT/zfuncs/preview"
+export PREVIEW="${DOT}/zfuncs/preview"
 FZF_PREVIEW_KEY_BIND="--bind 'ctrl-j:preview-down,"
 FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}ctrl-k:preview-up,"
 FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}ctrl-e:preview-down+preview-down+preview-down,"
@@ -293,34 +293,34 @@ export FZF_PREVIEW_KEY_BIND
 
 export FZF_COMPLETION_TRIGGER=',,'
 export FZF_DEFAULT_COMMAND='fd --hidden --color=always'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_COMPLETION_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_CTRL_T_COMMAND="${FZF_DEFAULT_COMMAND}"
+export FZF_COMPLETION_COMMAND="${FZF_DEFAULT_COMMAND}"
 export FZF_ALT_C_COMMAND="fd --hidden --type directory --color=always . . ~ /"
 
 export FZF_DEFAULT_OPTS="--multi --cycle --inline-info --ansi --height 100% \
-  --border --layout=default --preview '$PREVIEW {}' --preview-window \
-  'right:70%:wrap' $FZF_PREVIEW_KEY_BIND"
-export FZF_CTRL_T_OPTS="$FZF_DEFAULT_OPTS"
+  --border --layout=default --preview '${PREVIEW} {}' --preview-window \
+  'right:70%:wrap' ${FZF_PREVIEW_KEY_BIND}"
+export FZF_CTRL_T_OPTS="${FZF_DEFAULT_OPTS}"
 export FZF_COMPLETION_OPTS="-1 --cycle --inline-info --ansi --height 60% \
-  --border --layout=reverse --preview '$PREVIEW {}' --preview-window \
-  'right:70%:wrap' $FZF_PREVIEW_KEY_BIND"
+  --border --layout=reverse --preview '${PREVIEW} {}' --preview-window \
+  'right:70%:wrap' ${FZF_PREVIEW_KEY_BIND}"
 export FZF_CTRL_R_OPTS="+m -1 --cycle --ansi --border --no-preview"
-export FZF_ALT_C_OPTS="$FZF_DEFAULT_OPTS +m --preview-window 'right:60%'"
+export FZF_ALT_C_OPTS="${FZF_DEFAULT_OPTS} +m --preview-window 'right:60%'"
 export _ZL_FZF_FLAG="+s -1 +m --preview 'echo {} | awk \"{print \\\$2}\" \
-  | xargs $PREVIEW' $FZF_PREVIEW_KEY_BIND"
-export FORGIT_FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"
+  | xargs ${PREVIEW}' ${FZF_PREVIEW_KEY_BIND}"
+export FORGIT_FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS}"
 local extract="local in=\${\${\"\$(<{f})\"%\$'\0'*}#*\$'\0'}
   local -A ctxt=(\"\${(@ps:\2:)CTXT}\")
   in=\${ctxt[IPREFIX]}\${ctxt[hpre]}\$in
   in=\${(Qe)~in}"
 
 export FZF_TAB_OPTS=(-1 --cycle --inline-info --ansi --height 40% \
-  --border --layout=reverse  --expect=/ "$FZF_PREVIEW_KEY_BIND")
-zstyle ':fzf-tab:complete:*:*' extra-opts --preview="$extract;$PREVIEW \$in"
+  --border --layout=reverse  --expect=/ "${FZF_PREVIEW_KEY_BIND}")
+zstyle ':fzf-tab:complete:*:*' extra-opts --preview="${extract};${PREVIEW} \$in"
 zstyle ':completion:*:*:*:*:processes' command \
   'ps -eo user,pid,ppid,start,tty,time,cmd --no-headers -w -w'
 zstyle ':fzf-tab:complete:kill:argument-rest' extra-opts \
-  --preview=$extract';ps --pid=$in[(w)2] uww' \
+  --preview=${extract}';ps --pid=$in[(w)2] uww' \
   --preview-window='down:3:wrap'
 zstyle ':completion:*:kill:*' ignored-patterns '0'
 
@@ -329,14 +329,13 @@ fb() {
     | fzf --preview 'bat --color=always {}'
 }
 
-: "$DOT/sshrc.d/common.sh" && [[ -f "$_" ]] && source "$_"
-export BAT_PAGER="less ${LESS:-"imwR"}"
-export BAT_PAGER="less ${LESS:-"imwR"}"
+: "${DOT}/sshrc.d/common.sh" && [[ -f "$_" ]] && source "$_"
+export BAT_PAGER="less ${LESS:-"-imwR"}"
 
 if has winstart; then
   export BROWSER="chrome"
   alias e="winstart EmEditor"
-elif [[ -n "$DISPLAY" ]]; then
+elif [[ -n "${DISPLAY}" ]]; then
   if has google-chrome; then
     export BROWSER="google-chrome"
   elif has firefox; then
@@ -352,7 +351,7 @@ else
 fi
 has wslview && export BROWSER="wslview"
 
-[[ -z "$BROWSER" ]] && has w3m && export BROWSER="w3m"
+[[ -z "${BROWSER}" ]] && has w3m && export BROWSER="w3m"
 
 
 if has exa; then
@@ -383,7 +382,7 @@ elif has lsd; then
 fi
 
 toggle_comment() {
-  if [[ "$LBUFFER" == \#* ]]; then
+  if [[ "${LBUFFER}" == \#* ]]; then
     : "${LBUFFER#\#}" && : "${_## }"
   else
     : "# ${LBUFFER}"
@@ -392,7 +391,7 @@ toggle_comment() {
 }
 
 yank_bufer() {
-  echo -n "$LBUFFER" | yank -i
+  echo -n "${LBUFFER}" | yank -i
 }
 
 zle -N my-backward-delete-word
@@ -419,10 +418,10 @@ _fzf_complete_sshrc() {
 }
 
 hex() {
-  hexyl "$@" | less "${LESS:-"imwR"}"
+  hexyl "$@" | less "${LESS:-"-imwR"}"
 }
 
 set_no_proxy
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-: "$DOT/p10k.zsh"  && [[ -f "$_" ]] && source "$_"
+: "${DOT}/p10k.zsh"  && [[ -f "$_" ]] && source "$_"

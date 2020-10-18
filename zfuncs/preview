@@ -8,20 +8,20 @@ _preview() {
     cmd="$(exe exa lsd ls)"
     [[ -x "${cmd}" ]] && "${cmd}" -lh --color=always "${file}"
   elif [[ -f "${file}" ]]; then
-    local conf="${XDG_CONFIG_HOME:-"$HOME/.config"}"
-    local scope="${RANGER_CFG:-"$conf/ranger"}/scope.sh"
-    if [[ -f "$scope" ]]; then
+    local conf="${XDG_CONFIG_HOME:-"${HOME}/.config"}"
+    local scope="${RANGER_CFG:-"${conf}/ranger"}/scope.sh"
+    if [[ -f "${scope}" ]]; then
       : "${file##*/}"
       : "${_##*.}"
       local cache
       cache="$(mktemp -u /tmp/Scope.sh.XXXXXXXX.$_)"
-      local columns="${FZF_PREVIEW_COLUMNS:-$COLUMNS}"
-      local lines="${FZF_PREVIEW_LINES:-$Lines}"
+      local columns="${FZF_PREVIEW_COLUMNS:-${COLUMNS}}"
+      local lines="${FZF_PREVIEW_LINES:-${Lines}}"
       bash "${scope}" "${file}" "${columns}" "${lines}" "${cache}" "False"
       return 0
     fi
     info="$(file "${file}")"
-    if [[ "$info" == *text* ]]; then
+    if [[ "${info}" == *text* ]]; then
       if has bat; then
         bat --color=always "${file}"
       else

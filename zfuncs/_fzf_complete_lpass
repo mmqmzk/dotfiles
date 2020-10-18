@@ -22,7 +22,7 @@ __generateItems() {
   "--sync=now"
   "--sync=no"
   )
-  case "$args" in
+  case "${args}" in
     'lpass login'*)
       cmds=(
       "--trust"
@@ -31,7 +31,7 @@ __generateItems() {
       "--force"
       "${colors[@]}"
       )
-      [[ -n "$LAST_PASS_USERNAME" ]] && echo "$LAST_PASS_USERNAME"
+      [[ -n "${LAST_PASS_USERNAME}" ]] && echo "${LAST_PASS_USERNAME}"
       printf '%s\n' "${cmds[@]}"
       ;;
     'lpass logout'*)
@@ -145,7 +145,7 @@ __generateItems() {
       cmds=(
       "${colors[@]}"
       )
-      if [[ $args == 'lpass sync'* ]]; then
+      if [[ ${args} == 'lpass sync'* ]]; then
         cmds+=("-b" "--backgroud")
       else
         cmds+=("${sync[@]}")

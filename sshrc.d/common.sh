@@ -51,7 +51,7 @@ llL() {
 
 export LESS='-P"(%i/%m) ?f%f:-stdin-. ?lt%ltL:-./?dt%dtP:-./?pt%pt:-.\%.?e END" -iwR'
 
-export PAGER="less ${LESS:-"imwR"}}"
+export PAGER="less ${LESS:-"-iwR"}}"
 
 alias aac="sudo apt autoclean"
 alias aar="sudo apt autoremove"
@@ -85,7 +85,7 @@ alias jcu="journalctl -xe -u"
 alias k="kill"
 alias l="command ls --color=auto -lh"
 alias la="command ls --color=auto -lha"
-alias le="less ${LESS:-"imwR"}"
+alias le="less ${LESS:-"-imwR"}"
 alias lsa="command ls --color=auto -A"
 alias lss="command ls --color=auto -lhS"
 alias lst="command ls --color=auto -lht"
