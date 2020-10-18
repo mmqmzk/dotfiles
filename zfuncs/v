@@ -29,7 +29,15 @@ _v() {
     esac
     shift
   done
-  [[ -e "${query[*]}" ]] && "${editor[@]}" "${args[@]}" "${query[@]}" && return
+  local -a realFiles
+  for fie in "${query[@]}"; do
+    if [[ -e "${fie}" ]]; then
+      realFiles+=("${fie}")
+    fi
+  done
+  if ((${#realFiles[@]})); then
+    "${editor[@]}" "${argts[@]}" "${realFiles[@]}" && return
+  fi
   [[ -z "${query[*]}" ]] && "${editor[@]}" "${args[@]}" && return
   autoload -Uz has
   if ! has fzf; then
@@ -39,10 +47,10 @@ _v() {
     echo "Tool fd not installed." && exit 1
   fi
   local -a result
-  result=("${(@f)$(fd --color=always $options . . ~ /etc \
+  result=("${(@fie)$(fd --color=always $options . . ~ /etc \
     | fzf -1 -0 --print-query --query "${query[*]}")}")
-  if [[ ${#result} -gt 1 ]]; then
-    result=(${(@)result:1})
+  if ((${#result[@]}>1)); then
+    result=(${(@)result:0:-1})
   fi
   result=(${(@)result//,/})
   [[ -n "${result[*]}" ]] && "${editor[@]}" "${args[@]}" "${result[@]}"
