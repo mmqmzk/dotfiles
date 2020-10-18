@@ -208,12 +208,9 @@ alias -g C="| wc -l"
 alias -g F="| fzf"
 alias -g H="| head -q"
 alias -g HH="2>&1 | head -q"
-alias -g J="| jq -C . | less${LESS:-"imwR"}"
-alias -g J="| jq -C . | less${LESS:-"imwR"}"
-alias -g L="| less${LESS:-"imwR"}"
-alias -g L="| less${LESS:-"imwR"}"
-alias -g LL="2>&1 | less${LESS:-"imwR"}"
-alias -g LL="2>&1 | less${LESS:-"imwR"}"
+alias -g J="| jq -C . | less ${LESS:-"imwR"}"
+alias -g L="| less ${LESS}"
+alias -g LL="2>&1 | less ${LESS:-"imwR"}"
 alias -g S="| sort"
 alias -g T="| tail"
 alias -g TF="| tail -f"
@@ -333,8 +330,8 @@ fb() {
 }
 
 : "$DOT/sshrc.d/common.sh" && [[ -f "$_" ]] && source "$_"
-export BAT_PAGER="less${LESS:-"imwR"}"
-export BAT_PAGER="less${LESS:-"imwR"}"
+export BAT_PAGER="less ${LESS:-"imwR"}"
+export BAT_PAGER="less ${LESS:-"imwR"}"
 
 if has winstart; then
   export BROWSER="chrome"
@@ -422,7 +419,7 @@ _fzf_complete_sshrc() {
 }
 
 hex() {
-  hexyl "$@" | less "${LESS:-${LESS:-"imwR"}}"
+  hexyl "$@" | less "${LESS:-"imwR"}"
 }
 
 set_no_proxy
