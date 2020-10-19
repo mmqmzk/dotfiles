@@ -59,7 +59,8 @@ DISABLE_AUTO_UPDATE="true"
 # Uncomment the following line to enable command auto-correction.
 # ENABLE_CORRECTION="true"
 
-# Uncomment the following line to display red dots whilst waiting for completion.
+# Uncomment the following line to display red dots whilst waiting 
+# for completion.
 # COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
@@ -76,7 +77,8 @@ HIST_STAMPS="yyyy-mm-dd"
 # Would you like to use another custom folder than $ZSH/custom?
 ZSH_CUSTOM="${DOT}/zsh-custom"
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Which plugins would you like to load?
+# (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
@@ -281,8 +283,10 @@ alias snw="snap info"
 export PREVIEW="${DOT}/zfuncs/preview"
 FZF_PREVIEW_KEY_BIND="--bind 'ctrl-j:preview-down,"
 FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}ctrl-k:preview-up,"
-FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}ctrl-e:preview-down+preview-down+preview-down,"
-FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}ctrl-y:preview-up+preview-up+preview-up,"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}ctrl-e:preview-down\
++preview-down+preview-down,"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}ctrl-y:preview-up\
++preview-up+preview-up,"
 FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-p:toggle-preview,"
 FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-w:toggle-preview-wrap,"
 FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}ctrl-s:toggle-sort,"
@@ -421,6 +425,12 @@ _fzf_complete_sshrc() {
 
 hex() {
   hexyl "$@" | less -P"%btB./%ltL./%dtP.?e END" -iwR
+}
+
+mdl() {
+  glow "$@" -s dark \
+    | less -iwR \
+    -P'Line\:?lt%lt-%lb:-./?L%L:-. Page\:?db%db:-./?D%D:-. ?pb%pb:-.\%.?e END'
 }
 
 set_no_proxy
