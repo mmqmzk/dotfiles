@@ -52,7 +52,7 @@ llL() {
 export LESS="-P'?m(File\\:%i/%m) .[?f%f:-stdin-.]. Lines\\:?lt%lt-\
 %lb:-./?L%L:-. Page\\:?db%db:-./?D%D:-. ?pb%pb:-.\\%.?e END' -iwR"
 
-export PAGER="less ${LESS:-"-iwR"}}"
+export PAGER="less ${LESS:-"-iwR"}"
 
 alias aac="sudo apt autoclean"
 alias aar="sudo apt autoremove"
