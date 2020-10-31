@@ -62,4 +62,6 @@
   ui = true
 [text]
   eol=lf
+[pull]
+  rebase = false
 [https]
