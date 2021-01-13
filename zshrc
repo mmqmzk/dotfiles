@@ -283,10 +283,12 @@ alias snw="snap info"
 export PREVIEW="${DOT}/zfuncs/preview"
 FZF_PREVIEW_KEY_BIND="--bind 'ctrl-j:preview-down,"
 FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}ctrl-k:preview-up,"
-FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}ctrl-e:preview-down\
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-e:preview-down\
 +preview-down+preview-down,"
-FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}ctrl-y:preview-up\
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-y:preview-up\
 +preview-up+preview-up,"
+# FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-h:preview-top,"
+# FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-l:preview-bottom,"
 FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-p:toggle-preview,"
 FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-w:toggle-preview-wrap,"
 FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}ctrl-s:toggle-sort,"
@@ -315,18 +317,18 @@ export FZF_ALT_C_OPTS="${FZF_DEFAULT_OPTS} +m --preview-window 'right:60%'"
 export _ZL_FZF_FLAG="+s -1 +m --preview 'echo {} | awk \"{print \\\$2}\" \
   | xargs ${PREVIEW}' ${FZF_PREVIEW_KEY_BIND}"
 export FORGIT_FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS}"
-local extract="local in=\${\${\"\$(<{f})\"%\$'\0'*}#*\$'\0'}
-  local -A ctxt=(\"\${(@ps:\2:)CTXT}\")
-  in=\${ctxt[IPREFIX]}\${ctxt[hpre]}\$in
-  in=\${(Qe)~in}"
 
-export FZF_TAB_OPTS=(-1 --cycle --inline-info --ansi --height 40% \
-  --border --layout=reverse  --expect=/ "${FZF_PREVIEW_KEY_BIND}")
-zstyle ':fzf-tab:complete:*:*' extra-opts --preview="${extract};${PREVIEW} \$in"
+export __FZF_TAB_OPTS=(-1 --cycle --inline-info --ansi --height 40% \
+  --border --layout=reverse  --expect=/)
+zstyle ':completion:*:descriptions' format '[%d]'
+zstyle ':fzf-tab:*' fzf-flags "${__FZF_TAB_OPTS[@]}"
+zstyle ':fz${FZF_TAP_OPTS}f-tab:*' fzf-bindings "${FZF_PREVIEW_KEY_BIND}"
+zstyle ':fzf-tab:complete:*:*' fzf-preview "${PREVIEW}"' $realpath'
 zstyle ':completion:*:*:*:*:processes' command \
   'ps -eo user,pid,ppid,start,tty,time,cmd --no-headers -w -w'
-zstyle ':fzf-tab:complete:kill:argument-rest' extra-opts \
-  --preview=${extract}';ps --pid=$in[(w)2] uww' \
+zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-preview \
+  '[[ $group == "[process ID]"  ]] && ps --pid=$word -o cmd --no-headers -w -w'
+zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-flags \
   --preview-window='down:3:wrap'
 zstyle ':completion:*:kill:*' ignored-patterns '0'
 
