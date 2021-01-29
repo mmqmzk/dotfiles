@@ -89,6 +89,7 @@ get_tag_url() {
     echo "Tool jq not Installed." && exit 1
   fi
   curl -fsSL "https://api.github.com/repos/$1/releases/${2:-latest}" \
+    -H "Authorization: token $GITHUB_TOKEN" \
     | jq "{url:.assets[].browser_download_url,tag:.tag_name}\
     |select(.url|contains(\"${3:-"${RUST_ARCH}"}\"))|.url+\" \"+.tag" -r \
     | sed '1q'
