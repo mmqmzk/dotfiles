@@ -52,7 +52,7 @@ llL() {
 export LESS="-P'?m(File\\:%i/%m) .[?f%f:-stdin-.]. Lines\\:?lt%lt-\
 %lb:-./?L%L:-. Page\\:?db%db:-./?D%D:-. ?pb%pb:-.\\%.?e END' -iwR"
 
-export PAGER="less -imwR"
+# export PAGER="less -imwR"
 
 alias aac="sudo apt autoclean"
 alias aar="sudo apt autoremove"
@@ -100,11 +100,12 @@ alias gra="git remote add"
 alias grb="git rebase"
 alias grba="git rebase --abort"
 alias grbc="git rebase --continue"
+alias grbi="git rebase -i"
 alias grbn="git rebase --dry-run"
 alias grbs="git rebase --skip"
 alias grhh="git reset --hard"
 alias grm="git rm"
-alias grmf="git rm --force"
+alias gRM="git rm --force"
 alias grst="git reset"
 alias gsa="git stash apply"
 alias gsb="git status -sb"

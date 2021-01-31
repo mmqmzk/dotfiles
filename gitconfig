@@ -54,18 +54,19 @@
   ms = merge --squash
   p = push
   pd = push --delete
-  pdf = push --delete --force
-  pf = push --force
-  pfo = push --force --all origin
+  pD = push --delete --force
+  P = push --force
   pl = pull
   pl1 = pull --depth=1
   pn = push --dry-run
   po = push --all origin
+  pO = push --force --all origin
   r = remote
   ra = remote add
   rb = rebase
   rba = rebase --abort
   rbc = rebase --continue
+  rbi = rebase -i
   rbm = rebase master
   rbn = rebase --dry-run
   rbs = rebase --skip
