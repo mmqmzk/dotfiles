@@ -303,8 +303,8 @@ install_npm() {
 install_exa() {
   local tag=${1:-"latest"}
   [[ "${tag}" == "-f" ]] && tag="latest" && local force="YES"
-  local url="https://github.com/ogham/exa/releases/download/${tag}/${file}"
-  local result="exa-linux-x86_64-$tag.zip"
+  local result="exa-linux-x86_64-${tag##v}.zip"
+  local url="https://github.com/ogham/exa/releases/download/${tag}/${result}"
   if [[ "${tag}" == "latest" ]]; then
     local data="$(get_tag_url "ogham/exa" "${tag}" "exa-linux-x86_64")"
     url="${data%% *}"
