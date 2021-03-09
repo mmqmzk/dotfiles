@@ -65,7 +65,7 @@ echo "Installing git config."
 : "${DOT}/syncdot.sh" && [[ -x "$_" ]] && ln -sfn "$_" "${BIN}/syncdot"
 : "${DOT}/sshrc.d/del" && [[ -x "$_" ]] && sudo ln -sfn "$_" "${BIN}"
 : "${DOT}/zfuncs/v" && [[ -x "$_" ]] && sudo ln -sfn "$_" "${BIN}"
-
+"${PM}" install jq bat exa fd lsd ripgrep
 # install_jq "1.6"
 
 # install_bat v0.17.1
