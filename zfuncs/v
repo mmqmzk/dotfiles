@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/data/data/com.termux/files/usr/bin/zsh
 
 export PATH="${HOME}/.local/bin:${PATH}"
 
