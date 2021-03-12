@@ -190,7 +190,7 @@ install_fzf() {
 
 install_jq() {
   if is_debian; then
-    "${PM}" install jq jo -y
+    ${PM} install jq jo -y
   else
     local JQ_TAG=$1
     [[ -z "${JQ_TAG}" ]] && return 1
@@ -210,7 +210,7 @@ install_vim() {
     install_dot
   fi
   echo "Installing vim"
-  "${PM}" install vim -y
+  ${PM} install vim -y
   pushd ~ &>/dev/null
   del ~/.vim*
   local VIMDIR="${DOT}/vim"

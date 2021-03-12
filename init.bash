@@ -16,16 +16,16 @@ if [[ -z "${PM}" ]]; then
   exit 1
 fi
 
-"${PM}" install git zsh curl zip unzip ncurses-utils lua53 nodejs-lts gnupg
+${PM} install git zsh curl zip unzip ncurses-utils lua53 nodejs-lts gnupg
 
-# PIP=$(wh pip3 pip)
-# if [[ -n "${PIP}" ]]; then
-  # echo "Installing pips."
-  # ${PIP} install --user pip -U
-  # ${PIP} install --user httpie -U
-  # ${PIP} install --user mycli -U
-  # ${PIP} install --user youtube-dl -U
-# fi
+PIP=$(wh pip3 pip)
+if [[ -n "${PIP}" ]]; then
+  echo "Installing pips."
+  ${PIP} install pip -U
+  ${PIP} install httpie -U
+  ${PIP} install mycli -U
+  ${PIP} install youtube-dl -U
+fi
 # has python || (: "$(wh python3)" && [[ -x "$_" ]] && ln -sfn "$_" "${_%3}")
 
 if ! has ag; then
@@ -35,16 +35,17 @@ if ! has ag; then
   else
     : "the_silver_searcher"
   fi
-  "${PM}" install "$_" -y
+  ${PM} install "$_" -y
 fi
 
 # if ! has lua5.3 lua; then
   # if is_debian; then
-    # "${PM}" install lua5.3
+    # ${PM} install lua5.3
   # else
-    # "${PM}" install lua
+    # ${PM} install lua
   # fi
 # fi
+${PM} install lua53 -y
 
 check_bin
 install_dot
@@ -54,7 +55,7 @@ echo "Installing oh my zsh."
 
 if ! has tmux; then
   echo "Installing tmux."
-  "${PM}" install tmux -y
+  ${PM} install tmux -y
 fi
 
 : "${HOME}/.tmux.conf" && del "$_" && ln -sfn "${DOT}/tmux.conf" "$_"
