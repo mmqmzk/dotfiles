@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/data/data/com.termux/files/usr/bin/bash
 INIT=/tmp/init.bash
 curl -fsSL https://github.com/mmqmzk/dotfiles/raw/master/functions.bash >/tmp/functions.bash
 curl -fsSL https://github.com/mmqmzk/dotfiles/raw/master/init.bash >"${INIT}"

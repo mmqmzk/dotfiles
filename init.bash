@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/data/data/com.termux/files/usr/bin/bash
 
 pushd "$(dirname "$0")"
 
@@ -18,14 +18,14 @@ fi
 
 ${PM} install git zsh curl zip unzip ncurses-utils lua53 nodejs-lts gnupg
 
-PIP=$(wh pip3 pip)
-if [[ -n "${PIP}" ]]; then
-  echo "Installing pips."
-  ${PIP} install pip -U
-  ${PIP} install httpie -U
-  ${PIP} install mycli -U
-  ${PIP} install youtube-dl -U
-fi
+# PIP=$(wh pip3 pip)
+# if [[ -n "${PIP}" ]]; then
+  # echo "Installing pips."
+  # ${PIP} install pip -U
+  # ${PIP} install httpie -U
+  # ${PIP} install mycli -U
+  # ${PIP} install youtube-dl -U
+# fi
 # has python || (: "$(wh python3)" && [[ -x "$_" ]] && ln -sfn "$_" "${_%3}")
 
 if ! has ag; then
