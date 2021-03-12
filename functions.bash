@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/data/data/com.termux/files/usr/bin/bash
 
 set -e
 
@@ -56,10 +56,10 @@ install_dot() {
   ln -sfn "${DOT}/zfuncs/sshrc" "${BIN}/sshrc"
   ln -sfn "${DOT}/zfuncs/v" "${BIN}/v"
   [[ -e ~/.sshrc.d ]] || ln -s "${DOT}/sshrc.d" ~/.sshrc.d
-  if [[ "${HOME}" != /root ]]; then
-    mkdir -p /root/.local
-    ln -s "${BIN}" /root/.local/bin || true
-  fi
+  # if [[ "${HOME}" != /root ]]; then
+    # mkdir -p /root/.local
+    # ln -s "${BIN}" /root/.local/bin || true
+  # fi
   popd
 }
 
@@ -222,7 +222,8 @@ install_vim() {
 install_cht() {
   echo "Installing cheat.sh"
   check_bin
-  : "/tmp/cht"
+  # : "/tmp/cht"
+  : "cht"
   del "$_"
   curl -sSfL http://cht.sh/:cht.sh -o "$_"
   chmod 755 "$_"
