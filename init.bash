@@ -76,8 +76,8 @@ install_fzf
 # install_lsd 0.19.0
 # install_q v2.0.19
 # install_ripgrep 12.1.1
-install_vim
 # install_xsv 0.13.0
 # install_node "--lts"
+install_vim 
 
 popd
