@@ -49,7 +49,7 @@ install_dot() {
       || git clone https://github.com/mmqmzk/dotfiles.git "${DOT}"
   fi
   pushd "${DOT}" &>/dev/null
-  git pull || true
+  git pull --no-rebase || true
   git submodule update --init
   check_bin
   ln -sfn "${DOT}/zsh-custom/diff-so-fancy/diff-so-fancy" "${BIN}/diff-so-fancy"
