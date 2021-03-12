@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+\#!/usr/bin/env bash
 
 set -e
 
@@ -172,7 +172,7 @@ install_xsv() {
 }
 
 install_lsd() {
-  install_rust_module lsd lsd "Peltoche/lsd" "$1"
+  install_rust lsd lsd "Peltoche/lsd" "$1"
 }
 
 
