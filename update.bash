@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/bash
 MOD="${1:-"all"}"
 case "${MOD}" in
 h | help | -h | --help)
