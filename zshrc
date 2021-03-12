@@ -377,7 +377,7 @@ if has exa; then
   alias l@="exa -lg --git --time-style long-iso --extend --icons"
 elif has lsd; then
   alias ls="lsd"
-  alias lsa="lad -A"
+  alias lsa="lsd -A"
   alias l="lsd -l"
   alias la="lsd -la"
   alias lt="lsd --tree"
