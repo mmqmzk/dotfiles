@@ -26,7 +26,7 @@ fi
   # ${PIP} install --user mycli -U
   # ${PIP} install --user youtube-dl -U
 # fi
-# has python || (: "$(wh python3)" && [[ -x "$_" ]] && sudo ln -sfn "$_" "${_%3}")
+# has python || (: "$(wh python3)" && [[ -x "$_" ]] && ln -sfn "$_" "${_%3}")
 
 if ! has ag; then
   echo "Installing ag."
@@ -35,14 +35,14 @@ if ! has ag; then
   else
     : "the_silver_searcher"
   fi
-  sudo "${PM}" install "$_" -y
+  "${PM}" install "$_" -y
 fi
 
 # if ! has lua5.3 lua; then
   # if is_debian; then
-    # sudo "${PM}" install lua5.3
+    # "${PM}" install lua5.3
   # else
-    # sudo "${PM}" install lua
+    # "${PM}" install lua
   # fi
 # fi
 
@@ -54,7 +54,7 @@ echo "Installing oh my zsh."
 
 if ! has tmux; then
   echo "Installing tmux."
-  sudo "${PM}" install tmux -y
+  "${PM}" install tmux -y
 fi
 
 : "${HOME}/.tmux.conf" && del "$_" && ln -sfn "${DOT}/tmux.conf" "$_"
@@ -63,8 +63,8 @@ echo "Installing git config."
 : "${HOME}/.gitconfig" && del "$_" && ln -sfn "${DOT}/gitconfig" "$_"
 
 : "${DOT}/syncdot.sh" && [[ -x "$_" ]] && ln -sfn "$_" "${BIN}/syncdot"
-: "${DOT}/sshrc.d/del" && [[ -x "$_" ]] && sudo ln -sfn "$_" "${BIN}"
-: "${DOT}/zfuncs/v" && [[ -x "$_" ]] && sudo ln -sfn "$_" "${BIN}"
+: "${DOT}/sshrc.d/del" && [[ -x "$_" ]] && ln -sfn "$_" "${BIN}"
+: "${DOT}/zfuncs/v" && [[ -x "$_" ]] && ln -sfn "$_" "${BIN}"
 "${PM}" install jq bat exa fd lsd ripgrep
 # install_jq "1.6"
 

@@ -57,8 +57,8 @@ install_dot() {
   ln -sfn "${DOT}/zfuncs/v" "${BIN}/v"
   [[ -e ~/.sshrc.d ]] || ln -s "${DOT}/sshrc.d" ~/.sshrc.d
   if [[ "${HOME}" != /root ]]; then
-    sudo mkdir -p /root/.local
-    sudo ln -s "${BIN}" /root/.local/bin || true
+    mkdir -p /root/.local
+    ln -s "${BIN}" /root/.local/bin || true
   fi
   popd
 }
@@ -122,8 +122,8 @@ _link() {
   local -a files
   files=$(find "$1" -name "*.1" -type f)
   if (("${#files}")); then
-    sudo cp -f "${files[@]}" /usr/local/share/man/man1
-    sudo mandb || true
+    cp -f "${files[@]}" /usr/local/share/man/man1
+    mandb || true
   fi
 }
 
@@ -190,7 +190,7 @@ install_fzf() {
 
 install_jq() {
   if is_debian; then
-    sudo "${PM}" install jq jo -y
+    "${PM}" install jq jo -y
   else
     local JQ_TAG=$1
     [[ -z "${JQ_TAG}" ]] && return 1
