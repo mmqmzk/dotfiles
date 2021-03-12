@@ -14,7 +14,7 @@ if [[ -z "${PM}" ]]; then
   exit 1
 fi
 
-sudo "${PM}" install git zsh curl zip unzip python3-pip -y
+"${PM}" install git zsh curl zip unzip python3-pip -y
 
 PIP=$(wh pip3 pip)
 if [[ -n "${PIP}" ]]; then
@@ -33,14 +33,14 @@ if ! has ag; then
   else
     : "the_silver_searcher"
   fi
-  sudo "${PM}" install "$_" -y
+  "${PM}" install "$_" -y
 fi
 
 if ! has lua5.3 lua; then
   if is_debian; then
-    sudo "${PM}" install lua5.3
+    "${PM}" install lua5.3
   else
-    sudo "${PM}" install lua
+    "${PM}" install lua
   fi
 fi
 
@@ -52,7 +52,7 @@ echo "Installing oh my zsh."
 
 if ! has tmux; then
   echo "Installing tmux."
-  sudo "${PM}" install tmux -y
+  "${PM}" install tmux -y
 fi
 
 : "${HOME}/.tmux.conf" && del "$_" && ln -sfn "${DOT}/tmux.conf" "$_"
