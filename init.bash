@@ -64,7 +64,7 @@ echo "Installing git config."
 : "${DOT}/sshrc.d/del" && [[ -x "$_" ]] && sudo ln -sfn "$_" /usr/local/bin
 : "${DOT}/zfuncs/v" && [[ -x "$_" ]] && sudo ln -sfn "$_" /usr/local/bin
 
-install_jq "1.6"
+install_jq
 
 install_bat
 install_cht
