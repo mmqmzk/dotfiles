@@ -1,41 +1,53 @@
-if [[ -f /etc/profile ]]; then
-  source /etc/profile
-fi
-if [[ -f ~/.bashrc ]]; then
-  source ~/.bashrc
-fi
+#!/usr/bin/env bash
+# shellcheck disable=SC2139
 
-stty werase undef
-# bind '^[:character-search-backward'
+: "/etc/profile" && [[ -f "$_" ]] && source "$_"
+: "$HOME/.bashrc" && [[ -f "$_" ]] && source "$_"
+
+bind "\C-f":beginning-of-line
 
 if command -v vim &> /dev/null; then
-  if [[ -f $SSHRCD/vimrc ]]; then
-    alias v="command vim -u $SSHRCD/vimrc"
-    export EDITOR="v"
-  fi
+  : "$SSHRCD/vimrc" && [[ -f "$_" ]] \
+    && alias v="command vim -u '$_'" \
+    && export EDITOR="v"
+  alias vd="vimdiff"
+  alias e="vim"
 fi
 
-alias L="less -r"
-alias T="tail"
-alias H="head -q"
-alias h="history"
-alias l="command ls --color=auto -lh"
-alias la="command ls --color=auto -lha"
-alias lsa="command ls --color=auto -A"
-alias lss="command ls --color=auto -lhS"
-alias lst="command ls --color=auto -lht"
-alias t="tail -f"
-alias p="ps -ef"
-alias g="git"
+: "$SSHRCD/common.sh" && [[ -f "$_" ]] && source "$_"
+: "$SSHRCD/del" && [[ -x "$_" ]] && alias del="$_"
+
+bind '"2": "2>&1 "'
+bind '"e": "2>/dev/null "'
+bind '"f": "| tail -f "'
+bind '"h": "| head -q "'
+bind '"l": "| less -imwR"'
+bind '"n": ">/dev/null "'
+bind '"t": "| tail "'
+
 alias md="mkdir -p"
-alias c="cd"
+
+alias -- -="cd -"
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
-alias c-="cd -"
+alias ssl="ss -ltnp"
 
-take () {
-  mkdir -p $1 && cd $1
+if command -v ag &>/dev/null; then
+  alias agc="ag --color"
+  bind '"g": "| ag --color "'
+elif command -v rg &>/dev/null; then
+  alias rg="rg --smart-case"
+  alias rgc="\\rg --smart-case --color=always"
+  bind '"g": "| \\rg --smart-case --color=always "'
+else
+  alias ag="grep -Pin"
+  alias agc="grep -Pin --color=always"
+  bind '"g": "| grep -Pin --color=always "'
+fi
+
+take() {
+  mkdir -p "$1" && cd "$1" || return
 }
 

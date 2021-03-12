@@ -1,34 +1,105 @@
 [user]
-	name = mmqmzk
-	email = mmqmzk@gmail.com
+  name = mmqmzk
+  email = mmqmzk@gmail.com
 [alias]
-	rb = rebase
-	rbc = rebase --continue
-	rbs = rebase --skip
-	rbm = rebase master
-	co = checkout
-	com = checkout master
-	cow = checkout work
-	m = merge
-	mff = merge --ff
-	ms = merge --squash
-	mw = merge --ff work
-	s = status
-	br = branch
-	cm = commit
-	ca = commit -a
-	a = add
-	A = add .
-	d = diff
-	sr = svn rebase
-	sd = svn dcommit
+  A = add .
+  a = add
+  aa = add .
+  ai = add --interactive
+  b = branch
+  bD = branch --delete --force
+  bM = brach --move --force
+  bd = branch --delete
+  bl = blame
+  bm = brach --move
+  bnm = branch --no-merged
+  br = branch --remote
+  bs = bisect
+  bsb = bisect bad
+  bsg = bisect good
+  bsr = bisect reset
+  bss = bisect start
+  ca = commit -a
+  cb = checkout -b
+  cm = commit
+  cma = commit --amend
+  cmm = commit --message
+  co = checkout
+  coa = checkout -- .
+  cob = checkout -b
+  coc = checkout console
+  com = checkout master
+  coo = checkout --ours
+  cot = checkout --theirs
+  cow = checkout work
+  cp = cherry-pick
+  cpa = cherry-pick --abort
+  cpc = cherry-pick --continue
+  cpn = cherry-pick --dry-run
+  cps = cherry-pick --skip
+  df = diff
+  f = fetch
+  f1 = fetch --depth=1
+  fa = fetch --all
+  h = help
+  l = log
+  lg = log --graph
+  lo = log --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  m = merge
+  ma = merge --abort
+  mc = merge --continue
+  mff = merge --ff
+  mm = merge --message
+  mn = merge --dry-run
+  ms = merge --squash
+  p = push
+  pd = push --delete
+  pD = push --delete --force
+  P = push --force
+  pl = pull
+  pl1 = pull --depth=1
+  pn = push --dry-run
+  po = push --all origin
+  pO = push --force --all origin
+  r = remote
+  ra = remote add
+  rb = rebase
+  rba = rebase --abort
+  rbc = rebase --continue
+  rbi = rebase -i
+  rbm = rebase master
+  rbn = rebase --dry-run
+  rbs = rebase --skip
+  rr = remote remove
+  rs = remote set-url
+  s = status --short --branch
+  sa = stash apply
+  sc = stash clear
+  sd = svn dcommit
+  sf = submodule foreach --recursive
+  sfg = submodule foreach --recursive git
+  sh = show
+  shh = show --format="%H"
+  sl = stash list
+  sp = stash pop
+  sr = svn rebase
+  ss = stash push
+  ssh = stash show
+  st = stash
+  su = submodule
+  sui = submodule init --recursive
+  suu = submodule update --init --recursive
+  t = tag
 [core]
-	editor = vim
-	autocrlf = false
-	quotepath = false
-    pager = diff-so-fancy | less --tabs=4 -RFX
+  editor = vim
+  autocrlf = false
+  quotepath = false
+  pager = bash -c '(which diff-so-fancy &>/dev/null && diff-so-fancy "$@" || cat "$@") | less -iFRX'
 [color]
-	pager = true
+  pager = true
+  ui = true
 [text]
-	eol=lf
+  eol=lf
+[pull]
+  rebase = false
 [https]

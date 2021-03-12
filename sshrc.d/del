@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+_del() {
+  local tmp="/tmp"
+  if [[ ! -w "$tmp" ]] && [[ -w "$TMPDIR" ]]; then
+    tmp="$TMPDIR"
+  fi
+  for file in "$@"; do
+    [[ -e "$file" || -L "$file" ]] \
+      && mv -f --backup=t "$file" "$tmp" && continue
+    rm -rf "$file"
+  done
+}
+
+_del "$@"

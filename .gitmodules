@@ -43,3 +43,15 @@
 [submodule "zsh-custom/plugins/nvm-auto"]
 	path = zsh-custom/plugins/nvm-auto
 	url = https://github.com/dijitalmunky/nvm-auto.git
+[submodule "zsh-custom/plugins/fzf-marks"]
+	path = zsh-custom/plugins/fzf-marks
+	url = https://github.com/urbainvaes/fzf-marks.git
+[submodule "zsh-custom/themes/powerlevel10k"]
+	path = zsh-custom/themes/powerlevel10k
+	url = https://github.com/romkatv/powerlevel10k.git
+[submodule "zsh-custom/plugins/zsh-you-should-use"]
+	path = zsh-custom/plugins/you-should-use
+	url = https://github.com/MichaelAquilina/zsh-you-should-use.git
+[submodule "zsh-custom/plugins/fzf-tab"]
+	path = zsh-custom/plugins/fzf-tab
+	url = https://github.com/Aloxaf/fzf-tab.git

@@ -1,26 +1,28 @@
-set number
-set relativenumber
-set autoindent
-set smartindent
+set number relativenumber
+set autoindent smartindent
 set showcmd
-set showmode
 set tabstop=2
 set shiftwidth=2
 set scrolloff=4
+set sidescrolloff=4
 set softtabstop=2
+set nojoinspaces
 set backspace=indent,eol,start
 set showmatch
 set hlsearch
 set incsearch
-set smartcase
+set ignorecase smartcase
 set ruler
 set expandtab
+set smarttab
 set encoding=utf-8
 set timeoutlen=500
+set ttimeoutlen=100
 set nocompatible
 set autoread
 set autowrite
 set hidden
+set showmode
 syntax on
 filetype plugin indent on
 
@@ -32,19 +34,38 @@ filetype plugin indent on
 
 inoremap <s-cr> <esc>o
 inoremap <c-a> <c-o>^
+inoremap <c-f> <c-o>^
 inoremap <c-e> <c-o>$
 inoremap <c-k> <c-o>D
 inoremap <c-[> <esc>
 inoremap <c-]> <esc>
+inoremap  <c-w>
+inoremap [3;5~ <c-o>dw
 
-cnoremap w!! w !sudo tee % > /dev/null
+cnoremap w!! w !sudo tee > /dev/null %
+nnoremap <space>q :qa!<cr>
+nnoremap <space>z :w !sudo tee % > /dev/null<cr>
+nnoremap <space>zz :w !sudo tee % > /dev/null<cr>L:qa!<cr>
+
+nnoremap K :grep! -F '<c-r><c-w>' .<cr>:cwindow<cr>
+vnoremap K y:grep! -F '<c-r>0' .<cr>:cwindow<cr>
 
 if executable('ag')
-  set grepprg=ag\ --vimgrep\ --hidden
+  set grepprg=ag\ --vimgrep\ --smart-case\ 2>/dev/null
+elseif executable('rg')
+  set grepprg=rg\ --vimgrep\ --smart-case\ 2>/dev/null
+else
+  nnoremap K :grep! -srF '<c-r><c-w>' .<cr>:cwindow<cr>
+  vnoremap K y:grep! -srF '<c-r>0' .<cr>:cwindow<cr>
 endif
 
-nnoremap K :grep! -s -r '\b<c-r><c-w>\b' .<cr>:cwindow<cr>
-vnoremap K y:grep! -s -r -F '<c-r>0' .<cr>:cwindow<cr>
+if &diff
+  nmap [ [c
+  nmap ] ]c
+  nmap <c-F5> :diffupdate<cr>
+  set background=dark
+  colorscheme evening
+endif
 
 nnoremap [0 :cfirst<cr>
 nnoremap ]0 :clast<cr>
@@ -60,9 +81,11 @@ nnoremap [l :lprevious<cr>
 nnoremap ]l :lnext<cr>
 
 noremap Y y$
+noremap <F5> :redraw<cr>
 noremap <F8> :let @/ = ""<cr>
 nnoremap <leader><cr> :nohlsearch<cr>
 nnoremap <space><cr> :nohlsearch<cr>
+nmap <tab> <c-w>w
 
 nnoremap gz `[v`]
 vnoremap < <gv
@@ -71,11 +94,10 @@ vnoremap p pgvy
 vnoremap v ^$h
 vnoremap * y/\V<c-r>0<cr>
 vnoremap # y?\V<c-r>0<cr>
+nnoremap <c-y> 3<c-y>
+nnoremap <c-e> 3<c-e>
 
-nnoremap x "_x
-nnoremap xp xp
 vnoremap x "_x
-nnoremap s "_s
 vnoremap s "_s
 
 noremap <c-j> :bnext<cr>
@@ -85,6 +107,4 @@ nnoremap <space>d :bdelete<cr>
 noremap <Up> gk
 noremap <Down> gj
 
-nnoremap <leader>r viwpgvy
-nnoremap <space>r viwpgvy
 nnoremap <leader>sw "_yiw:s/\(\%#\w\+\)\(\W\+\)\(\w\+\)/\3\2\1/<cr><c-o>

@@ -1,130 +1,206 @@
-DOT=${DOT:-"$HOME/.dotfiles"}
-BIN=${BIN:-"$HOME/.local/bin"}
-LIB=${LIB:-"$HOME/.local/lib"}
+#!/usr/bin/env bash
+
+set -e
+
+DOT="${DOT:-"${HOME}/.dotfiles"}"
+BIN="${BIN:-"${HOME}/.local/bin"}"
+LIB="${LIB:-"${HOME}/.local/lib"}"
 
 RUST_ARCH="arm-unknown-linux-gnueabihf"
 
 has() {
-  wh $@ &> /dev/null
+  wh "$@" &>/dev/null
 }
 
 wh() {
-  for name in $@
-  do
-  if command which $name 2> /dev/null; then
-    return 0
-  fi
+  for name in "$@"; do
+    command which "${name}" 2>/dev/null && return
   done
   return 1;
 }
-
-export PM=$(wh yum apt)
+PM=$(wh yum apt)
+export PM
 
 is_debian() {
-  [[ "$PM" != *yum* ]]
+  [[ "${PM}" != *yum* ]]
 }
 
 del() {
-  [[ -e $1 || -L $1 ]] && rm -rf $1 || true
+  for file in "$@"; do
+    ([[ -e "${file}" || -L "${file}" ]] \
+      && mv --backup=t "$1" /tmp &>/dev/null) \
+      || rm -rf "${file}" &>/dev/null
+  done
 }
 
 version_lte() {
-  [[ "$1" == "$(printf "%s\n%s" $1 $2 | sort -V | head -n 1)" ]]
+  [[ "$1" == "$(printf "%s\n%s" "$1" "$2" | sort -V | head -n 1)" ]]
 }
 
 check_bin() {
-  [[ -d "$BIN" ]] || mkdir -p "$BIN"
-  [[ -d "$LIB" ]] || mkdir -p "$LIB"
+  [[ -d "${BIN}" ]] || mkdir -p "${BIN}"
+  [[ -d "${LIB}" ]] || mkdir -p "${LIB}"
 }
 
 
 install_dot() {
-  if [[ ! -d "$DOT" ]]; then
-    git clone https://github.com/mmqmzk/dotfiles.git "$DOT"
+  if [[ ! -d "${DOT}" ]]; then
+    git clone git@github.com:mmqmzk/dotfiles.git "${DOT}" \
+      || git clone https://github.com/mmqmzk/dotfiles.git "${DOT}"
   fi
-  cd "$DOT"
-  git pull
+  pushd "${DOT}" &>/dev/null
+  git pull || true
   git submodule update --init
   check_bin
-  ln -s -f "$DOT/zsh-custom/diff-so-fancy/diff-so-fancy" "$BIN/diff-so-fancy"
-  ln -s -f "$DOT/sshrc.zsh" "$BIN/sshrc"
-  ln -s -f "$DOT/zfuncs/v" "$BIN/v"
-  ln -s -f "$DOT/sshrc.d" ~/.sshrc.d
-  sudo mkdir -p /root/.local
-  sudo ln -s $BIN /root/.local/bin
-  sudo ln -s "$DOT/zfuncs/v" /usr/local/bin
+  ln -sfn "${DOT}/zsh-custom/diff-so-fancy/diff-so-fancy" "${BIN}/diff-so-fancy"
+  ln -sfn "${DOT}/zfuncs/sshrc" "${BIN}/sshrc"
+  ln -sfn "${DOT}/zfuncs/v" "${BIN}/v"
+  [[ -e ~/.sshrc.d ]] || ln -s "${DOT}/sshrc.d" ~/.sshrc.d
+  if [[ "${HOME}" != /root ]]; then
+    sudo mkdir -p /root/.local
+    sudo ln -s "${BIN}" /root/.local/bin || true
+  fi
+  popd
 }
 
-install_rust_module() {
-  local module=$1
-  local bin=$2
-  local repo=$3
-  local tag=$4
-  local arch=${5:-$RUST_ARCH}
-  if [[ -z "$tag" ]]; then
+add_v() {
+  : "$1"
+  [[ "$2" == v* ]] && [[ "$_" != v* ]] &&: "v$_"
+  [[ "$2" == V* ]] && [[ "$_" != V* ]] && : "V$_"
+  echo "$_"
+}
+
+check_current_tag() {
+  : "$("$1" --version 2>&1 \
+    | grep -iv "command not found" \
+    | grep -v '未找到命令' \
+    | grep -Eio 'v?[0-9]+[0-9.]*' \
+    | sed '1q')"
+  : "$(add_v "$_" "$2")"
+  if [[ -n "$_" ]] && version_lte "$2" "$_"; then
+    echo "Tool $1 already up to date, version: $_."
+  else
     return 1
   fi
-  echo "Installing $module $tag"
-  check_bin
-  local dir="$LIB/$module"
-  del "$dir"
-  mkdir -p "$dir" && cd "$dir"
-  local file="$module-$tag-$arch"
-  curl -fsSL "https://github.com/$repo/releases/download/$tag/$file.tar.gz" > "$file.tgz"
-  tar -xf "$file.tgz" && rm -f "$file.tgz"
-  if [[ $bin == /* ]]; then
-    ln -s -f "$dir$bin" "$BIN/$(basename $bin)"
-  else
-    ln -s -f "$dir/$file/$bin" "$BIN/$(basename $bin)"
+}
+
+get_tag_url() {
+  if ! has jq; then
+    echo "Tool jq not Installed." && exit 1
   fi
+  curl -fsSL "https://api.github.com/repos/$1/releases/${2:-latest}" \
+    -H "Authorization: token $GITHUB_TOKEN" \
+    | jq "{url:.assets[].browser_download_url,tag:.tag_name}\
+    |select(.url|contains(\"${3:-"${RUST_ARCH}"}\"))|.url+\" \"+.tag" -r \
+    | sed '1q'
+}
+
+_download() {
+  local url="$1"
+  local dir="$2"
+  local result="$3"
+  del "${dir}"
+  mkdir -p "${dir}" && pushd "${dir}" &>/dev/null
+  curl -fsSL "${url}" -o "${result}"
+  case "${result}" in
+    *.tar.*|*.tar)
+      tar -xf "${result}" && del "${result}"
+      ;;
+    *.zip)
+      unzip -o "${result}" && del "${result}"
+      ;;
+  esac
+  popd &>/dev/null
+}
+
+_link() {
+  check_bin
+  : "$(find "$1" -name "*$2*" -type f  -perm -555 | sed '1q')"
+  ln -sfn "$_" "${BIN}/$2"
+  : "$(ls -l --color=always "$_")"
+  echo "Linked $_."
+  local -a files
+  files=$(find "$1" -name "*.1" -type f)
+  if (("${#files}")); then
+    sudo cp -f "${files[@]}" /usr/local/share/man/man1
+    sudo mandb || true
+  fi
+}
+
+install_rust () {
+  local module="$1"
+  local bin="$2"
+  local repo="$3"
+  local tag="${4:-"latest"}"
+  [[ "${tag}" == "-f" ]] && tag="latest" && local force="YES"
+  local arch="${5:-"${RUST_ARCH}"}"
+  local url
+  local result="${module}-${tag}-${arch}.tar.gz"
+  if [[ "${tag}" == "latest" ]]; then
+    local data
+    data="$(get_tag_url "${repo}" "${tag}" "${arch}")"
+    url="${data%% *}"
+    tag="${data##* }"
+    if [[ -z "${force}" ]] && check_current_tag "${bin}" "${tag}"; then
+      return
+    fi
+    result="${result//latest/${tag}}"
+  else
+    url="https://github.com/${repo}/releases/download/${tag}/${result}"
+  fi
+  echo "Installing ${module} ${tag}."
+  local dir="${LIB}/${module}"
+  _download "${url}" "${dir}" "${result}"
+  _link "${dir}" "${bin}"
 }
 
 install_bat() {
-  install_rust_module bat bat "sharkdp/bat" $1
+  install_rust bat bat "sharkdp/bat" "$1"
 }
 
 install_fd() {
-  install_rust_module fd fd "sharkdp/fd" $1
+  install_rust fd fd "sharkdp/fd" "$1"
 }
 
 install_ripgrep() {
-  install_rust_module ripgrep rg "BurntSushi/ripgrep" $1
+
+  install_rust ripgrep rg "BurntSushi/ripgrep" "$1"
 }
 
 install_xsv() {
-  install_rust_module xsv "/xsv" "BurntSushi/xsv" $1
+  install_rust xsv "xsv" "BurntSushi/xsv" "$1"
 }
 
 install_lsd() {
-  install_rust_module lsd lsd "Peltoche/lsd" $1
+  install_rust_module lsd lsd "Peltoche/lsd" "$1"
 }
 
 
 install_fzf() {
-  if [[ $1 == "init" ]]; then
+  if [[ "$1" == "init" ]]; then
     install_dot
   fi
-  if [[ -f  "$DOT/fzf/install" ]]; then
-    echo "Installing fzf"
-    bash "$DOT/fzf/install" --bin
-    ln -s -f $DOT/fzf/bin/fzf $BIN
+  local fzf_base="${FZF_BASE:-"${DOT}/fzf"}"
+  if [[ -d "${fzf_base}" ]]; then
+    echo "Installing fzf."
+    bash "${fzf_base}/install" --bin
+    ln -sfn "${fzf_base}/bin/fzf" "${BIN}"
   fi
 }
 
 install_jq() {
   if is_debian; then
-    sudo ${PM} install jq -y
+    sudo "${PM}" install jq jo -y
   else
     local JQ_TAG=$1
-    if [[ -z "$JQ_TAG" ]]; then
-      return 1
-    fi
-    echo "Installing jq $JQ_TAG"
-    check_bin
-    local JQ_BIN="$BIN/jq"
-    del "$JQ_BIN"
-    curl -fsSL "https://github.com/stedolan/jq/releases/download/jq-$JQ_TAG/jq-linux64" > "$JQ_BIN"
-    chmod 755 "$JQ_BIN"
+    [[ -z "${JQ_TAG}" ]] && return 1
+    echo "Installing jq ${JQ_TAG}"
+    local result="jq-linux64"
+    local dir="${LIB}/jq"
+    : "https://github.com/stedolan/jq/releases/download/jq-${JQ_TAG}/${result}"
+    _download  "$_" "${dir}" "${result}"
+    chmod 755 "${dir}/${result}"
+    _link "${dir}" "jq"
   fi
 }
 
@@ -134,63 +210,78 @@ install_vim() {
     install_dot
   fi
   echo "Installing vim"
-  cd ~
-  rm -rf ~/.vim*
-  local VIMDIR="$DOT/vim"
-  ln -s -f $VIMDIR ~/.vim
-  bash "$VIMDIR/install.sh"
+  pushd ~ &>/dev/null
+  del ~/.vim*
+  local VIMDIR="${DOT}/vim"
+  ln -sfn "${VIMDIR}" ~/.vim
+  bash "${VIMDIR}/install.sh"
+  popd &>/dev/null
 }
 
 install_cht() {
   echo "Installing cheat.sh"
   check_bin
-  local CHT="/tmp/cht"
-  del "$CHT"
-  curl -sSfL http://cht.sh/:cht.sh > "$CHT"
-  chmod 755 "$CHT"
-  del "$BIN/cht"
-  mv -f "$CHT" "$BIN"
+  : "/tmp/cht"
+  del "$_"
+  curl -sSfL http://cht.sh/:cht.sh -o "$_"
+  chmod 755 "$_"
+  mv -f "$_" "${BIN}"
 }
 
 install_q() {
-  echo "Installing q"
-  check_bin
-  local Q="$BIN/q"
-  del "$Q"
-  curl -fsSL https://github.com/harelba/q/raw/master/bin/q -o "$Q"
-  chmod 755 "$Q"
+  local tag=${1:-latest}
+  [[ "${tag}" == "-f" ]] && tag="latest" && local force="YES"
+  local result="q-x86_64-Linux"
+  local url="https://github.com/harelba/q/releases/download/${tag}/${result}"
+  if [[ "${tag}" == "latest" ]]; then
+    local data
+    data="$(get_tag_url "harelba/q" "${tag}" "${result}")"
+    url="${data%% *}"
+    tag="${data##* }"
+    if [[ -z "${force}" ]] && check_current_tag "q" "${tag}"; then
+      return
+    fi
+    result="${result//latest/${tag}}"
+  fi
+  echo "Installing q ${tag}."
+  local dir="${LIB}/q"
+  _download "${url}" "${dir}" "${result}"
+  chmod 755 "${dir}/${result}"
+  _link "${dir}" "q"
 }
 
 install_node() {
-  local NVM="${NVM_DIR:-"$DOT/nvm"}/nvm.sh"
-  if [[ -f "$NVM" ]]; then
-    source "$NVM"
+  : "${NVM_DIR:-"${DOT}/nvm"}/nvm.sh"
+  if [[ -f "$_" ]]; then
+    source "$_"
   else
-    echo "nvm not installed"
+    echo "Tool nvm not installed."
     return 1
   fi
-  local NVMRC="$HOME/.nvmrc"
-  local CURRENT_VERSION="$(nvm current 2> /dev/null)"
-  local NODE_TAG="$(nvm ls-remote $1 2> /dev/null | egrep -o 'v[0-9.]+' | sort -V | tail -n 1)"
-  if [[ -z "$NODE_TAG" ]]; then
-    echo "Node version $1 not found"
-    return 1
-  fi
-  if [[ "$NODE_TAG" != "$CURRENT_VERSION" ]]; then
-    if nvm install ${NODE_TAG}; then
-      echo ${NODE_TAG} > "$NVMRC"
-      nvm alias ${NODE_TAG} default
-      nvm use --delete-prefix ${NODE_TAG}
+  local NVMRC="${HOME}/.nvmrc"
+  local CURRENT_VERSION
+  CURRENT_VERSION="$(nvm current 2>/dev/null)"
+  local NODE_TAG
+  NODE_TAG="$(nvm ls-remote "$1" 2>/dev/null \
+    | grep -Eo 'v[0-9.]+' \
+    | sort -V \
+    | tail -n 1)"
+  [[ -z "${NODE_TAG}" ]] && echo "Node version $1 not found." && return 1
+  if [[ "${NODE_TAG}" != "${CURRENT_VERSION}" ]]; then
+    if nvm install "${NODE_TAG}"; then
+      echo "${NODE_TAG}" >"${NVMRC}"
+      nvm alias default "${NODE_TAG}"
+      nvm use --delete-prefix default
       install_npm
     else
-      echo "Install node version $NODE_TAG failed"
+      echo "Install node version ${NODE_TAG} failed."
       return 1
     fi
-    if nvm version ${CURRENT_VERSION} &> /dev/null; then
-      nvm uninstall ${CURRENT_VERSION}
+    if nvm version "${CURRENT_VERSION}" &>/dev/null; then
+      nvm uninstall "${CURRENT_VERSION}"
     fi
   else
-    echo "Node version $NODE_TAG alreday installed"
+    echo "Node version ${NODE_TAG} alreday installed."
   fi
 }
 
@@ -198,30 +289,34 @@ install_node() {
 install_npm() {
   if ! has npm; then
     nvm use default
-    if ! has npm; then
-      echo "npm command not found"
-      return 1
-    fi
+    has npm || (echo "Npm command not found." && return 1)
   fi
   npm install -g npm
   npm install -g fkill-cli
   npm install -g ramda-cli
+  npm install -g typescript
+  npm install -g eslint
+  npm install -g pm2
 }
 
 
 install_exa() {
-  local tag=$1
-  if [[ -z "$tag" ]]; then 
-    return 1
+  local tag=${1:-"latest"}
+  [[ "${tag}" == "-f" ]] && tag="latest" && local force="YES"
+  local result="exa-linux-x86_64-${tag##v}.zip"
+  local url="https://github.com/ogham/exa/releases/download/${tag}/${result}"
+  if [[ "${tag}" == "latest" ]]; then
+    local data="$(get_tag_url "ogham/exa" "${tag}" "exa-linux-x86_64")"
+    url="${data%% *}"
+    tag="${data##* }"
+    if [[ -z "${force}" ]] && check_current_tag "exa" "${tag}"; then
+      return
+    fi
+    result="${result//latest/${tag}}"
   fi
-  echo "Installing exa"
-  local EXA="$LIB/exa"
-  mkdir -p "$EXA" && pushd "$EXA"
-  local file="exa-linux-x86_64-$tag.zip"
-  local url="https://github.com/ogham/exa/releases/download/v$tag/$file"
-  curl -fsSL $url -o "$file"
-  unzip -o "$file" 
-  ln -sf "$EXA/exa-linux-x86_64" "$BIN/exa"  
-  rm -f "$file"
-  popd
+  echo "Installing exa ${tag}."
+  local dir="${LIB}/exa"
+  _download "${url}" "${dir}" "${result}"
+  _link "${dir}" "exa"
 }
+

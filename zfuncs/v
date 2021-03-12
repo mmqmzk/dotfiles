@@ -1,35 +1,58 @@
 #!/usr/bin/env zsh
 
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="${HOME}/.local/bin:${PATH}"
 
 _v() {
-  local opt=()
-  local query=()
-  local editor=(${EDITOR:-vim})
+  local -a fd_opts
+  fd_opts=("--type" "file")
+  local -a query
+  local -a editor
+  editor=("${EDITOR:-vim}")
+  local -a v_opts
   while [[ -n "$1" ]]; do
-    case $1 in
+    case "$1" in
       -h|-H|h|H)
-        opt=($opt --hidden)
+        fd_opts+=("--hidden")
         ;;
       -l|-L|l|L)
-        opt=($opt --type symlink)
+        fd_opts+=("--type" "symlink")
         ;;
       -s|-S|s|S)
-        editor=(sudo $editor)
+        editor=(sudo "$editor")
         ;;
-      -*)
+      -*|+*)
+        v_opts+=("$1")
         ;;
       *)
-        query=($query $1)
+        query+=("$1")
         ;;
     esac
     shift
   done
-  [[ -e "$query" ]] && $editor "$query" && return
-  file=$(fd --color=always --type file $opt .+ . ~ /etc /var | \
-    fzf -1 +m --ansi --cycle --inline-info --height 50% --border \
-    --layout=reverse --preview="bat --color=always {}" --query "$query") && \
-    $editor "$file" || $editor "$query"
+  local -a files
+  for file in "${query[@]}"; do
+    if [[ -e "${file}" ]]; then
+      files+=("${file}")
+    fi
+  done
+  if ((${#files[@]})); then
+    "${editor[@]}" ${v_opts[@]:+"${v_opts[@]}"} "${files[@]}" && return
+  fi
+  [[ -z "${query[*]}" ]] && "${editor[@]}" ${v_opts[@]:+"${v_opts[@]}"} && return
+  autoload -Uz has
+  if ! has fzf; then
+    echo "Tool fzf not installed." && exit 1
+  fi
+  if ! has fd; then
+    echo "Tool fd not installed." && exit 1
+  fi
+  files=("${(@f)$(fd --color=always "${fd_opts[@]}" . . ~ /etc \
+    | fzf -1 -0 --print-query --query "${query[*]}")}")
+  if ((${#files[@]}>1)); then
+    files=(${(@)files:1})
+  fi
+  files=(${(@)files//,/})
+  ((${#files[@]})) && "${editor[@]}" ${v_opts[@]:+"${v_opts[@]}"} "${files[@]}"
 }
 
 _v "$@"
