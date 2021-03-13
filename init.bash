@@ -66,19 +66,20 @@ echo "Installing git config."
 : "${DOT}/syncdot.sh" && [[ -x "$_" ]] && ln -sfn "$_" "${BIN}/syncdot"
 : "${DOT}/sshrc.d/del" && [[ -x "$_" ]] && ln -sfn "$_" "${BIN}"
 : "${DOT}/zfuncs/v" && [[ -x "$_" ]] && ln -sfn "$_" "${BIN}"
-"${PM}" install jq bat exa fd lsd ripgrep
+
 # install_jq "1.6"
 
-# install_bat v0.17.1
+install_bat
 install_cht
-# install_exa v0.9.0
-# install_fd v8.2.1
+install_exa
+install_fd
 install_fzf
-# install_lsd 0.19.0
+install_lsd
 # install_q v2.0.19
-# install_ripgrep 12.1.1
-# install_xsv 0.13.0
+install_ripgrep
+# install_xsv
 # install_node "--lts"
+install_npm
 install_vim 
 
 popd
