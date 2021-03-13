@@ -437,3 +437,5 @@ set_no_proxy
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 : "${DOT}/p10k.zsh"  && [[ -f "$_" ]] && source "$_"
+
+[[ -d "$HOME/.cargo/bin" ]] && export PATH="$HOME/.cargo/bin:$PATH"
