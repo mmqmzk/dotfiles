@@ -9,6 +9,7 @@ fi
 if [[ "${PATH}" != *"${HOME}/.local/bin"* ]]; then
   export PATH="${HOME}/.local/bin:${PATH}"
 fi
+[[ -d "$HOME/.cargo/bin" ]] && export PATH="$HOME/.cargo/bin:$PATH"
 export DOT="${DOT:-"${HOME}/.dotfiles"}"
 
 export FZF_BASE="${DOT}/fzf"
@@ -190,6 +191,9 @@ export FPATH
 autoload -Uz proxy noproxy set_no_proxy my-backward-delete-word \
   preview exe _fzf_complete_lpass
 
+: "${DOT}/sshrc.d/common.sh" && [[ -f "$_" ]] && source "$_"
+export BAT_PAGER="less ${LESS:-"-imwR"}"
+
 alias agc="ag --smart-case --color"
 alias rg="rg --smart-case"
 alias rgc="\\rg --smart-case --color=always"
@@ -336,9 +340,6 @@ fb() {
   fd --hidden --type file --color=always "$@" \
     | fzf --preview 'bat --color=always {}'
 }
-
-: "${DOT}/sshrc.d/common.sh" && [[ -f "$_" ]] && source "$_"
-export BAT_PAGER="less ${LESS:-"-imwR"}"
 
 if has winstart; then
   export BROWSER="chrome"
