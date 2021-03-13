@@ -6,7 +6,7 @@ DOT="${DOT:-"${HOME}/.dotfiles"}"
 BIN="${BIN:-"${HOME}/.local/bin"}"
 LIB="${LIB:-"${HOME}/.local/lib"}"
 
-RUST_ARCH="arm-unknown-linux-gnueabihf"
+RUST_ARCH="aarch64-unknown-linux-gnu"
 
 has() {
   wh "$@" &>/dev/null
@@ -129,29 +129,31 @@ _link() {
 
 install_rust () {
   local module="$1"
-  local bin="$2"
-  local repo="$3"
-  local tag="${4:-"latest"}"
-  [[ "${tag}" == "-f" ]] && tag="latest" && local force="YES"
-  local arch="${5:-"${RUST_ARCH}"}"
-  local url
-  local result="${module}-${tag}-${arch}.tar.gz"
-  if [[ "${tag}" == "latest" ]]; then
-    local data
-    data="$(get_tag_url "${repo}" "${tag}" "${arch}")"
-    url="${data%% *}"
-    tag="${data##* }"
-    if [[ -z "${force}" ]] && check_current_tag "${bin}" "${tag}"; then
-      return
-    fi
-    result="${result//latest/${tag}}"
-  else
-    url="https://github.com/${repo}/releases/download/${tag}/${result}"
-  fi
-  echo "Installing ${module} ${tag}."
-  local dir="${LIB}/${module}"
-  _download "${url}" "${dir}" "${result}"
-  _link "${dir}" "${bin}"
+  # local bin="$2"
+  # local repo="$3"
+  # local tag="${4:-"latest"}"
+  # [[ "${tag}" == "-f" ]] && tag="latest" && local force="YES"
+  # local arch="${5:-"${RUST_ARCH}"}"
+  # local url
+  # local result="${module}-${tag}-${arch}.tar.gz"
+  # if [[ "${tag}" == "latest" ]]; then
+    # local data
+    # data="$(get_tag_url "${repo}" "${tag}" "${arch}")"
+    # url="${data%% *}"
+    # tag="${data##* }"
+    # if [[ -z "${force}" ]] && check_current_tag "${bin}" "${tag}"; then
+      # return
+    # fi
+    # result="${result//latest/${tag}}"
+  # else
+    # url="https://github.com/${repo}/releases/download/${tag}/${result}"
+  # fi
+  # echo "Installing ${module} ${tag}."
+  # local dir="${LIB}/${module}"
+  # _download "${url}" "${dir}" "${result}"
+  # _link "${dir}" "${bin}"
+  has cargo || ${PM} install cargo -y
+  [[ -n "${module}" ]] && cargo install "${module}"
 }
 
 install_bat() {
@@ -159,7 +161,7 @@ install_bat() {
 }
 
 install_fd() {
-  install_rust fd fd "sharkdp/fd" "$1"
+  install_rust fd-find fd "sharkdp/fd" "$1"
 }
 
 install_ripgrep() {
