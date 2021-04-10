@@ -1,56 +1,71 @@
 __lfd() {
-  type="$1"
+  t="$1"
   shift
-  args="$1"
+  a="$1"
   shift
   for name in "$@"; do
     if [ $# -gt 1 ]; then
       echo "${name}:"
     fi
-    find "${name}" -maxdepth 1 -type "${type}" |
-      sed -E 's|^\./||;s|/$||;/^\.$/d;s/.+/"\0"/' |
-      xargs -r -n 1 ls --color=auto ${args:+"${args}"}
+    find "${name}" -maxdepth 1 -type "$t" \
+      | sed -E 's|^\./||;s|/$||;/^\.$/d;s/.+/"\0"/' \
+      | LANG=C sort \
+      | xargs -r -n 1 ls --color=auto ${a:+$a} \
+      | column -t
+  done
+}
+
+__lfdc() {
+  t="$1"
+  shift
+  a="$1"
+  shift
+  for name in "$@"; do
+    if [ $# -gt 1 ]; then
+      echo "${name}:"
+    fi
+    find "${name}" -maxdepth 1 -type "$t" \
+      | sed -E 's|^\./||;s|/$||;/^\.$/d;s/.+/"\0"/' \
+      | LANG=C sort \
+      | xargs -r -n 1 ls --color=always ${a:+$a} \
+      | column -t
   done
 }
 
 _lfd() {
+  f="$1"
+  shift
   t="$1"
   shift
   a="$1"
   shift
   if [ $# -eq 0 ]; then
-    __lfd "$t" "$a" .
+    ${f:+$f} "$t" "$a" .
   else
-    __lfd "$t" "$a" "$@"
+    ${f:+$f} "$t" "$a" "$@"
   fi
 }
 
-lf() {
-  _lfd f "" "$@"
+
+__lt() {
+  level="$1"
+  if [ "$level" != "0" ]; then
+    level="-maxdepth $level"
+  else
+    unset level
+  fi
+  shift
+  {
+    if [ $# -eq 0 ]; then
+      find "$@" ${level:+$level} -print0
+    else
+      find . ${level:+$level} -print0
+    fi
+  } | xargs -0 -r  -n 1 ls -lhd --color=always \
+    | sed '1s;/[^/]*$;;;s;\([^/]*\)/;|-;g;s;-|; |;g'
 }
 
-llf() {
-  _lfd f -lh "$@"
-}
-
-lD() {
-  _lfd d -d "$@"
-}
-
-lld() {
-  _lfd d -lhd "$@"
-}
-
-lL() {
-  _lfd l "" "$@"
-}
-
-llL() {
-  _lfd l -lh "$@"
-}
-
-export LESS="-P'?m(File\\:%i/%m) .[?f%f:-stdin-.]. Lines\\:?lt%lt-\
-%lb:-./?L%L:-. Page\\:?db%db:-./?D%D:-. ?pb%pb:-.\\%.?e END' -iwR"
+export LESS='-iwR -P?m(File\:%i/%m) .[?f%f:-stdin-.]. Lines\:?lt%lt-%lb:-./?L%L:-. Page\:?db%db:-./?D%D:-. ?pb%pb:-.\%'
 
 # export PAGER="less -imwR"
 
@@ -79,7 +94,9 @@ alias gcl="git clone --recurse-submodules"
 alias gcm="git checkout master"
 alias gcmm="git commit --message"
 alias gco="git checkout"
+alias gcoa="git checkout -- ."
 alias gcoc="git checkout console"
+alias gcom="git checkout master"
 alias gf1="git fetch --depth=1"
 alias gf="git fetch"
 alias gl1="git pull --depth=1"
@@ -135,9 +152,20 @@ alias k="kill"
 alias l="command ls --color=auto -lh"
 alias la="command ls --color=auto -lha"
 alias le="less ${LESS:-"-imwR"}"
+alias lf="_lfd __lfd f -h"
+alias llf="_lfd __lfdc f -lh"
+alias lD="_lfd __lfd d -dh"
+alias lL="_lfd __lfd l -h"
+alias llD="_lfd __lfdc d -lhd"
+alias lld="_lfd __lfdc d -lhd"
+alias llL="_lfd __lfdc l -lhd"
 alias lsa="command ls --color=auto -A"
 alias lss="command ls --color=auto -lhS"
 alias lst="command ls --color=auto -lht"
+alias lt="__lt 0"
+alias lt2="__lt 2"
+alias lt3="__lt 3"
+alias lt4="__lt 4"
 alias p="ps -ef"
 alias par="parallel"
 alias pu="pkg upgrade"

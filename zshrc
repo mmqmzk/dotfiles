@@ -208,6 +208,10 @@ else
   alias -g GC="| grep -Pi --color=always"
 fi
 
+if has bat; then
+  export PAGER="bat"
+fi
+
 alias -g B="| bat --color=always"
 alias -g BB="2>&1 | bat --color=always"
 alias -g C="| wc -l"
@@ -217,6 +221,7 @@ alias -g HH="2>&1 | head -q"
 alias -g J="| jq -C . | less ${LESS:-"-imwR"}"
 alias -g L="| less ${LESS:-"-imwR"}"
 alias -g LL="2>&1 | less ${LESS:-"-imwR"}"
+alias -g NC="| sed 's/\x1b\[[0-9;]*m//g'"
 alias -g S="| sort"
 alias -g T="| tail"
 alias -g TF="| tail -f"
@@ -370,7 +375,10 @@ if has exa; then
   alias lt2="exa -gT --icons --level 2"
   alias lt3="exa -gT --icons --level 3"
   alias lt4="exa -gT --icons --level 4"
-  alias ltl="exa -gT --icons --level"
+  alias ltl="exa -lgT --icons"
+  alias ltl2="exa -lgT --icons --level 2"
+  alias ltl3="exa -lgT --icons --level 3"
+  alias ltl4="exa -lgT --icons --level 4"
   alias lss="exa -lg --git --time-style long-iso --sort size -r --icons"
   alias lst="exa -lg --git --time-style long-iso --sort modified -r --icons"
   alias l@="exa -lg --git --time-style long-iso --extend --icons"
@@ -383,7 +391,10 @@ elif has lsd; then
   alias lt2="lsd --tree --depth 2"
   alias lt3="lsd --tree --depth 3"
   alias lt4="lsd --tree --depth 4"
-  alias ltl="lsd --tree --depth"
+  alias ltl="lsd -l --tree"
+  alias ltl2="lsd -l --tree --depth 2"
+  alias ltl3="lsd -l --tree --depth 3"
+  alias ltl4="lsd -l --tree --depth 4"
   alias lss="lsd -lS"
   alias lst="lsd -lt"
 fi
@@ -406,7 +417,7 @@ zle -N toggle_comment
 zle -N fzf_history_find
 zle -N yank_bufer
 bindkey '' my-backward-delete-word
-bindkey '' toggle_commit
+bindkey '' toggle_comment
 bindkey 'y' yank_bufer
 bindkey '' beginning-of-line
 bindkey '' vi-find-next-char
