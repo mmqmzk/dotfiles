@@ -1,16 +1,15 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC2139
 
 : "/etc/profile" && [[ -f "$_" ]] && source "$_"
 : "$HOME/.bashrc" && [[ -f "$_" ]] && source "$_"
 
 bind "\C-f":beginning-of-line
 
-if command -v vim &> /dev/null; then
-  : "$SSHRCD/vimrc" && [[ -f "$_" ]] \
-    && alias v="command vim -u '$_'" \
-    && export EDITOR="v"
-  alias vd="vimdiff"
+if command -v vim &>/dev/null; then
+  : "$SSHRCD/vimrc" && [[ -f "$_" ]] &&
+    alias v="command vim -u '$_'" &&
+    export EDITOR="v"
+  alias vdf="vimdiff"
   alias e="vim"
 fi
 
@@ -18,12 +17,13 @@ fi
 : "$SSHRCD/del" && [[ -x "$_" ]] && alias del="$_"
 
 bind '"2": "2>&1 "'
+bind '"a": "| cat -A"'
 bind '"e": "2>/dev/null "'
-bind '"f": "| tail -f "'
 bind '"h": "| head -q "'
-bind '"l": "| less -imwR"'
+bind '"l": "| less"'
 bind '"n": ">/dev/null "'
-bind '"t": "| tail "'
+bind '"t": "| tail -f"'
+bind '"w": "| wc -l"'
 
 alias md="mkdir -p"
 
@@ -32,7 +32,7 @@ alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
-alias ssl="ss -ltnp"
+alias ssl="ss -ltn"
 
 if command -v ag &>/dev/null; then
   alias agc="ag --color"
@@ -50,4 +50,3 @@ fi
 take() {
   mkdir -p "$1" && cd "$1" || return
 }
-
