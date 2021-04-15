@@ -65,7 +65,7 @@ __lt() {
     | sed '1s;/[^/]*$;;;s;\([^/]*\)/;|-;g;s;-|; |;g'
 }
 
-export LESS='-iwR -P?m(File\:%i/%m) .[?f%f:-stdin-.]. Lines\:?lt%lt-%lb:-./?L%L:-. Page\:?db%db:-./?D%D:-. ?pb%pb:-.\%'
+export LESS='-iwR -P"?m(File\:%i/%m) .[?f%f:-stdin-.]. Lines\:?lt%lt-%lb:-./?L%L:-. Page\:?db%db:-./?D%D:-. ?pb%pb:-.\%"'
 
 # export PAGER="less -imwR"
 
