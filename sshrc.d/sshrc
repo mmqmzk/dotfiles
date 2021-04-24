@@ -3,6 +3,8 @@
 : "/etc/profile" && [[ -f "$_" ]] && source "$_"
 : "$HOME/.bashrc" && [[ -f "$_" ]] && source "$_"
 
+shopt -s cdspell direxpand dirspell 
+
 bind "\C-f":beginning-of-line
 
 if command -v vim &>/dev/null; then
