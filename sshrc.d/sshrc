@@ -25,6 +25,7 @@ bind '"h": "| head -q "'
 bind '"l": "| less"'
 bind '"n": ">/dev/null "'
 bind '"t": "| tail -f"'
+bind '"e": "| less +F"'
 bind '"w": "| wc -l"'
 
 alias md="mkdir -p"
