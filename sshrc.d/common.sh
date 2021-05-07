@@ -65,7 +65,7 @@ __lt() {
     | sed '1s;/[^/]*$;;;s;\([^/]*\)/;|-;g;s;-|; |;g'
 }
 
-export LESS='-iwR -P?m(File\:%i/%m) .[?f%f:-stdin-.]. Lines\:?lt%lt-%lb:-./?L%L:-. Page\:?db%db:-./?D%D:-. ?pb%pb:-.\%'
+export LESS='-iwR -P"?m(File\:%i/%m) .[?f%f:-stdin-.]. Lines\:?lt%lt-%lb:-./?L%L:-. Page\:?db%db:-./?D%D:-. ?pb%pb:-.\%"'
 
 # export PAGER="less -imwR"
 
@@ -172,7 +172,13 @@ alias pu="pkg upgrade"
 alias pi="pkg install"
 alias pk="pkill"
 alias s=""
+alias pd="pushd"
+alias ppd="popd"
+alias pk="pkill"
+alias s="sudo "
 alias sc-dr="systemctl daemon-reload"
+alias se="sudo -E"
+alias sp="sudo --preserve-env=PATH env"
 alias t="tail"
 alias tf="tail -f"
 alias vdf="vimdiff"

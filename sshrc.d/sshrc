@@ -3,6 +3,8 @@
 : "/etc/profile" && [[ -f "$_" ]] && source "$_"
 : "$HOME/.bashrc" && [[ -f "$_" ]] && source "$_"
 
+shopt -s cdspell direxpand dirspell 
+
 bind "\C-f":beginning-of-line
 
 if command -v vim &>/dev/null; then
@@ -23,6 +25,7 @@ bind '"h": "| head -q "'
 bind '"l": "| less"'
 bind '"n": ">/dev/null "'
 bind '"t": "| tail -f"'
+bind '"e": "| less +F"'
 bind '"w": "| wc -l"'
 
 alias md="mkdir -p"

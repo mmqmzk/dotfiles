@@ -16,7 +16,7 @@ if [[ -z "${PM}" ]]; then
   exit 1
 fi
 
-${PM} install git zsh curl zip unzip ncurses-utils lua53 nodejs-lts gnupg
+${PM} install git zsh curl zip unzip ncurses-utils lua53 gnupg
 
 # PIP=$(wh pip3 pip)
 # if [[ -n "${PIP}" ]]; then
@@ -45,7 +45,6 @@ fi
     # ${PM} install lua
   # fi
 # fi
-${PM} install lua53 -y
 
 check_bin
 install_dot
@@ -67,19 +66,30 @@ echo "Installing git config."
 : "${DOT}/sshrc.d/del" && [[ -x "$_" ]] && ln -sfn "$_" "${BIN}"
 : "${DOT}/zfuncs/v" && [[ -x "$_" ]] && ln -sfn "$_" "${BIN}"
 
-# install_jq "1.6"
+install_jq
 
 install_bat
-install_cht
+# install_cht
 install_exa
 install_fd
-install_fzf
+install_hexyl
 install_lsd
-# install_q v2.0.19
 install_ripgrep
 # install_xsv
-# install_node "--lts"
-install_npm
-install_vim 
+
+install_fzf
+install_node "--lts"
+
+install_vim
+
+# install_q v2.0.19
+
+# install_baidu
+install_glow
+install_rclone
+# install_v2sub
+
+mkdir -p "${HOME}/.config"
+mkdir -p "${HOME}/.cache"
 
 popd

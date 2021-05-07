@@ -10,7 +10,10 @@ if [[ "${PATH}" != *"${HOME}/.local/bin"* ]]; then
   export PATH="${HOME}/.local/bin:${PATH}"
 fi
 [[ -d "$HOME/.cargo/bin" ]] && export PATH="$HOME/.cargo/bin:$PATH"
+[[ -d "$HOME/go/bin" ]] && export PATH="$HOME/go/bin:$PATH"
 export DOT="${DOT:-"${HOME}/.dotfiles"}"
+export GOPATH="${HOME}/go"
+export GO111MODULE=on
 
 export FZF_BASE="${DOT}/fzf"
 export NVM_DIR="${DOT}/nvm"
@@ -220,6 +223,8 @@ alias -g H="| head -q"
 alias -g HH="2>&1 | head -q"
 alias -g J="| jq -C . | less ${LESS:-"-imwR"}"
 alias -g L="| less ${LESS:-"-imwR"}"
+alias -g LF="| less ${LESS:-"-imwR"} +F"
+alias -g LG="| less ${LESS:-"-imwR"} +G"
 alias -g LL="2>&1 | less ${LESS:-"-imwR"}"
 alias -g NC="| sed 's/\x1b\[[0-9;]*m//g'"
 alias -g S="| sort"
