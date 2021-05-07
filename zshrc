@@ -10,6 +10,7 @@ if [[ "${PATH}" != *"${HOME}/.local/bin"* ]]; then
   export PATH="${HOME}/.local/bin:${PATH}"
 fi
 [[ -d "$HOME/.cargo/bin" ]] && export PATH="$HOME/.cargo/bin:$PATH"
+[[ -d "$HOME/go/bin" ]] && export PATH="$HOME/go/bin:$PATH"
 export DOT="${DOT:-"${HOME}/.dotfiles"}"
 
 export FZF_BASE="${DOT}/fzf"
