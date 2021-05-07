@@ -329,8 +329,8 @@ install_go() {
   GO111MODULE=on go get "github.com/$1@latest"
 }
 
-install_v2sub() {
-  install_go ThomasZN/v2sub
+install_baidu() {
+  install_go qjfoidnh/BaiduPCS-Go
 }
 
 install_glow() {
@@ -339,4 +339,8 @@ install_glow() {
 
 install_rclone() {
   install_go rclone/rclone
+}
+
+install_v2sub() {
+  install_go ThomasZN/v2sub
 }
