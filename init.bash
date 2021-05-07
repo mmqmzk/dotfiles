@@ -82,8 +82,9 @@ install_vim
 
 # install_q v2.0.19
 
-install_go charmbracelet/glow
-install_go ThomasZN/v2sub
+install_glow
+install_rclone
+install_v2sub
 
 mkdir -p "${HOME}/.config"
 mkdir -p "${HOME}/.cache"
