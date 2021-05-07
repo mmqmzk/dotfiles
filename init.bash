@@ -14,7 +14,7 @@ if [[ -z "${PM}" ]]; then
   exit 1
 fi
 
-${PM} install git zsh curl zip unzip python3-pip -y
+${PM} install git zsh curl zip unzip python3-pip rustc golang -y
 
 PIP=$(wh pip3 pip)
 if [[ -n "${PIP}" ]]; then
@@ -68,14 +68,24 @@ install_jq
 
 install_bat
 install_cht
-# install_exa
+install_exa
 install_fd
-install_fzf
+install_hexyl
 install_lsd
-# install_q
 install_ripgrep
-# install_xsv
+install_xsv
+
+install_fzf
 install_node "--lts"
+
 install_vim
+
+# install_q v2.0.19
+
+install_go charmbracelet/glow
+install_go ThomasZN/v2sub
+
+mkdir -p "${HOME}/.config"
+mkdir -p "${HOME}/.cache"
 
 popd
