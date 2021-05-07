@@ -39,6 +39,7 @@ fi
 if ! has lua5.3 lua; then
   if is_debian; then
     ${PM} install lua5.3
+    ${PM} install lua-filesystem
   else
     ${PM} install lua
   fi
@@ -82,6 +83,7 @@ install_vim
 
 # install_q v2.0.19
 
+install_baidu
 install_glow
 install_rclone
 install_v2sub
