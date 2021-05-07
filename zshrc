@@ -12,6 +12,8 @@ fi
 [[ -d "$HOME/.cargo/bin" ]] && export PATH="$HOME/.cargo/bin:$PATH"
 [[ -d "$HOME/go/bin" ]] && export PATH="$HOME/go/bin:$PATH"
 export DOT="${DOT:-"${HOME}/.dotfiles"}"
+export GOPATH="${HOME}/go"
+export GO111MODULE=on
 
 export FZF_BASE="${DOT}/fzf"
 export NVM_DIR="${DOT}/nvm"

@@ -158,8 +158,12 @@ install_bat() {
   install_rust bat bat "sharkdp/bat" "$1"
 }
 
+install_delta() {
+  install_rust git-delta delta "dandavison/delta" "$1"
+}
+
 install_fd() {
-  install_rust fd fd "sharkdp/fd" "$1"
+  install_rust fd-find fd "sharkdp/fd" "$1"
 }
 install_hexyl() {
   install_rust hexyl hexyl "sharkdp/hexyl" "$1"
@@ -322,5 +326,17 @@ install_exa() {
 }
 
 install_go() {
-  go install "github.com/$1@latest"
+  GO111MODULE=on go get "github.com/$1@latest"
+}
+
+install_v2sub() {
+  install_go ThomasZN/v2sub
+}
+
+install_glow() {
+  install_go charmbracelet/glow
+}
+
+install_rclone() {
+  install_go rclone/rclone
 }
