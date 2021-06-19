@@ -18,7 +18,7 @@ wh() {
   done
   return 1
 }
-PM="sudo $(wh yum apt)"
+PM="$(wh yum apt)"
 export PM
 
 is_debian() {
