@@ -91,6 +91,7 @@ ZSH_CUSTOM="${DOT}/zsh-custom"
 export _ZL_DATA="~/.z"
 export _ZL_MATCH_MODE=1
 export _ZL_ADD_ONCE=1
+export _ZL_CD="pushd"
 export FZ_HISTORY_CD_CMD="_zlua"
 export RANGER_ZLUA="${ZSH_CUSTOM}/plugins/z.lua/z.lua"
 
