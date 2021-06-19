@@ -1,3 +1,4 @@
+#!/usr.bin/env bash
 __lfd() {
   t="$1"
   shift
@@ -65,6 +66,14 @@ __lt() {
     | sed '1s;/[^/]*$;;;s;\([^/]*\)/;|-;g;s;-|; |;g'
 }
 
+_pushd() {
+  if [ $# -eq 0 ]; then
+    builtin cd || return
+  else
+    pushd "$@" || return
+  fi
+}
+
 export LESS='-iwR -P"?m(File\:%i/%m) .[?f%f:-stdin-.]. Lines\:?lt%lt-%lb:-./?L%L:-. Page\:?db%db:-./?D%D:-. ?pb%pb:-.\%"'
 
 # export PAGER="less -imwR"
@@ -85,7 +94,7 @@ alias as="apt search"
 alias au="sudo apt upgrade"
 alias aw="apt show"
 alias b="less ${LESS:-"-imwR"}"
-alias c="cd"
+alias c="_pushd"
 alias dud="du -h -d 1"
 alias g="git"
 alias gaa="git add ."
@@ -107,25 +116,25 @@ alias gma="git merge --abort"
 alias gmc="git merge --continue"
 alias goo="BROWSER=w3m googler -l cn"
 alias gp="git push"
-alias gp="git push"
 alias gpn="git push --dry-run"
-alias gpo="git push origin --all"
-alias gpo="git push origin --all"
+alias gpo="git push origin"
+alias gpoa="git push origin --all"
 alias gpoat="git push origin --all && git push origin --tags"
-alias gpot="git push origin --all --tags"
-alias gr="git remote"
-alias gra="git remote add"
+alias gpot="git push origin --tags"
 alias grb="git rebase"
 alias grba="git rebase --abort"
 alias grbc="git rebase --continue"
 alias grbi="git rebase -i"
 alias grbn="git rebase --dry-run"
 alias grbs="git rebase --skip"
-alias grhh="git reset --hard"
+alias gre="git remote"
+alias grea="git remote add"
 alias grm="git rm"
 alias gRM="git rm --force"
 alias grst="git reset"
+alias grsthh="git reset --hard"
 alias gsa="git stash apply"
+alias gs="git status"
 alias gsb="git status -sb"
 alias gsc="git stash clear"
 alias gsd="git svn dcommit"
@@ -168,8 +177,7 @@ alias lt3="__lt 3"
 alias lt4="__lt 4"
 alias p="ps -ef"
 alias par="parallel"
-alias pd="pushd"
-alias ppd="popd"
+alias pd="popd"
 alias pk="pkill"
 alias s="sudo "
 alias se="sudo -E"
