@@ -24,9 +24,9 @@ bind '"e": "2>/dev/null "'
 bind '"h": "| head -q "'
 bind '"l": "| less"'
 bind '"n": ">/dev/null "'
-bind '"t": "| tail -f"'
-bind '"e": "| less +F"'
-bind '"w": "| wc -l"'
+# bind '"t": "| tail -f"'
+bind '"t": "| less +F"'
+bind '"c": "| wc -l"'
 
 alias md="mkdir -p"
 
@@ -36,20 +36,19 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias ssl="ss -ltn"
+alias yiag="sudo yum install the_silver_searcher"
+alias aiag="sudo apt-get install silversearcher-ag" 
 
-if command -v ag &>/dev/null; then
-  alias agc="ag --color"
-  bind '"g": "| ag --color "'
-elif command -v rg &>/dev/null; then
-  alias rg="rg --smart-case"
-  alias rgc="\\rg --smart-case --color=always"
-  bind '"g": "| \\rg --smart-case --color=always "'
-else
-  alias ag="grep -Pin"
-  alias agc="grep -Pin --color=always"
-  bind '"g": "| grep -Pin --color=always "'
-fi
+alias agc="ag --color"
+bind '"g": "| ag --color "'
+alias rg="rg --smart-case"
+alias rgc="\\rg --smart-case --color=always"
+# bind '"g": "| \\rg --smart-case --color=always "'
+alias eg="grep -Pin"
+alias egc="grep -Pin --color=always"
+bind '"p": "| grep -Pin --color=always "'
 
 take() {
   mkdir -p "$1" && cd "$1" || return
 }
+
