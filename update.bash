@@ -8,7 +8,7 @@ esac
 declare -a MODULES
 MODULES+=("$@")
 if ((${#MODULES[@]}==0)) || [[ "${MODULES[*]}" == "all" ]]; then
-  MODULES=(baidu bat exa delta fd fzf glow hexyl jq lsd node ripgrep rclone v2sub)
+  MODULES=(baidu bat exa delta fd fzf glow hexyl jq lsd ripgrep rclone v2sub node)
 fi
 pushd "$(dirname "$0")" &>/dev/null
 source ./functions.bash

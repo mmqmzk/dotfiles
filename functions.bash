@@ -301,6 +301,12 @@ install_npm() {
     nvm use default
     has npm || (echo "Npm command not found." && return 1)
   fi
+  unset HTTP_PROXY
+  unset HTTPS_PROXY
+  unset ALL_PROXY
+  unset http_proxy
+  unset https_proxy
+  unset all_proxy
   npm install -g npm
   npm install -g fkill-cli
   npm install -g ramda-cli
