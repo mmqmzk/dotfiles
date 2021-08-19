@@ -30,11 +30,6 @@ bind '"c": "| wc -l"'
 
 alias md="mkdir -p"
 
-alias -- -="cd -"
-alias ..="cd .."
-alias ...="cd ../.."
-alias ....="cd ../../.."
-alias .....="cd ../../../.."
 alias ssl="ss -ltn"
 alias yiag="sudo yum install the_silver_searcher"
 alias aiag="sudo apt-get install silversearcher-ag" 

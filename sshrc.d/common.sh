@@ -78,6 +78,12 @@ export LESS='-iwR -P"?m(File\:%i/%m) .[?f%f:-stdin-.]. Lines\:?lt%lt-%lb:-./?L%L
 
 # export PAGER="less -imwR"
 
+alias -- -="_pushd -"
+alias ..="_pushd .."
+alias ...="_pushd ../.."
+alias ....="_pushd ../../.."
+alias .....="_pushd ../../../.."
+
 alias aac="sudo apt autoclean"
 alias aar="sudo apt autoremove"
 alias ad="sudo apt update"
