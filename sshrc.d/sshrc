@@ -4,6 +4,7 @@
 : "$HOME/.bashrc" && [[ -f "$_" ]] && source "$_"
 
 shopt -s cdspell direxpand dirspell 
+export LANG=en_US.UTF-8
 
 bind "\C-f":beginning-of-line
 
@@ -46,4 +47,9 @@ bind '"p": "| grep -Pin --color=always "'
 take() {
   mkdir -p "$1" && cd "$1" || return
 }
+
+alias sjk="java -jar $HOME/sjk.jar"
+export game="/data/game"
+export backup="$game/backup"
+export server="$game/server"
 
