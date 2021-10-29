@@ -62,7 +62,8 @@ __lt() {
     else
       find . ${level:+$level} -print0
     fi
-  } | xargs -0 -r  -n 1 ls -lhd --color=always \
+  } | LANG=C sort -z \
+    | xargs -0 -r  -n 1 ls -lhd --color=always \
     | sed '1s;/[^/]*$;;;s;\([^/]*\)/;|-;g;s;-|; |;g'
 }
 
@@ -101,6 +102,7 @@ alias au="sudo apt upgrade"
 alias aw="apt show"
 alias b="less ${LESS:-"-imwR"}"
 alias c="_pushd"
+alias ca="cat -A"
 alias dud="du -h -d 1"
 alias g="git"
 alias gaa="git add ."
