@@ -125,7 +125,7 @@ plugins=(
   node
   npm
   nvm
-  nvm-auto
+  # nvm-auto
   pip
   python
   ripgrep
