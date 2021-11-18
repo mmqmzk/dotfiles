@@ -27,7 +27,7 @@
 	url = https://github.com/hlissner/zsh-autopair.git
 [submodule "zsh-custom/plugins/fast-syntax-highlighting"]
 	path = zsh-custom/plugins/fast-syntax-highlighting
-	url = https://github.com/zdharma/fast-syntax-highlighting.git
+	url = https://github.com/zdharma-continuum/fast-syntax-highlighting.git
 [submodule "zsh-custom/diff-so-fancy"]
 	path = zsh-custom/diff-so-fancy
 	url = https://github.com/so-fancy/diff-so-fancy.git
@@ -40,9 +40,9 @@
 [submodule "zsh-custom/plugins/z.lua"]
 	path = zsh-custom/plugins/z.lua
 	url = https://github.com/skywind3000/z.lua.git
-[submodule "zsh-custom/plugins/nvm-auto"]
-	path = zsh-custom/plugins/nvm-auto
-	url = https://github.com/dijitalmunky/nvm-auto.git
+; [submodule "zsh-custom/plugins/nvm-auto"]
+	; path = zsh-custom/plugins/nvm-auto
+	; url = https://github.com/dijitalmunky/nvm-auto.git
 [submodule "zsh-custom/plugins/fzf-marks"]
 	path = zsh-custom/plugins/fzf-marks
 	url = https://github.com/urbainvaes/fzf-marks.git
