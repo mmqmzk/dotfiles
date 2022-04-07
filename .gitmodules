@@ -3,7 +3,7 @@
 	url = https://github.com/robbyrussell/oh-my-zsh.git
 [submodule "vim"]
 	path = vim
-	url = git@github.com:mmqmzk/.vim.git
+	url = https://github.com/mmqmzk/.vim.git
 [submodule "fzf"]
 	path = fzf
 	url = https://github.com/junegunn/fzf.git
