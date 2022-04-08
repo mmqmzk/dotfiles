@@ -455,3 +455,7 @@ set_no_proxy
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 : "${DOT}/p10k.zsh"  && [[ -f "$_" ]] && source "$_"
+
+# 1password cli
+
+has op && eval "$(op completion zsh)" && compdef _op op
