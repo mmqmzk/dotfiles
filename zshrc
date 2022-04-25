@@ -214,6 +214,9 @@ fi
 
 if has bat; then
   export PAGER="bat"
+  alias b="bat --color=always"
+  alias bn="bat --style=rule"
+  alias batn="bat --style=rule"
 fi
 
 alias -g B="| bat --color=always"
@@ -236,7 +239,6 @@ alias -g TTF="2>&1 | tail -f"
 alias -g X="| bat -l xml"
 alias -g Y="| yank -i"
 alias -g YY="2>&1 | yank -i"
-alias b="bat --color=always"
 # alias bai="brew cask install"
 # alias bah="brew cask home"
 # alias bal="brew cask list"
