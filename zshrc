@@ -63,7 +63,7 @@ DISABLE_AUTO_UPDATE="true"
 # Uncomment the following line to enable command auto-correction.
 # ENABLE_CORRECTION="true"
 
-# Uncomment the following line to display red dots whilst waiting 
+# Uncomment the following line to display red dots whilst waiting
 # for completion.
 # COMPLETION_WAITING_DOTS="true"
 
@@ -124,7 +124,7 @@ plugins=(
   mosh
   node
   npm
-  nvm
+  # nvm
   # nvm-auto
   pip
   python
@@ -306,8 +306,8 @@ FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-p:toggle-preview,"
 FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-w:toggle-preview-wrap,"
 FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}ctrl-s:toggle-sort,"
 FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-a:toggle-all,"
-FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-n:toggle+down,"
-FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-p:toggle+up,"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}ctrl-n:toggle+down,"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}ctrl-p:toggle+up,"
 FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}tab:toggle+down,"
 FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}btab:toggle+up'"
 export FZF_PREVIEW_KEY_BIND
@@ -322,7 +322,7 @@ export FZF_DEFAULT_OPTS="--multi --cycle --inline-info --ansi --height 100% \
   --border --layout=default --preview '${PREVIEW} {}' --preview-window \
   'right:70%:wrap' ${FZF_PREVIEW_KEY_BIND}"
 export FZF_CTRL_T_OPTS="${FZF_DEFAULT_OPTS}"
-export FZF_COMPLETION_OPTS="-1 --cycle --inline-info --ansi --height 60% \
+export FZF_COMPLETION_OPTS="-1 --cycle --inline-info --ansi --height 100% \
   --border --layout=reverse --preview '${PREVIEW} {}' --preview-window \
   'right:70%:wrap' ${FZF_PREVIEW_KEY_BIND}"
 export FZF_CTRL_R_OPTS="+m -1 --cycle --ansi --border --no-preview"
@@ -331,7 +331,7 @@ export _ZL_FZF_FLAG="+s -1 +m --preview 'echo {} | awk \"{print \\\$2}\" \
   | xargs ${PREVIEW}' ${FZF_PREVIEW_KEY_BIND}"
 export FORGIT_FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS}"
 
-export __FZF_TAB_OPTS=(-1 --cycle --inline-info --ansi --height 40% \
+export __FZF_TAB_OPTS=(-1 --cycle --inline-info --ansi --height 100% \
   --border --layout=reverse  --expect=/)
 zstyle ':completion:*:descriptions' format '[%d]'
 zstyle ':fzf-tab:*' fzf-flags "${__FZF_TAB_OPTS[@]}"
@@ -342,7 +342,7 @@ zstyle ':completion:*:*:*:*:processes' command \
 zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-preview \
   '[[ $group == "[process ID]"  ]] && ps --pid=$word -o cmd --no-headers -w -w'
 zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-flags \
-  --preview-window='down:3:wrap'
+  --preview-window='up:3:wrap' --height 100% --layout=reverse --border
 zstyle ':completion:*:kill:*' ignored-patterns '0'
 
 fb() {
@@ -459,3 +459,53 @@ set_no_proxy
 # 1password cli
 
 has op && eval "$(op completion zsh)" && compdef _op op
+
+# For WSL
+has code.exe && alias cdf="winstart code --wait --diff"
+has EmEditor.exe && alias edf="winstart EmEditor /cmp"
+if has idea64.exe; then
+  alias jdf="winstart idea64 diff"
+  alias jmerge="winstart idea64 merge"
+fi
+if has netstat.exe; then
+  alias ss="netstat.exe -ano | rg -vF '[::]:0'"
+  alias ssl="netstat.exe -ano | rg LISTENING | rg -vF '[::]:0'"
+fi
+
+has ipconfig.exe && alias ipc="ipconfig.exe"
+if has choco.exe; then
+  alias co="choco.exe"
+  alias ci="choco.exe install"
+  alias cinfo="choco.exe info"
+  alias cout="choco.exe outdated"
+  alias cs="choco.exe search"
+  alias cui="choco.exe uninstall"
+  alias cup="cup.exe"
+  alias cw="choco.exe info"
+fi
+if has powershell.exe; then
+  alias psh="powershell.exe"
+  alias wk="powershell.exe kill -Id"
+  alias wpk="powershell.exe kill -Name"
+  alias reboot="powershell.exe -Command Restart-Computer"
+fi
+
+wsl-init() {
+  ssh "$@" 'zsh -x "$HOME/.zprofile"'
+}
+
+wsl-reset() {
+  local wsl_cfg_exe="/mnt/c/WINDOWS/system32/wslconfig.exe"
+  ssh "$@" "${wsl_cfg_exe} /t ubuntu"
+  wsl-init "$@"
+}
+
+wsl-reboot() {
+  local psh_exe="/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0//powershell.exe"
+  ssh "$@" "${psh_exe} -Command Restart-Computer"
+}
+
+wsl-reboot-f() {
+local psh_exe="/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0//powershell.exe"
+ssh "$@" "${psh_exe} -Command Restart-Computer -Force"
+}
