@@ -110,12 +110,17 @@ _fzf_compgen_path() {
 zstyle :omz:plugins:ssh-agent quiet yes
 
 plugins=(
+  ag
+  catimg
   colored-man-pages
   common-aliases
   debian
   dirhistory
   docker
   docker-compose
+  emoji
+  encode64
+  extract
   fd
   firewalld
   fzf
@@ -125,19 +130,26 @@ plugins=(
   gpg-agent
   forgit
   httpie
+  last-working-dir
   mosh
   node
   npm
   # nvm
   # nvm-auto
+  perms
   pip
+  pm2
+  profiles
   python
+  redis-cli
   ripgrep
+  rust
   ssh-agent
   sudo
   systemd
   themes
   tmux
+  universalarchive
   urltools
   wakeonlan
   yum
