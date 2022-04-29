@@ -130,7 +130,7 @@ plugins=(
   gpg-agent
   forgit
   httpie
-  last-working-dir
+  # last-working-dir
   mosh
   node
   npm
@@ -296,6 +296,7 @@ alias dil="sudo docker image ls"
 alias dip="sudo docker image prune"
 alias dl="sudo docker pull"
 alias dp="sudo docker ps"
+
 alias f="fzm"
 alias ff="fzf -f"
 alias fk="fkill"
@@ -303,6 +304,7 @@ alias ft="fzf-tmux"
 alias https="http --default-scheme https"
 alias npmi="npm install"
 alias m="mark"
+
 alias se='sudo -E'
 alias sni="sudo snap install"
 alias snf="snap find"
@@ -312,10 +314,9 @@ alias sns="snap find"
 alias snu="sudo snap refresh"
 alias snw="snap info"
 
-
 export PREVIEW="${DOT}/zfuncs/preview"
-FZF_PREVIEW_KEY_BIND="--bind 'ctrl-j:preview-down,"
-FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}ctrl-k:preview-up,"
+FZF_PREVIEW_KEY_BIND="--bind 'alt-j:preview-down,"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-k:preview-up,"
 FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-e:preview-down\
 +preview-down+preview-down,"
 FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-y:preview-up\
@@ -355,7 +356,7 @@ export __FZF_TAB_OPTS=(-1 --cycle --inline-info --ansi --height 100% \
   --border --layout=default  --expect=/)
 zstyle ':completion:*:descriptions' format '[%d]'
 zstyle ':fzf-tab:*' fzf-flags "${__FZF_TAB_OPTS[@]}"
-zstyle ':fzf-tab:*' fzf-bindings "${FZF_PREVIEW_KEY_BIND}"
+# zstyle ':fzf-tab:*' fzf-bindings "${FZF_PREVIEW_KEY_BIND}" # confilict maybe
 zstyle ':fzf-tab:complete:*:*' fzf-preview "${PREVIEW}"' $realpath'
 zstyle ':completion:*:*:*:*:processes' command \
   'ps -eo user,pid,ppid,start,tty,time,cmd --no-headers -w -w'
