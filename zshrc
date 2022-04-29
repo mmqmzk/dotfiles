@@ -2,6 +2,7 @@
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-"${HOME}/.cache"}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
   source "${XDG_CACHE_HOME:-"${HOME}/.cache"}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
@@ -61,11 +62,11 @@ DISABLE_AUTO_UPDATE="true"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting
 # for completion.
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -105,13 +106,21 @@ _fzf_compgen_path() {
   fd --hidden --follow --exclude ".git" --color=always . "$@"
 }
 
+# zstyle :omz:plugins:ssh-agent helper opss-ssh-askpass
+zstyle :omz:plugins:ssh-agent quiet yes
+
 plugins=(
+  ag
+  catimg
   colored-man-pages
   common-aliases
   debian
   dirhistory
   docker
   docker-compose
+  emoji
+  encode64
+  extract
   fd
   firewalld
   fzf
@@ -121,18 +130,26 @@ plugins=(
   gpg-agent
   forgit
   httpie
+  # last-working-dir
   mosh
   node
   npm
   # nvm
   # nvm-auto
+  perms
   pip
+  pm2
+  profiles
   python
+  redis-cli
   ripgrep
+  rust
+  ssh-agent
   sudo
   systemd
   themes
   tmux
+  universalarchive
   urltools
   wakeonlan
   yum
@@ -274,12 +291,14 @@ alias bul="brew unlink"
 alias bup="brew unpin"
 alias but="brew untap"
 alias bw="brew info"
+
 alias di="sudo docker image"
 alias dii="sudo docker image inspect"
 alias dil="sudo docker image ls"
 alias dip="sudo docker image prune"
 alias dl="sudo docker pull"
 alias dp="sudo docker ps"
+
 alias f="fzm"
 alias ff="fzf -f"
 alias fk="fkill"
@@ -287,6 +306,7 @@ alias ft="fzf-tmux"
 alias https="http --default-scheme https"
 alias npmi="npm install"
 alias m="mark"
+
 alias se='sudo -E'
 alias sni="sudo snap install"
 alias snf="snap find"
@@ -296,16 +316,15 @@ alias sns="snap find"
 alias snu="sudo snap refresh"
 alias snw="snap info"
 
-
 export PREVIEW="${DOT}/zfuncs/preview"
-FZF_PREVIEW_KEY_BIND="--bind 'ctrl-j:preview-down,"
-FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}ctrl-k:preview-up,"
+FZF_PREVIEW_KEY_BIND="--bind 'alt-j:preview-down,"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-k:preview-up,"
 FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-e:preview-down\
 +preview-down+preview-down,"
 FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-y:preview-up\
 +preview-up+preview-up,"
-# FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-h:preview-top,"
-# FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-l:preview-bottom,"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-h:preview-top,"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-l:preview-bottom,"
 FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-p:toggle-preview,"
 FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-w:toggle-preview-wrap,"
 FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}ctrl-s:toggle-sort,"
@@ -327,7 +346,7 @@ export FZF_DEFAULT_OPTS="--multi --cycle --inline-info --ansi --height 100% \
   'right:70%:wrap' ${FZF_PREVIEW_KEY_BIND}"
 export FZF_CTRL_T_OPTS="${FZF_DEFAULT_OPTS}"
 export FZF_COMPLETION_OPTS="-1 --cycle --inline-info --ansi --height 100% \
-  --border --layout=reverse --preview '${PREVIEW} {}' --preview-window \
+  --border --layout=default --preview '${PREVIEW} {}' --preview-window \
   'right:70%:wrap' ${FZF_PREVIEW_KEY_BIND}"
 export FZF_CTRL_R_OPTS="+m -1 --cycle --ansi --border --no-preview"
 export FZF_ALT_C_OPTS="${FZF_DEFAULT_OPTS} +m --preview-window 'right:60%'"
@@ -336,17 +355,17 @@ export _ZL_FZF_FLAG="+s -1 +m --preview 'echo {} | awk \"{print \\\$2}\" \
 export FORGIT_FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS}"
 
 export __FZF_TAB_OPTS=(-1 --cycle --inline-info --ansi --height 100% \
-  --border --layout=reverse  --expect=/)
+  --border --layout=default  --expect=/)
 zstyle ':completion:*:descriptions' format '[%d]'
 zstyle ':fzf-tab:*' fzf-flags "${__FZF_TAB_OPTS[@]}"
-zstyle ':fz${FZF_TAP_OPTS}f-tab:*' fzf-bindings "${FZF_PREVIEW_KEY_BIND}"
+# zstyle ':fzf-tab:*' fzf-bindings "${FZF_PREVIEW_KEY_BIND}" # confilict maybe
 zstyle ':fzf-tab:complete:*:*' fzf-preview "${PREVIEW}"' $realpath'
 zstyle ':completion:*:*:*:*:processes' command \
   'ps -eo user,pid,ppid,start,tty,time,cmd --no-headers -w -w'
 zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-preview \
   '[[ $group == "[process ID]"  ]] && ps --pid=$word -o cmd --no-headers -w -w'
 zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-flags \
-  --preview-window='up:3:wrap' --height 100% --layout=reverse --border
+  --preview-window='up:3:wrap' --height 100% --layout=default --border
 zstyle ':completion:*:kill:*' ignored-patterns '0'
 
 fb() {
