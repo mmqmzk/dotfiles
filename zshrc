@@ -484,9 +484,9 @@ has op && eval "$(op completion zsh)" && compdef _op op
 # For WSL
 has code.exe && alias cdf="winstart code --wait --diff"
 has EmEditor.exe && alias edf="winstart EmEditor /cmp"
-if has idea64.exe; then
-  alias jdf="winstart idea64 diff"
-  alias jmerge="winstart idea64 merge"
+if has idea.cmd; then
+  alias jdf="runexe cmd.exe /C idea.cmd diff"
+  alias jmerge="runexe cmd.exe /C idea.cmd merge"
 fi
 if has netstat.exe; then
   alias ss="netstat.exe -ano | rg -vF '[::]:0'"
