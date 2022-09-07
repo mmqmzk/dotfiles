@@ -374,10 +374,12 @@ fb() {
 }
 
 if has winstart; then
-  export BROWSER="chrome"
+  export BROWSER="msedge"
   alias e="winstart EmEditor"
 elif [[ -n "${DISPLAY}" ]]; then
-  if has google-chrome; then
+  if has msedge; then
+    export BROWSER="msedge"
+  elif has google-chrome; then
     export BROWSER="google-chrome"
   elif has firefox; then
     export BROWSER="firefox"
