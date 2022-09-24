@@ -332,7 +332,7 @@ install_exa() {
 }
 
 install_go() {
-  GO111MODULE=on go get "github.com/$1@latest"
+  GO111MODULE=on go install "github.com/$1@latest"
 }
 
 install_baidu() {
