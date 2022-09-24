@@ -44,6 +44,10 @@ alias eg="grep -Pin"
 alias egc="grep -Pin --color=always"
 bind '"p": "| grep -Pin --color=always "'
 
+alias sc="systemctl"
+alias scs="systemctl status"
+alias scl="systemctl list-units"
+
 take() {
   mkdir -p "$1" && cd "$1" || return
 }
