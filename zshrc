@@ -443,10 +443,19 @@ yank_bufer() {
   echo -n "${LBUFFER}" | yank -i
 }
 
+hf() {
+  LBUFFER="$(history -r | fzf --with-nth=4.. --query "${LBUFFER}" \
+    | awk '{for(i=4;i<=NF;i++)printf("%s ",$i);printf("\n")}')"
+}
+
+
 zle -N my-backward-delete-word
 zle -N toggle_comment
 zle -N fzf_history_find
 zle -N yank_bufer
+zle -N hf
+
+bindkey "" hf
 bindkey '' my-backward-delete-word
 bindkey '' toggle_comment
 bindkey 'y' yank_bufer
