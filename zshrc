@@ -456,7 +456,6 @@ zle -N fzf_history_find
 zle -N yank_bufer
 zle -N hf
 
-bindkey "" fzf_history_find
 bindkey "r" hf
 bindkey '' my-backward-delete-word
 bindkey '' toggle_comment
