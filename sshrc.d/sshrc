@@ -3,7 +3,7 @@
 : "/etc/profile" && [[ -f "$_" ]] && source "$_"
 : "$HOME/.bashrc" && [[ -f "$_" ]] && source "$_"
 
-shopt -s cdspell direxpand dirspell 
+shopt -s cdspell direxpand dirspell
 export LANG=en_US.UTF-8
 
 bind "\C-f":beginning-of-line
@@ -12,7 +12,6 @@ if command -v vim &>/dev/null; then
   : "$SSHRCD/vimrc" && [[ -f "$_" ]] &&
     alias v="command vim -u '$_'" &&
     export EDITOR="v"
-  alias vdf="vimdiff"
   alias e="vim"
 fi
 
@@ -21,19 +20,19 @@ fi
 
 bind '"2": "2>&1 "'
 bind '"a": "| cat -A"'
+bind '"c": "| wc -l"'
 bind '"e": "2>/dev/null "'
 bind '"h": "| head -q "'
 bind '"l": "| less"'
 bind '"n": ">/dev/null "'
-# bind '"t": "| tail -f"'
 bind '"t": "| less +F"'
-bind '"c": "| wc -l"'
+# bind '"t": "| tail -f"'
 
 alias md="mkdir -p"
 
 alias ssl="ss -ltn"
 alias yiag="sudo yum install the_silver_searcher"
-alias aiag="sudo apt-get install silversearcher-ag" 
+alias aiag="sudo apt-get install silversearcher-ag"
 
 alias agc="ag --color"
 bind '"g": "| ag --color "'

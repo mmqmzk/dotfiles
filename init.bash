@@ -20,9 +20,9 @@ PIP=$(wh pip3 pip)
 if [[ -n "${PIP}" ]]; then
   echo "Installing pips."
   ${PIP} install --user pip -U
-  ${PIP} install --user httpie -U
-  ${PIP} install --user mycli -U
-  ${PIP} install --user youtube-dl -U
+  ${PIP} install --user -U ansi2html gita httpie jc mdv \
+  mycli neovim pip Pygments pynvim PySocks ranger-fm tabulate \
+  visidata xlsx2csv xq youtube-dl yq
 fi
 has python || (: "$(wh python3)" && [[ -x "$_" ]] && sudo ln -sfn "$_" "${_%3}")
 
@@ -65,28 +65,25 @@ echo "Installing git config."
 : "${DOT}/sshrc.d/del" && [[ -x "$_" ]] && sudo ln -sfn "$_" /usr/local/bin
 : "${DOT}/zfuncs/v" && [[ -x "$_" ]] && sudo ln -sfn "$_" /usr/local/bin
 
-install_jq
-
+install_baidu
 install_bat
 install_cht
 install_exa
 install_fd
+install_fx
+install_fzf
+install_glow
 install_hexyl
+install_jq
 install_lsd
+install_rclone
 install_ripgrep
+install_v2sub
 install_xsv
 
-install_fzf
 install_node "--lts"
 
 install_vim
-
-# install_q v2.0.19
-
-install_baidu
-install_glow
-install_rclone
-install_v2sub
 
 mkdir -p "${HOME}/.config"
 mkdir -p "${HOME}/.cache"
