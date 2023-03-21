@@ -12,7 +12,9 @@ if [[ "${PATH}" != *"${HOME}/.local/bin"* ]]; then
 fi
 [[ -d "$HOME/.cargo/bin" ]] && export PATH="$HOME/.cargo/bin:$PATH"
 [[ -d "$HOME/go/bin" ]] && export PATH="$HOME/go/bin:$PATH"
+
 export DOT="${DOT:-"${HOME}/.dotfiles"}"
+
 export GOPATH="${HOME}/go"
 export GO111MODULE=on
 
@@ -21,7 +23,6 @@ export NVM_DIR="${DOT}/nvm"
 
 # Path to your oh-my-zsh installation.
 export ZSH="${DOT}/oh-my-zsh"
-
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -89,10 +90,11 @@ ZSH_CUSTOM="${DOT}/zsh-custom"
 # Add wisely, as too many plugins slow down shell startup.
 #
 
-export _ZL_DATA="~/.z"
-export _ZL_MATCH_MODE=1
 export _ZL_ADD_ONCE=1
 export _ZL_CD="pushd"
+export _ZL_DATA="~/.z"
+export _ZL_MATCH_MODE=1
+
 export FZ_HISTORY_CD_CMD="_zlua"
 export RANGER_ZLUA="${ZSH_CUSTOM}/plugins/z.lua/z.lua"
 
@@ -123,18 +125,18 @@ plugins=(
   extract
   fd
   firewalld
+  forgit
   fzf
   fzf-marks
   fzf-tab
   git
   gpg-agent
-  forgit
   httpie
   # last-working-dir
   mosh
   node
   npm
-  # nvm
+  nvm
   # nvm-auto
   perms
   pip
@@ -154,6 +156,7 @@ plugins=(
   wakeonlan
   yum
   z.lua
+
   zsh-autosuggestions
   zsh-syntax-highlighting
   # fast-syntax-highlighting
@@ -213,11 +216,14 @@ autoload -Uz proxy noproxy set_no_proxy my-backward-delete-word \
   preview exe _fzf_complete_lpass
 
 : "${DOT}/sshrc.d/common.sh" && [[ -f "$_" ]] && source "$_"
+
 export BAT_PAGER="less ${LESS:-"-imwR"}"
 
 alias agc="ag --smart-case --color"
+
 alias rg="rg --smart-case"
 alias rgc="\\rg --smart-case --color=always"
+
 if has rg; then
   alias -g G="| \\rg --smart-case"
   alias -g GC="| \\rg --smart-case --color=always"
@@ -235,9 +241,9 @@ if has bat; then
   export PAGER="bat"
   alias b="bat --color=always"
   alias bn="bat --style=rule"
-  alias batn="bat --style=rule"
 fi
 
+# Global alias
 alias -g B="| bat --color=always"
 alias -g BB="2>&1 | bat --color=always"
 alias -g C="| wc -l"
@@ -258,17 +264,20 @@ alias -g TTF="2>&1 | tail -f"
 alias -g X="| bat -l xml"
 alias -g Y="| yank -i"
 alias -g YY="2>&1 | yank -i"
-# alias bai="brew cask install"
+
+
+# Brew alias
 # alias bah="brew cask home"
+# alias bai="brew cask install"
 # alias bal="brew cask list"
 # alias bar="brew cask remove"
 # alias bau="brew cask upgrade"
 # alias baw="brew cask info"
 alias bca="brew cat"
 alias bcl="brew cleanup"
-alias bcp="brew cleanup --prune"
 alias bcm="brew command"
 alias bcms="brew commands"
+alias bcp="brew cleanup --prune"
 alias bd="brew update"
 alias bh="brew home"
 alias bi="brew install"
@@ -292,6 +301,7 @@ alias bup="brew unpin"
 alias but="brew untap"
 alias bw="brew info"
 
+# Docker cli
 alias di="sudo docker image"
 alias dii="sudo docker image inspect"
 alias dil="sudo docker image ls"
@@ -307,7 +317,7 @@ alias https="http --default-scheme https"
 alias npmi="npm install"
 alias m="mark"
 
-alias se='sudo -E'
+# Ubuntu Snap alias
 alias sni="sudo snap install"
 alias snf="snap find"
 alias snl="snap list"
@@ -316,6 +326,7 @@ alias sns="snap find"
 alias snu="sudo snap refresh"
 alias snw="snap info"
 
+# Fzf
 export PREVIEW="${DOT}/zfuncs/preview"
 FZF_PREVIEW_KEY_BIND="--bind 'alt-j:preview-down,"
 FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-k:preview-up,"
@@ -396,15 +407,17 @@ else
   alias e="${EDITOR:-vim}"
 fi
 has wslview && export BROWSER="wslview"
-
 [[ -z "${BROWSER}" ]] && has w3m && export BROWSER="w3m"
-
+alias bro="$BROWSER"
 
 if has exa; then
-  alias ls="exa --icons"
-  alias lsa="exa -a --icons"
+  alias l@="exa -lg --git --time-style long-iso --extend --icons"
   alias l="exa -lg --git --time-style long-iso --icons"
   alias la="exa -lgaa --git --time-style long-iso --icons"
+  alias ls="exa --icons"
+  alias lsa="exa -a --icons"
+  alias lss="exa -lg --git --time-style long-iso --sort size -r --icons"
+  alias lst="exa -lg --git --time-style long-iso --sort modified -r --icons"
   alias lt="exa -T --icons"
   alias lt2="exa -gT --icons --level 2"
   alias lt3="exa -gT --icons --level 3"
@@ -413,14 +426,13 @@ if has exa; then
   alias ltl2="exa -lgT --icons --level 2"
   alias ltl3="exa -lgT --icons --level 3"
   alias ltl4="exa -lgT --icons --level 4"
-  alias lss="exa -lg --git --time-style long-iso --sort size -r --icons"
-  alias lst="exa -lg --git --time-style long-iso --sort modified -r --icons"
-  alias l@="exa -lg --git --time-style long-iso --extend --icons"
 elif has lsd; then
-  alias ls="lsd"
-  alias lsa="lsd -A"
   alias l="lsd -l"
   alias la="lsd -la"
+  alias ls="lsd"
+  alias lsa="lsd -A"
+  alias lss="lsd -lS"
+  alias lst="lsd -lt"
   alias lt="lsd --tree"
   alias lt2="lsd --tree --depth 2"
   alias lt3="lsd --tree --depth 3"
@@ -429,8 +441,6 @@ elif has lsd; then
   alias ltl2="lsd -l --tree --depth 2"
   alias ltl3="lsd -l --tree --depth 3"
   alias ltl4="lsd -l --tree --depth 4"
-  alias lss="lsd -lS"
-  alias lst="lsd -lt"
 fi
 
 toggle_comment() {
@@ -451,22 +461,21 @@ hf() {
     | awk '{for(i=4;i<=NF;i++)printf("%s ",$i);printf("\n")}')"
 }
 
-
+zle -N fzf_history_find
+zle -N hf
 zle -N my-backward-delete-word
 zle -N toggle_comment
-zle -N fzf_history_find
 zle -N yank_bufer
-zle -N hf
 
-bindkey "r" hf
+bindkey ',' vi-rev-repeat-find
+bindkey ';' vi-repeat-find
+bindkey '' beginning-of-line
 bindkey '' my-backward-delete-word
 bindkey '' toggle_comment
-bindkey 'y' yank_bufer
-bindkey '' beginning-of-line
 bindkey '' vi-find-next-char
 bindkey '' vi-find-prev-char
-bindkey ';' vi-repeat-find
-bindkey ',' vi-rev-repeat-find
+bindkey 'y' yank_bufer
+bindkey "r" hf
 
 __fzf_complete_ssh() {
   _fzf_complete --no-preview -- "$@" < <(grep -iw "Host" ~/.ssh/config \
@@ -497,7 +506,6 @@ set_no_proxy
 zstyle ":completion:*" list-colors "${(s.:.)LS_COLORS}"
 
 # 1password cli
-
 has op && eval "$(op completion zsh)" && compdef _op op
 
 # For WSL
@@ -508,26 +516,29 @@ if has idea.cmd; then
   alias jmerge="runexe cmd.exe /C idea.cmd merge"
 fi
 if has netstat.exe; then
-  alias ss="netstat.exe -ano | rg -vF '[::]:0'"
-  alias ssl="netstat.exe -ano | rg LISTENING | rg -vF '[::]:0'"
+  alias ss="netstat.exe -ano | grep -vF '[::]:0'"
+  alias ssl="netstat.exe -ano | grep LISTENING | grep -vF '[::]:0'"
+fi
+if has ipconfig.exe; then
+  alias ipc="ipconfig.exe"
 fi
 
-has ipconfig.exe && alias ipc="ipconfig.exe"
 if has choco.exe; then
-  alias co="choco.exe"
   alias ci="choco.exe install"
   alias cinfo="choco.exe info"
+  alias co="choco.exe"
   alias cout="choco.exe outdated"
   alias cs="choco.exe search"
   alias cui="choco.exe uninstall"
   alias cup="cup.exe"
   alias cw="choco.exe info"
 fi
+
 if has powershell.exe; then
   alias psh="powershell.exe"
+  alias reboot="powershell.exe -Command Restart-Computer"
   alias wk="powershell.exe kill -Id"
   alias wpk="powershell.exe kill -Name"
-  alias reboot="powershell.exe -Command Restart-Computer"
 fi
 
 wsl-init() {
@@ -547,5 +558,5 @@ wsl-reboot() {
 
 wsl-reboot-f() {
 local psh_exe="/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0//powershell.exe"
-ssh "$@" "${psh_exe} -Command Restart-Computer -Force"
+  ssh "$@" "${psh_exe} -Command Restart-Computer -Force"
 }
