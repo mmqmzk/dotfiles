@@ -6,8 +6,8 @@ _del() {
     tmp="$TMPDIR"
   fi
   for file in "$@"; do
-    [[ -e "$file" || -L "$file" ]] \
-      && mv -f --backup=t "$file" "$tmp" && continue
+    [[ -e "$file" || -L "$file" ]] &&
+      mv -f --backup=t "$file" "$tmp" && continue
     rm -rf "$file"
   done
 }
