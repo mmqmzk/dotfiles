@@ -222,11 +222,11 @@ export BAT_PAGER="less ${LESS:-"-imwR"}"
 alias agc="ag --smart-case --color"
 
 alias rg="rg --smart-case"
-alias rgc="\\rg --smart-case --color=always"
+alias rgc="\\rg --smart-case --pretty"
 
 if has rg; then
   alias -g G="| \\rg --smart-case"
-  alias -g GC="| \\rg --smart-case --color=always"
+  alias -g GC="| \\rg --smart-case --pretty"
 elif has ag; then
   alias -g G="| ag --smart-case"
   alias -g GC="| ag --smart-case --color"
@@ -244,8 +244,9 @@ if has bat; then
 fi
 
 # Global alias
-alias -g B="| bat --color=always"
-alias -g BB="2>&1 | bat --color=always"
+alias -g B="| bat --force-colorization"
+alias -g BB="2>&1 | bat --force-colorization"
+alias -g BM="| bat --force-colorization --language man"
 alias -g C="| wc -l"
 alias -g F="| fzf"
 alias -g H="| head -q"
@@ -257,12 +258,16 @@ alias -g LG="| less ${LESS:-"-imwR"} +G"
 alias -g LL="2>&1 | less ${LESS:-"-imwR"}"
 alias -g NC="| sed 's/\x1b\[[0-9;]*m//g'"
 alias -g S="| sort"
+alias -g SN="| sort -n"
+alias -g SNR="| sort -nr"
+alias -g SR="| sort -r"
 alias -g T="| tail"
 alias -g TF="| tail -f"
 alias -g TT="2>&1 | tail"
 alias -g TTF="2>&1 | tail -f"
-alias -g X="| bat -l xml"
+alias -g X="| bat --force-colorization --language xml"
 alias -g Y="| yank -i"
+alias -g YM="| bat --force-colorization --language yaml"
 alias -g YY="2>&1 | yank -i"
 
 
@@ -380,7 +385,8 @@ zstyle ':fzf-tab:complete:(kill|ps|top):argument-rest' fzf-flags \
   --preview-window='up:3:wrap' --height 100% --layout=default --border
 zstyle ':completion:*:kill:*' ignored-patterns '0'
 
-zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl status $word'
+zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview \
+  'SYSTEMD_COLORS=1 systemctl status $word'
 
 fb() {
   fd --hidden --type file --color=always "$@" \
@@ -526,6 +532,7 @@ fi
 if has choco.exe; then
   alias ci="choco.exe install"
   alias cinfo="choco.exe info"
+  alias cls="choco.exe list"
   alias co="choco.exe"
   alias cout="choco.exe outdated"
   alias cs="choco.exe search"
