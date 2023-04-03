@@ -356,3 +356,7 @@ install_rclone() {
 install_v2sub() {
   install_go ThomasZN/v2sub
 }
+
+install_fx() {
+  install_go antonmedv/fx
+}

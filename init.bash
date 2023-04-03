@@ -66,18 +66,21 @@ echo "Installing git config."
 : "${DOT}/sshrc.d/del" && [[ -x "$_" ]] && ln -sfn "$_" "${BIN}"
 : "${DOT}/zfuncs/v" && [[ -x "$_" ]] && ln -sfn "$_" "${BIN}"
 
-install_jq
-
+install_baidu
 install_bat
 # install_cht
 install_exa
 install_fd
+install_fx
+install_fzf
+install_glow
 install_hexyl
+install_jq
 install_lsd
+install_rclone
 install_ripgrep
 # install_xsv
 
-install_fzf
 install_node "--lts"
 
 install_vim
