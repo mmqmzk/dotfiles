@@ -75,7 +75,7 @@ _pushd() {
   fi
 }
 
-sshrcd="$(cd $(dirname "$0") && PWD)"
+sshrcd="$(cd $(dirname "$0") && pwd)"
 [[ ! -d sshrcd ]] && sshrcd="$HOME/.sshrc.d"
 
 export LESS='-iwR -P"?m(File\:%i/%m) .[?f%f:-stdin-.]. Lines\:?lt%lt-%lb:-./?L%L:-. Page\:?db%db:-./?D%D:-. ?pb%pb:-.\%"'
