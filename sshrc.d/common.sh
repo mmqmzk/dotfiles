@@ -75,7 +75,7 @@ _pushd() {
   fi
 }
 
-sshrcd="$(cd $(dirname "$0") && pwd)"
+sshrcd="$(cd "$(dirname "$0")" && pwd)"
 [[ ! -d sshrcd ]] && sshrcd="$HOME/.sshrc.d"
 
 export LESS='-iwR -P"?m(File\:%i/%m) .[?f%f:-stdin-.]. Lines\:?lt%lt-%lb:-./?L%L:-. Page\:?db%db:-./?D%D:-. ?pb%pb:-.\%"'
@@ -109,6 +109,7 @@ alias ca="cat -A"
 alias dud="du -h -d 1"
 
 alias g="git"
+alias g="git add"
 alias gaa="git add ."
 alias gb="git branch"
 alias gba="git branch -a"
@@ -119,15 +120,18 @@ alias gca="git commit --amend"
 alias gcl="git clone --recurse-submodules"
 alias gcm="git checkout master"
 alias gcmm="git commit --message"
+alias gco-="git checkout --"
 alias gco.="git checkout -- ."
 alias gco="git checkout"
 alias gcoa="git checkout -- ."
 alias gcoc="git checkout console"
+alias gcod="git checkout develop"
 alias gcom="git checkout master"
 alias gf="git fetch"
 alias gf1="git fetch --depth=1"
 alias gl="git pull"
 alias gl1="git pull --depth=1"
+alias gla="git pull --all"
 alias glog="git log --oneline --decorate --graph"
 alias glr="git pull --rebase"
 alias gma="git merge --abort"
