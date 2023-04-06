@@ -246,6 +246,7 @@ alias -g B="| bat --force-colorization"
 alias -g BB="2>&1 | bat --force-colorization"
 alias -g BM="| bat --force-colorization --language man"
 alias -g C="| wc -l"
+alias -g DR=" --dry-run"
 alias -g F="| fzf"
 alias -g H="| head -q"
 alias -g HH="2>&1 | head -q"
@@ -539,11 +540,21 @@ if has choco.exe; then
   alias cw="choco.exe info"
 fi
 
+_wsl-pgrep() {
+  local psh_exe="/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe"
+  local process_names="${*// /,}"
+  ${psh_exe} Get-Process -Name "${process_names}" | awk '/[0-9]+/ {print $6}'
+}
+
 if has powershell.exe; then
   alias psh="powershell.exe"
   alias reboot="powershell.exe -Command Restart-Computer"
-  alias wk="powershell.exe kill -Id"
-  alias wpk="powershell.exe kill -Name"
+  alias wk="powershell.exe Stop-Process -Id"
+  alias wpk="powershell.exe Stop-Process -Name"
+  alias wp="powershell.exe Get-Process"
+  alias wpg="_wsl-pgrep"
+  alias wpgrep="_wsl-pgrep"
+  alias wps="powershell.exe Get-Process"
 fi
 
 wsl-init() {
@@ -557,11 +568,11 @@ wsl-reset() {
 }
 
 wsl-reboot() {
-  local psh_exe="/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0//powershell.exe"
+  local psh_exe="/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe"
   ssh "$@" "${psh_exe} -Command Restart-Computer"
 }
 
 wsl-reboot-f() {
-local psh_exe="/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0//powershell.exe"
+  local psh_exe="/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe"
   ssh "$@" "${psh_exe} -Command Restart-Computer -Force"
 }
