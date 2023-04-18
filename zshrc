@@ -531,12 +531,12 @@ fi
 if has choco.exe; then
   alias ci="choco.exe install"
   alias cinfo="choco.exe info"
-  alias cls="choco.exe list"
+  alias cls="choco.exe list -l"
   alias co="choco.exe"
   alias cout="choco.exe outdated"
   alias cs="choco.exe search"
   alias cui="choco.exe uninstall"
-  alias cup="cup.exe"
+  alias cup="choco.exe update"
   alias cw="choco.exe info"
 fi
 
