@@ -576,3 +576,11 @@ wsl-reboot-f() {
   local psh_exe="/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe"
   ssh "$@" "${psh_exe} -Command Restart-Computer -Force"
 }
+
+# Hishtory Config:
+HH_PATH="$HOME/.hishtory"
+if [[ -x "$HH_PATH/hishtory" ]]; then
+  export PATH="$PATH:$HH_PATH"
+  source "$HH_PATH/config.zsh"
+  alias hh="hishtory"
+fi
