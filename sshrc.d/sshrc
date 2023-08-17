@@ -25,22 +25,23 @@ bind '"e": "2>/dev/null "'
 bind '"h": "| head -q "'
 bind '"l": "| less"'
 bind '"n": ">/dev/null "'
-bind '"t": "| less +F"'
+bind '"t": "| less -i +F"'
 # bind '"t": "| tail -f"'
 
 alias md="mkdir -p"
-
 alias ssl="ss -ltn"
-alias yiag="sudo yum install the_silver_searcher"
-alias aiag="sudo apt-get install silversearcher-ag"
 
 alias agc="ag --color"
 bind '"g": "| ag --color "'
-alias rg="rg --smart-case"
-alias rgc="\\rg --smart-case --color=always"
-# bind '"g": "| \\rg --smart-case --color=always "'
-alias eg="grep -Pin"
-alias egc="grep -Pin --color=always"
+
+if command -v rg &>/dev/null; then
+  alias rg="rg --smart-case"
+  alias rgc="\\rg --smart-case --color=always"
+  bind '"g": "| \\rg --smart-case --color=always "'
+fi
+
+alias gg="grep -Pin"
+alias ggc="grep -Pin --color=always"
 bind '"p": "| grep -Pin --color=always "'
 
 alias sc="systemctl"
@@ -51,8 +52,4 @@ take() {
   mkdir -p "$1" && cd "$1" || return
 }
 
-alias sjk="java -jar $HOME/sjk.jar"
-export game="/data/game"
-export backup="$game/backup"
-export server="$game/server"
-
+: "$SSHRCD/sshrc.local.sh" && [[ -f "$_" ]] && source "$_"
