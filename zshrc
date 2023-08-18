@@ -224,6 +224,9 @@ alias agc="ag --smart-case --color"
 alias rg="rg --smart-case"
 alias rgc="\\rg --smart-case --pretty"
 
+alias gg="grep -Pi"
+alias ggc="grep -Pi --color=always"
+
 if has rg; then
   alias -g G="| \\rg --smart-case"
   alias -g GC="| \\rg --smart-case --pretty"
@@ -311,9 +314,12 @@ alias bw="brew info"
 alias di="sudo docker image"
 alias dii="sudo docker image inspect"
 alias dil="sudo docker image ls"
+alias dils="sudo docker image ls"
 alias dip="sudo docker image prune"
 alias dl="sudo docker pull"
 alias dp="sudo docker ps"
+alias dpl="sudo docker pull"
+alias dps="sudo docker ps"
 
 alias f="fzm"
 alias ff="fzf -f"
@@ -463,13 +469,13 @@ yank_bufer() {
   echo -n "${LBUFFER}" | yank -i
 }
 
-hf() {
+my-history-find() {
   LBUFFER="$(history -r | fzf --with-nth=4.. --query "${LBUFFER}" \
     | awk '{for(i=4;i<=NF;i++)printf("%s ",$i);printf("\n")}')"
 }
 
-zle -N fzf_history_find
-zle -N hf
+zle -N fzf-history-widget
+zle -N my-history-find
 zle -N my-backward-delete-word
 zle -N toggle_comment
 zle -N yank_bufer
@@ -482,7 +488,8 @@ bindkey '' toggle_comment
 bindkey '' vi-find-next-char
 bindkey '' vi-find-prev-char
 bindkey 'y' yank_bufer
-bindkey "r" hf
+bindkey 'r' my-history-find
+bindkey 'h' fzf-history-widget
 
 __fzf_complete_ssh() {
   _fzf_complete --no-preview -- "$@" < <(grep -iw "Host" ~/.ssh/config \
@@ -533,7 +540,7 @@ fi
 if has choco.exe; then
   alias ci="choco.exe install"
   alias cinfo="choco.exe info"
-  alias cls="choco.exe list -l"
+  alias cls="choco.exe list"
   alias co="choco.exe"
   alias cout="choco.exe outdated"
   alias cs="choco.exe search"
