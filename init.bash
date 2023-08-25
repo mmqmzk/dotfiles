@@ -14,7 +14,7 @@ if [[ -z "${PM}" ]]; then
   exit 1
 fi
 
-${PM} install git zsh curl zip unzip python3-pip rustc golang -y
+${PM} install git zsh curl zip unzip python3-pip rustc cargo golang -y
 
 PIP=$(wh pip3 pip)
 if [[ -n "${PIP}" ]]; then
@@ -65,21 +65,32 @@ echo "Installing git config."
 : "${DOT}/sshrc.d/del" && [[ -x "$_" ]] && sudo ln -sfn "$_" /usr/local/bin
 : "${DOT}/zfuncs/v" && [[ -x "$_" ]] && sudo ln -sfn "$_" /usr/local/bin
 
+mkdir -p ~/.cargo
+cat - >~/.cargo/config <<EOF
+[source.crates-io]
+registry = "https://github.com/rust-lang/crates.io-index"
+replace-with = 'ustc'
+[source.ustc]
+registry = "git://mirrors.ustc.edu.cn/crates.io-index"
+EOF
+
+${PM} install bat exa fd-find hexyl rclone ripgrep -y
+
 install_baidu
-install_bat
+# install_bat
 install_cht
-install_exa
-install_fd
+# install_exa
+# install_fd
 install_fx
 install_fzf
 install_glow
-install_hexyl
+# install_hexyl
 install_jq
 install_lsd
-install_rclone
-install_ripgrep
+# install_rclone
+# install_ripgrep
 install_v2sub
-install_xsv
+# install_xsv
 
 install_node "--lts"
 
