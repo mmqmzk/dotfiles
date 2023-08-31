@@ -338,22 +338,28 @@ alias snw="snap info"
 
 # Fzf
 export PREVIEW="${DOT}/zfuncs/preview"
-FZF_PREVIEW_KEY_BIND="--bind 'alt-j:preview-down,"
-FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-k:preview-up,"
-FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-e:preview-down\
-+preview-down+preview-down,"
-FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-y:preview-up\
-+preview-up+preview-up,"
-FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-h:preview-top,"
-FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-l:preview-bottom,"
-FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-p:toggle-preview,"
-FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-w:toggle-preview-wrap,"
-FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}ctrl-s:toggle-sort,"
+FZF_PREVIEW_KEY_BIND="--bind '"
 FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-a:toggle-all,"
-FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}ctrl-n:toggle+down,"
-FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}ctrl-p:toggle+up,"
-FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}tab:toggle+down,"
-FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}btab:toggle+up'"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-e:preview-down+preview-down+preview-down,"
+# FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-end:last,"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-h:preview-top,"
+# FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-home:first,"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-j:preview-down,"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-k:preview-up,"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-l:preview-bottom,"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-n:toggle+down,"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-p:toggle+up,"
+# FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-pgdn:preview-page-down,"
+# FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-pgup:preview-page-up,"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-s:select-all,"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-t:toggle-all,"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-u:clear-selection,"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-w:toggle-preview-wrap,"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-y:preview-up+preview-up+preview-up,"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}ctrl-alt-p:toggle-preview,"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}ctrl-s:toggle-sort,"
+FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}ctrl-space:toggle'"
+
 export FZF_PREVIEW_KEY_BIND
 
 export FZF_COMPLETION_TRIGGER=',,'
@@ -371,8 +377,7 @@ export FZF_COMPLETION_OPTS="-1 --cycle --inline-info --ansi --height 100% \
   'right:70%:wrap' ${FZF_PREVIEW_KEY_BIND}"
 export FZF_CTRL_R_OPTS="+m -1 --cycle --ansi --border --no-preview"
 export FZF_ALT_C_OPTS="${FZF_DEFAULT_OPTS} +m --preview-window 'right:60%'"
-export _ZL_FZF_FLAG="+s -1 +m --preview 'echo {} | awk \"{print \\\$2}\" \
-  | xargs ${PREVIEW}' ${FZF_PREVIEW_KEY_BIND}"
+# export _ZL_FZF_FLAG="+s -1 +m --preview 'exa -lg {2}' ${FZF_PREVIEW_KEY_BIND}"
 export FORGIT_FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS}"
 
 export __FZF_TAB_OPTS=(-1 --cycle --inline-info --ansi --height 100% \
