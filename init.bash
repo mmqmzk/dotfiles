@@ -76,6 +76,10 @@ EOF
 
 ${PM} install bat exa fd-find hexyl rclone ripgrep -y
 
+sudo ln -sfn /usr/bin/batcat /usr/local/bin/bat || true
+sudo ln -sfn /usr/bin/fdfind /usr/local/bin/fd || true
+
+
 install_baidu
 # install_bat
 install_cht
