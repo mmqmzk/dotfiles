@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+
+set -e
+
 case "$1" in
 h | help | -h | --help)
   echo "Usage: $0 <module|all> <version|init|noinit>"
