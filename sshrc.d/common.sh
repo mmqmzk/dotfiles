@@ -75,6 +75,17 @@ _pushd() {
   fi
 }
 
+gbell() {
+  while true; do
+    if grep -q "$@"; then
+      echo -e '\a'
+      echo "Success matched!"
+      return
+    fi
+    sleep 5
+  done
+}
+
 sshrcd="$(cd "$(dirname "$0")" && pwd)"
 [[ ! -d sshrcd ]] && sshrcd="$HOME/.sshrc.d"
 
