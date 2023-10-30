@@ -75,9 +75,16 @@ _pushd() {
   fi
 }
 
+sshrcd="$(cd "$(dirname "$0")" && pwd)"
+[[ ! -d sshrcd ]] && sshrcd="$HOME/.sshrc.d"
+
+export LESS='-iwR -P"?m(File\:%i/%m) .[?f%f:-stdin-.]. Lines\:?lt%lt-%lb:-./?L%L:-. Page\:?db%db:-./?D%D:-. ?pb%pb:-.\%"'
+
+# export PAGER="less -imwR"
+
 gbell() {
   while true; do
-    if grep -q "$@"; then
+    if grep "$@"; then
       echo -e '\a'
       echo "Success matched!"
       return
@@ -86,12 +93,9 @@ gbell() {
   done
 }
 
-sshrcd="$(cd "$(dirname "$0")" && pwd)"
-[[ ! -d sshrcd ]] && sshrcd="$HOME/.sshrc.d"
-
-export LESS='-iwR -P"?m(File\:%i/%m) .[?f%f:-stdin-.]. Lines\:?lt%lt-%lb:-./?L%L:-. Page\:?db%db:-./?D%D:-. ?pb%pb:-.\%"'
-
-# export PAGER="less -imwR"
+alias eco='echo $?'
+alias ebell=': $? && (($_)) && echo -e "\\aExitCode=$_" || echo "Success"'
+alias bell='echo -e "done!\\a"'
 
 alias -- -="_pushd -"
 alias ..="_pushd .."
