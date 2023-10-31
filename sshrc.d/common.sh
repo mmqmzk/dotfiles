@@ -82,6 +82,21 @@ export LESS='-iwR -P"?m(File\:%i/%m) .[?f%f:-stdin-.]. Lines\:?lt%lt-%lb:-./?L%L
 
 # export PAGER="less -imwR"
 
+gbell() {
+  while true; do
+    if grep "$@"; then
+      echo -e '\a'
+      echo "Success matched!"
+      return
+    fi
+    sleep 5
+  done
+}
+
+alias eco='echo $?'
+alias ebell=': $? && (($_)) && echo -e "\\aExitCode=$_" || echo "Success"'
+alias bell='echo -e "done!\\a"'
+
 alias -- -="_pushd -"
 alias ..="_pushd .."
 alias ...="_pushd ../.."
