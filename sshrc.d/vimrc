@@ -3,8 +3,8 @@ set autoindent smartindent
 set showcmd
 set tabstop=2
 set shiftwidth=2
-set scrolloff=4
-set sidescrolloff=4
+set scrolloff=2
+set sidescrolloff=2
 set softtabstop=2
 set nojoinspaces
 set backspace=indent,eol,start
@@ -32,21 +32,7 @@ filetype plugin indent on
   " execute "map! \e".c." <M-".c.">"
 " endfor
 
-inoremap <s-cr> <esc>o
-inoremap <c-a> <c-o>^
-inoremap <c-f> <c-o>^
-inoremap <c-e> <c-o>$
-inoremap <c-k> <c-o>D
-inoremap <c-[> <esc>
-inoremap <c-]> <esc>
-inoremap  <c-w>
-inoremap [3;5~ <c-o>dw
-
-cnoremap w!! w !sudo tee > /dev/null %
-nnoremap <space>q :qa!<cr>
-nnoremap <space>z :w !sudo tee % > /dev/null<cr>
-nnoremap <space>zz :w !sudo tee % > /dev/null<cr>L:qa!<cr>
-
+" Key mapping
 nnoremap K :grep! -F '<c-r><c-w>' .<cr>:cwindow<cr>
 vnoremap K y:grep! -F '<c-r>0' .<cr>:cwindow<cr>
 
@@ -67,6 +53,23 @@ if &diff
   colorscheme evening
 endif
 
+inoremap <s-cr> <c-o>o
+" inoremap <s-a-cr> <esc>O
+inoremap <c-a> <c-o>^
+inoremap <c-f> <c-o>^
+inoremap <c-e> <c-o>$
+inoremap <c-k> <c-o>D
+inoremap <s-tab> <c-o><<
+inoremap <c-]> <c-o>>>
+inoremap <c-l> <c-o>==
+inoremap jj <esc>
+noremap <F5> :redraw<cr>
+
+cnoremap w!! w !sudo tee > /dev/null %
+nnoremap <space>q :qa!<cr>
+nnoremap <space>z :w !sudo tee % > /dev/null<cr>
+nnoremap <space>zz :w !sudo tee % > /dev/null<cr>L:qa!<cr>
+
 nnoremap [0 :cfirst<cr>
 nnoremap ]0 :clast<cr>
 nnoremap [o :copen<cr>
@@ -79,13 +82,22 @@ nnoremap [q :lopen<cr>
 nnoremap ]q :lclose<cr>
 nnoremap [l :lprevious<cr>
 nnoremap ]l :lnext<cr>
-
-noremap Y y$
-noremap <F5> :redraw<cr>
-noremap <F8> :let @/ = ""<cr>
-nnoremap <leader><cr> :nohlsearch<cr>
-nnoremap <space><cr> :nohlsearch<cr>
 nmap <tab> <c-w>w
+
+vnoremap x "_x
+vnoremap s "_s
+
+nmap <leader>y "*y
+nmap <leader>p "*p
+nmap <leader>P "*P
+nmap zy "*y
+nmap Y "*y
+nmap zp "*p
+nmap zP "*P
+vmap gy y`>
+vmap gY "*y`>
+map Q gq
+map U <c-r>
 
 nnoremap gz `[v`]
 vnoremap < <gv
@@ -94,17 +106,22 @@ vnoremap p pgvy
 vnoremap v ^$h
 vnoremap * y/\V<c-r>0<cr>
 vnoremap # y?\V<c-r>0<cr>
-nnoremap <c-y> 3<c-y>
-nnoremap <c-e> 3<c-e>
+nnoremap e 3<c-y>
+nnoremap y 3<c-e>
+inoremap e <c-o><c-y>
+inoremap y i<c-o><c-e>
 
-vnoremap x "_x
-vnoremap s "_s
+nnoremap <c-j> <esc>:bnext<cr>
+nnoremap <c-k> <esc>:bprevious<cr>
 
-noremap <c-j> :bnext<cr>
-noremap <c-k> :bprevious<cr>
-nnoremap <leader>d :bdelete<cr>
-nnoremap <space>d :bdelete<cr>
-noremap <Up> gk
-noremap <Down> gj
+nnoremap <leader>d <esc>:bdelete<cr>
+nnoremap <space>d <esc>:bdelete<cr>
+
+noremap <F8> :let @/ = ""<cr>
+nnoremap <leader><cr> :nohlsearch<cr>
+nnoremap <space><cr> :nohlsearch<cr>
+
+nnoremap <Up> gk
+nnoremap <Down> gj
 
 nnoremap <leader>sw "_yiw:s/\(\%#\w\+\)\(\W\+\)\(\w\+\)/\3\2\1/<cr><c-o>
