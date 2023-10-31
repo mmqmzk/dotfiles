@@ -4,7 +4,7 @@ set showcmd
 set tabstop=2
 set shiftwidth=2
 set scrolloff=2
-set sidescrolloff=4
+set sidescrolloff=2
 set softtabstop=2
 set nojoinspaces
 set backspace=indent,eol,start
@@ -54,14 +54,15 @@ if &diff
 endif
 
 inoremap <s-cr> <c-o>o
-inoremap <s-a-cr> <esc>O
+" inoremap <s-a-cr> <esc>O
 inoremap <c-a> <c-o>^
 inoremap <c-f> <c-o>^
 inoremap <c-e> <c-o>$
 inoremap <c-k> <c-o>D
-inoremap <c-[> <c-o><<
+inoremap <s-tab> <c-o><<
 inoremap <c-]> <c-o>>>
 inoremap <c-l> <c-o>==
+inoremap jj <esc>
 noremap <F5> :redraw<cr>
 
 cnoremap w!! w !sudo tee > /dev/null %
@@ -86,15 +87,15 @@ nmap <tab> <c-w>w
 vnoremap x "_x
 vnoremap s "_s
 
-nmap <leader>y "+y
-nmap <leader>p "+p
-nmap <leader>P "+P
-nmap zy "+y
-nmap Y "+y
-nmap zp "+p
-nmap zP "+P
+nmap <leader>y "*y
+nmap <leader>p "*p
+nmap <leader>P "*P
+nmap zy "*y
+nmap Y "*y
+nmap zp "*p
+nmap zP "*P
 vmap gy y`>
-vmap gY "+y`>
+vmap gY "*y`>
 map Q gq
 map U <c-r>
 
