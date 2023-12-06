@@ -44,6 +44,13 @@ alias gg="grep -Pin"
 alias ggc="grep -Pin --color=always"
 bind '"p": "| grep -Pin --color=always "'
 
+alias ipnl="iptables -nL"
+alias ipnL="iptables -nL"
+alias ipI="iptables -I INPUT"
+alias ipI1="iptables -I INPUT 1"
+alias ipII="iptables -I INPUT 1 -p tcp -j ACCEPT"
+alias ips="service iptables save"
+
 alias sc="systemctl"
 alias scs="systemctl status"
 alias scl="systemctl list-units"
