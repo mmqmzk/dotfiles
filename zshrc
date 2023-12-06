@@ -596,3 +596,5 @@ if [[ -x "$HH_PATH/hishtory" ]]; then
   source "$HH_PATH/config.zsh"
   alias hh="hishtory"
 fi
+
+: "$HOME/.zshrc.local" && [[ -f "$_" ]] && source "$_"
