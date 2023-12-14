@@ -70,7 +70,7 @@
     # rvm                     # ruby version from rvm (https://rvm.io)
     # fvm                     # flutter version management (https://github.com/leoafarias/fvm)
     # luaenv                  # lua version from luaenv (https://github.com/cehoffman/luaenv)
-    # jenv                    # java version from jenv (https://github.com/jenv/jenv)
+    jenv                    # java version from jenv (https://github.com/jenv/jenv)
     # plenv                   # perl version from plenv (https://github.com/tokuhirom/plenv)
     # perlbrew                # perl version from perlbrew (https://github.com/gugod/App-perlbrew)
     # phpenv                  # php version from phpenv (https://github.com/phpenv/phpenv)
