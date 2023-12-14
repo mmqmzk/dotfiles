@@ -132,6 +132,7 @@ plugins=(
   git
   gpg-agent
   httpie
+  jenv
   # last-working-dir
   mosh
   node
