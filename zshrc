@@ -112,7 +112,6 @@ _fzf_compgen_path() {
 zstyle :omz:plugins:ssh-agent quiet yes
 
 plugins=(
-  ag
   catimg
   colored-man-pages
   common-aliases
@@ -123,7 +122,6 @@ plugins=(
   emoji
   encode64
   extract
-  fd
   firewalld
   forgit
   fzf
@@ -145,7 +143,6 @@ plugins=(
   profiles
   python
   redis-cli
-  ripgrep
   rust
   ssh-agent
   sudo
