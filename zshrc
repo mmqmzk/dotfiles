@@ -389,7 +389,8 @@ zstyle ':completion:*:descriptions' format '[%d]'
 zstyle ':fzf-tab:*' fzf-flags "${__FZF_TAB_OPTS[@]}"
 # zstyle ':fzf-tab:*' fzf-bindings "${FZF_PREVIEW_KEY_BIND}" # confilict maybe
 zstyle ':fzf-tab:complete:*:*' fzf-preview \
-  "[[ -e \$realpath ]] && ${PREVIEW}"' $realpath || echo ${(P)${word}:-$desc}'
+  "[[ -e \$realpath ]] && ${PREVIEW}"' $realpath || echo $desc'
+  # "[[ -e \$realpath ]] && ${PREVIEW}"' $realpath || echo ${(P)${word}:-$desc}'
 zstyle ':completion:*:*:*:*:processes' command \
   'ps -eo user,pid,ppid,start,tty,time,cmd --no-headers -w -w'
 zstyle ':fzf-tab:complete:(kill|ps|top):argument-rest' fzf-preview \
