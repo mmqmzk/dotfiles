@@ -155,31 +155,37 @@ install_rust() {
 }
 
 install_bat() {
-  install_rust bat bat "sharkdp/bat" "$1"
+  ${PM} bat -y
+  # install_rust bat bat "sharkdp/bat" "$1"
 }
 
 install_delta() {
-  install_rust git-delta delta "dandavison/delta" "$1"
+  ${PM} git-delta -y
+  # install_rust git-delta delta "dandavison/delta" "$1"
 }
 
 install_fd() {
-  install_rust fd-find fd "sharkdp/fd" "$1"
+  ${PM} fd-find -y
+  # install_rust fd-find fd "sharkdp/fd" "$1"
 }
 install_hexyl() {
-  install_rust hexyl hexyl "sharkdp/hexyl" "$1"
+  ${PM} hexyl -y
+  # install_rust hexyl hexyl "sharkdp/hexyl" "$1"
 }
 
 install_lsd() {
-  install_rust lsd lsd "Peltoche/lsd" "$1" "x86_64-unknown-linux-gnu"
+  ${PM} lsd -y
+  # install_rust lsd lsd "Peltoche/lsd" "$1" "x86_64-unknown-linux-gnu"
 }
 
 install_ripgrep() {
-
-  install_rust ripgrep rg "BurntSushi/ripgrep" "$1"
+  ${PM} ripgrep -y
+  # install_rust ripgrep rg "BurntSushi/ripgrep" "$1"
 }
 
 install_xsv() {
-  install_rust xsv "xsv" "BurntSushi/xsv" "$1"
+  echo "XSV won't install"
+  # install_rust xsv "xsv" "BurntSushi/xsv" "$1"
 }
 
 install_fzf() {
@@ -344,7 +350,8 @@ install_glow() {
 }
 
 install_rclone() {
-  install_go rclone/rclone
+  ${PM} rclone -y
+  # install_go rclone/rclone
 }
 
 install_v2sub() {

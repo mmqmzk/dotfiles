@@ -19,8 +19,8 @@ ${PM} install git zsh curl zip unzip python3-pip rustc cargo golang -y
 PIP=$(wh pip3 pip)
 if [[ -n "${PIP}" ]]; then
   echo "Installing pips."
-  ${PIP} install --user pip -U
-  ${PIP} install --user -U ansi2html gita httpie jc mdv \
+  ${PIP} install pip -U
+  ${PIP} install -U ansi2html gita httpie jc mdv \
   mycli neovim pip Pygments pynvim PySocks ranger-fm tabulate \
   visidata xlsx2csv xq youtube-dl yq
 fi
@@ -36,9 +36,9 @@ if ! has ag; then
   ${PM} install "$_" -y
 fi
 
-if ! has lua5.3 lua; then
+if ! has lua5.4 lua; then
   if is_debian; then
-    ${PM} install lua5.3
+    ${PM} install lua5.4
     ${PM} install lua-filesystem
   else
     ${PM} install lua
@@ -80,20 +80,20 @@ sudo ln -sfn /usr/bin/batcat /usr/local/bin/bat || true
 sudo ln -sfn /usr/bin/fdfind /usr/local/bin/fd || true
 
 
-install_baidu
+# install_baidu
 # install_bat
 install_cht
 # install_exa
 # install_fd
-install_fx
+# install_fx
 install_fzf
-install_glow
+# install_glow
 # install_hexyl
 install_jq
 install_lsd
 # install_rclone
 # install_ripgrep
-install_v2sub
+# install_v2sub
 # install_xsv
 
 install_node "--lts"
