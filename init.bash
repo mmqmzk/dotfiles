@@ -14,17 +14,26 @@ if [[ -z "${PM}" ]]; then
   exit 1
 fi
 
-${PM} install git zsh curl zip unzip python3-pip rustc cargo golang -y
+${PM} install git zsh curl zip unzip python3-pip \
+  rustc cargo golang python3-venv python3-pynvim -y
 
-PIP=$(wh pip3 pip)
-if [[ -n "${PIP}" ]]; then
+check_bin
+
+PY_ENV="${LIB:-"$HOME/.local/lib"}/python3"
+if [[ ! -d "${PY_ENV}" ]]; then
+  python3 -m venv "${PY_ENV}"
+fi
+
+PIP="$PY_ENV/bin/pip"
+if [[ -x "${PIP}" ]]; then
   echo "Installing pips."
   ${PIP} install pip -U
   ${PIP} install -U ansi2html gita httpie jc mdv \
-  mycli neovim pip Pygments pynvim PySocks ranger-fm tabulate \
-  visidata xlsx2csv xq youtube-dl yq
+    mycli neovim pip Pygments pynvim PySocks ranger-fm tabulate \
+    visidata xlsx2csv xq youtube-dl yq
 fi
-has python || (: "$(wh python3)" && [[ -x "$_" ]] && sudo ln -sfn "$_" "${_%3}")
+# has python || (: "$(wh python3)" && [[ -x "$_" ]] && sudo ln -sfn "$_" "${_%3}")
+ln -s "${PY_ENV}/bin/*" "$BIN" || true
 
 if ! has ag; then
   echo "Installing ag."
@@ -45,7 +54,6 @@ if ! has lua5.4 lua; then
   fi
 fi
 
-check_bin
 install_dot
 
 echo "Installing oh my zsh."
@@ -74,11 +82,10 @@ replace-with = 'ustc'
 registry = "git://mirrors.ustc.edu.cn/crates.io-index"
 EOF
 
-${PM} install bat exa fd-find hexyl rclone ripgrep -y
+${PM} install bat eza fd-find hexyl rclone ripgrep -y
 
 sudo ln -sfn /usr/bin/batcat /usr/local/bin/bat || true
 sudo ln -sfn /usr/bin/fdfind /usr/local/bin/fd || true
-
 
 # install_baidu
 # install_bat
