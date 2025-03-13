@@ -14,7 +14,7 @@ if [[ -z "${PM}" ]]; then
   exit 1
 fi
 
-${PM} install git zsh curl zip unzip python3-pip \
+${PM} install git zsh curl zip unzip \
   rustc cargo golang python3-venv python3-pynvim -y
 
 check_bin
