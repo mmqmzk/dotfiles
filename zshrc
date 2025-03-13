@@ -382,7 +382,7 @@ export __FZF_TAB_OPTS=(-1 --cycle --inline-info --ansi --height 100% \
   --border --layout=default  --expect=/)
 zstyle ':completion:*:descriptions' format '[%d]'
 zstyle ':fzf-tab:*' fzf-flags "${__FZF_TAB_OPTS[@]}"
-# zstyle ':fzf-tab:*' fzf-bindings "${FZF_PREVIEW_KEY_BIND}" # confilict maybe
+# zstyle ':fzf-tab:*' fzf-bindings "${FZF_PREVIEW_KEY_BIND}" # conflict maybe
 zstyle ':fzf-tab:complete:*:*' fzf-preview \
   "[[ -e \$realpath ]] && ${PREVIEW}"' $realpath || echo $desc'
   # "[[ -e \$realpath ]] && ${PREVIEW}"' $realpath || echo ${(P)${word}:-$desc}'
@@ -467,7 +467,7 @@ toggle_comment() {
   LBUFFER="$_"
 }
 
-yank_bufer() {
+yank_buffer() {
   echo -n "${LBUFFER}" | yank -i
 }
 
@@ -480,7 +480,7 @@ zle -N fzf-history-widget
 zle -N my-history-find
 zle -N my-backward-delete-word
 zle -N toggle_comment
-zle -N yank_bufer
+zle -N yank_buffer
 
 bindkey ',' vi-rev-repeat-find
 bindkey ';' vi-repeat-find
@@ -489,7 +489,7 @@ bindkey '' my-backward-delete-word
 bindkey '' toggle_comment
 bindkey '' vi-find-next-char
 bindkey '' vi-find-prev-char
-bindkey 'y' yank_bufer
+bindkey 'y' yank_buffer
 bindkey 'r' my-history-find
 bindkey 'h' fzf-history-widget
 
