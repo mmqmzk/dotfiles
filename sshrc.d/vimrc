@@ -87,13 +87,15 @@ nmap <tab> <c-w>w
 vnoremap x "_x
 vnoremap s "_s
 
-nmap <leader>y "*y
-nmap <leader>p "*p
-nmap <leader>P "*P
-nmap zy "*y
-nmap Y "*y
-nmap zp "*p
-nmap zP "*P
+map <leader>p "*p
+map <leader>P "*P
+map <space>p "*p
+map <space>P "*P
+map <leader>y "*y
+map <space>y "*y
+map Y "*y
+map zp "0p
+map zP "0P
 vmap gy y`>
 vmap gY "*y`>
 map Q gq

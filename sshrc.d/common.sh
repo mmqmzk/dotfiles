@@ -119,7 +119,7 @@ alias as="apt search"
 alias au="sudo apt upgrade"
 alias aw="apt show"
 alias b="less ${LESS:-"-imwR"}"
-alias c="_pushd"
+alias c="pushd"
 alias ca="cat -A"
 alias dud="du -h -d 1"
 

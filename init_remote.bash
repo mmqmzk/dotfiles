@@ -4,20 +4,20 @@ user=root
 group=root
 while [[ -n "$1" ]]; do
   case "$1" in
-    -u)
-      user="$2"
-      shift
-      ;;
-    -g)
-      group="$2"
-      shift
-      ;;
-    -e)
-      EXA="exa"
-      ;;
-    -l)
-      LSD="lsd"
-      ;;
+  -u)
+    user="$2"
+    shift
+    ;;
+  -g)
+    group="$2"
+    shift
+    ;;
+  -e)
+    EXA="exa"
+    ;;
+  -l)
+    LSD="lsd"
+    ;;
   esac
   shift
 done
@@ -30,10 +30,10 @@ LIB="${LOCAL}/lib"
 DOT_BALL="${DOT_BALL:-"${HOME}/dot.tbz2"}"
 
 del() {
-   (mv -f --backup=t -t /tmp "$@" \
-     || rm -rf "$@") \
-     || (sudo mv -f --backup=t -t /tmp "$@" \
-     || sudo rm -rf "$@")
+  (mv -f --backup=t -t /tmp "$@" ||
+    rm -rf "$@") ||
+    (sudo mv -f --backup=t -t /tmp "$@" ||
+      sudo rm -rf "$@")
 }
 
 rm -rf "${DOT}" "${LOCAL}"
@@ -43,8 +43,8 @@ find "${BASE}" -maxdepth 1 -type l -delete
 tar -xf "${DOT_BALL}" -C "${BASE}"
 
 _chown() {
-  if [[ "$(stat -c "%U" "$1")" != "${user}" ]] \
-    || [[ "$(stat -c "%G" "$1")" != "${group}" ]]; then
+  if [[ "$(stat -c "%U" "$1")" != "${user}" ]] ||
+    [[ "$(stat -c "%G" "$1")" != "${group}" ]]; then
     local -a cmd
     cmd=("chown" "${user}:${group}" "-R")
     if [[ "${user}" != "${USER}" ]]; then
@@ -57,7 +57,7 @@ _chown() {
 _chown "${DOT}"
 _chown "${LOCAL}"
 chmod -R go-w "${DOT}"
-ln -sfn "${DOT}/zshrc"  "${BASE}/.zshrc"
+ln -sfn "${DOT}/zshrc" "${BASE}/.zshrc"
 # ln -sfn "${DOT}/vim"  "${BASE}/.vim"
 ln -sfn "${DOT}/sshrc.d/vimrc" "${BASE}/.vimrc"
 if [[ "${user}" != "root" ]]; then

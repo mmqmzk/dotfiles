@@ -155,31 +155,31 @@ install_rust() {
 }
 
 install_bat() {
-  ${PM} bat -y
+  ${PM} install bat -y
   # install_rust bat bat "sharkdp/bat" "$1"
 }
 
 install_delta() {
-  ${PM} git-delta -y
+  ${PM} install git-delta -y
   # install_rust git-delta delta "dandavison/delta" "$1"
 }
 
 install_fd() {
-  ${PM} fd-find -y
+  ${PM} install fd-find -y
   # install_rust fd-find fd "sharkdp/fd" "$1"
 }
 install_hexyl() {
-  ${PM} hexyl -y
+  ${PM} install hexyl -y
   # install_rust hexyl hexyl "sharkdp/hexyl" "$1"
 }
 
 install_lsd() {
-  ${PM} lsd -y
+  ${PM} install lsd -y
   # install_rust lsd lsd "Peltoche/lsd" "$1" "x86_64-unknown-linux-gnu"
 }
 
 install_ripgrep() {
-  ${PM} ripgrep -y
+  ${PM} install ripgrep -y
   # install_rust ripgrep rg "BurntSushi/ripgrep" "$1"
 }
 
@@ -293,7 +293,7 @@ install_node() {
       nvm uninstall "${CURRENT_VERSION}"
     fi
   else
-    echo "Node version ${NODE_TAG} alreday installed."
+    echo "Node version ${NODE_TAG} already installed."
   fi
 }
 
@@ -314,10 +314,11 @@ install_npm() {
   npm install -g typescript
   npm install -g eslint
   npm install -g pm2
+  npm install -g bash-language-server
 }
 
 install_exa() {
-  install_rust exa
+  ${PM} install eza -y
   # local tag=${1:-"latest"}
   # [[ "${tag}" == "-f" ]] && tag="latest" && local force="YES"
   # local result="exa-linux-x86_64-${tag##v}.zip"
