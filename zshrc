@@ -388,9 +388,9 @@ zstyle ':fzf-tab:complete:*:*' fzf-preview \
   # "[[ -e \$realpath ]] && ${PREVIEW}"' $realpath || echo ${(P)${word}:-$desc}'
 zstyle ':completion:*:*:*:*:processes' command \
   'ps -eo user,pid,ppid,start,tty,time,cmd --no-headers -w -w'
-zstyle ':fzf-tab:complete:(kill|ps|top):argument-rest' fzf-preview \
-  '[[ $group == "[process ID]"  ]] && ps --pid=$word -o cmd --no-headers -w -w'
-zstyle ':fzf-tab:complete:(kill|ps|top):argument-rest' fzf-flags \
+zstyle ':fzf-tab:complete:(kill|ps|top):*' fzf-preview \
+  '[[ $group == "[process ID]" ]] && ps --pid=$word -o cmd --no-headers -w -w'
+zstyle ':fzf-tab:complete:(kill|ps|top):*' fzf-flags \
   --preview-window='up:3:wrap' --height 100% --layout=default --border
 zstyle ':completion:*:kill:*' ignored-patterns '0'
 
