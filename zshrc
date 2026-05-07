@@ -508,15 +508,10 @@ bindkey 'y' yank_buffer
 bindkey 'r' my-history-find
 bindkey 'h' fzf-history-widget
 
-__fzf_complete_ssh() {
-  _fzf_complete --no-preview -- "$@" < <(grep -iw "Host" ~/.ssh/config \
-    | awk '{for(i=2;i<=NF;i++)print $i}' | grep -v "[*?]")
+_sshrc() {
+    _dispatch ssh ssh
 }
-functions[_fzf_complete_ssh]='__fzf_complete_ssh "$@"'
-
-_fzf_complete_sshrc() {
-  __fzf_complete_ssh "$@"
-}
+compdef _sshrc sshrc
 
 hex() {
   hexyl "$@" | less -P"%btB./%ltL./%dtP.?e END" -iwR
