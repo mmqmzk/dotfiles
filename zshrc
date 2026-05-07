@@ -334,7 +334,8 @@ alias sns="snap find"
 alias snu="sudo snap refresh"
 alias snw="snap info"
 
-# Fzf
+# FZF
+
 export PREVIEW="${DOT}/zfuncs/preview"
 FZF_PREVIEW_KEY_BIND="--bind '"
 FZF_PREVIEW_KEY_BIND="${FZF_PREVIEW_KEY_BIND}alt-a:toggle-all,"
@@ -401,6 +402,20 @@ fb() {
   fd --hidden --type file --color=always "$@" \
     | fzf --preview 'bat --color=always {}'
 }
+
+fzf() {
+  if [[ -n "$TMUX" ]]; then
+    fzf-tmux -p 80%,60% "$@"
+  else
+    command fzf "$@"
+  fi
+}
+
+if [[ -n "$TMUX" ]]; then
+  # 告诉 fzf 相关的脚本，当调用 fzf-tmux 时默认开启浮窗
+  export FZF_TMUX=1
+  export FZF_TMUX_OPTS="-p 80%,60%"
+fi
 
 if has winstart; then
   export BROWSER="msedge"
